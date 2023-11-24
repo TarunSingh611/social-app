@@ -1,0 +1,14 @@
+# Build artifacts
+/build/
+/dist/
+
+# Configuration files
+config/config.js
+config/config.json
+
+# Temporary files
+.tmp/
+
+# Log files
+logs/
+*.log
