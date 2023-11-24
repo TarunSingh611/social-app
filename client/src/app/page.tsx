@@ -1,9 +1,18 @@
-import Image from 'next/image'
+
+import SlotMachine from '@/components/slotMachine'
+import CurtainButton from '@/components/curtainButton'
+
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1> Getting started</h1>
-    </main>
+    <div className="curtain relative">
+      <div className="slotMachine absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+        <SlotMachine />
+        <div className='flex mx-auto mt-16 justify-center'>
+          <CurtainButton key={0} type={0}/>
+          <CurtainButton key={1} type={1}/>
+        </div>
+      </div>
+    </div>
   )
 }
