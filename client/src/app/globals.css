@@ -1,27 +1,117 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --theme-light: {
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 240, 240, 240;
+    --background-end-rgb: 255, 255, 255;
+  }
+
+  --theme-dark: {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 30, 30, 30;
+    --background-end-rgb: 30, 30, 30;
+  }
+
+  --current-theme: var(--theme-light);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --current-theme: var(--theme-dark);
   }
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
+  color: rgb(var(--current-theme-foreground-rgb));
   background: linear-gradient(
       to bottom,
       transparent,
-      rgb(var(--background-end-rgb))
+      rgb(var(--current-theme-background-end-rgb))
     )
-    rgb(var(--background-start-rgb));
+    rgb(var(--current-theme-background-start-rgb));
+}
+
+/* Additional styling for interactive elements */
+button,
+a {
+  background-color: rgb(var(--current-theme-background-start-rgb));
+  color: rgb(var(--current-theme-foreground-rgb));
+  border: 1px solid rgb(var(--current-theme-foreground-rgb));
+  padding: 8px 16px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+button:hover,
+a:hover {
+  background-color: rgb(var(--current-theme-foreground-rgb));
+  color: rgb(var(--current-theme-background-start-rgb));
+}
+
+/* ////////////////////////////////////////////////////// */
+.curtain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80%;
+  background: linear-gradient(45deg, #0078d4 0%, #004578 100%),
+    repeating-linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.05),
+      rgba(255, 255, 255, 0.05) 10px,
+      transparent 10px,
+      transparent 20px
+    ); /* Add cloth-like texture */
+  box-shadow: 10px 20px 20px 11px rgba(0, 0, 0, 0.2);
+  border-bottom-left-radius: 45px;
+  border-bottom-right-radius: 45px;
+}
+
+.curtainButton {
+  width: 120px;
+  height:40px; 
+  text-align: center;
+  font-size: 1.2em;
+  padding: 0.2em;
+  border: 1px solid whitesmoke;
+  font : 1.2em;
+  color: #fff;
+  filter: brightness(1.2) contrast(0.8) sepia(0.2) saturate(1.4) blur(0.6px)
+    drop-shadow(0 0 5px rgba(71, 154, 168, 0.8));
+ 
+  background: radial-gradient(
+    ellipse at center,
+    rgba(23, 102, 148, 0) 0%,
+    rgba(49, 121, 163, 0.8) 100%
+  );
+  margin: 20px;
+  font-weight: normal; 
+  transition: background-color 0.3s, box-shadow 0.3s, font-weight 0.3s; 
+
+  
+}
+
+.curtainButton:hover {
+  background-color: rgb(var(--current-theme-foreground-rgb));
+  font-weight: bold;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6), 0 0 30px rgba(255, 255, 255, 0.4);
+}
+
+.footer {
+  background-color: rgb(var(--current-theme-background-start-rgb));
+  color: rgb(var(--current-theme-foreground-rgb));
+  padding: 20px;
+  position: fixed;
+  bottom: 0;
+  width:100%;
+  text-align: center;
+  box-shadow: 0px -5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.footer p {
+  margin: 0;
+  font-weight: bold;
 }
