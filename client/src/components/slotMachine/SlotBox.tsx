@@ -7,7 +7,7 @@ interface SlotMachineProps {
     iterate?: boolean;
     iterateTime?: number;
   }
-const SlotMachine: React.FC<SlotMachineProps> = ({stopLetter,time=500, moveDirection=1,iterate=false,iterateTime=120000}) => {
+const SlotMachine: React.FC<SlotMachineProps> = ({stopLetter,time=500, moveDirection=1}) => {
 
   const [n, setN] = useState(0);
   const text = ['-','A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
@@ -29,20 +29,21 @@ const SlotMachine: React.FC<SlotMachineProps> = ({stopLetter,time=500, moveDirec
     }, time);
   }, [n]);
 
-  useEffect(() => {
-        if(iterate){
-        const interval = setInterval(() => {
-            setN(0);
-        },iterateTime);
-    }
-  },[])
+
+
+  const isLastIteration = stopLetter === text[n] ;
 
   return (
-    <div className={style.slotMachine}>
+    <div className={`${style.slotMachine} flex flex-col justify-center`}>
       <div className={style.slot} id="slot1">
-        <div className={style.letter}>{text[(n - 1 + 27) % 27]}</div>
-        <div className={style.letterMain}>{text[n]}</div>
-        <div className={style.letter}>{text[(n + 1) % 27]}</div>
+        <div className={style.letterMain}
+       style={window == undefined ? {} : {
+        transform: `rotateX(${isLastIteration ? 0 : Math.random() * 360}deg)`,
+      }}
+      onClick={() => {
+        setN((0));
+      }}
+          >{text[n]}</div>
       </div>
     </div>
   );

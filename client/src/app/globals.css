@@ -64,13 +64,46 @@ a:hover {
       rgba(255, 255, 255, 0.05) 10px,
       transparent 10px,
       transparent 20px
-    ); /* Add cloth-like texture */
+    ); 
   box-shadow: 10px 20px 20px 11px rgba(0, 0, 0, 0.2);
+  border-bottom-left-radius: 45px;
+  border-bottom-right-radius: 45px;
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+  transition: transform 3s ease-out, box-shadow 3s ease-out , opacity 0.1s ease-out 0.1s;
+}
+
+.curtain-raised {
+  transform: translateY(calc(-100% + 100px)); 
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0.2);
+  opacity: 0.1;
+  pointer-events: none;
+  transition: transform 3s ease-out, box-shadow 3s ease-out, opacity 1s ease-out 3s;
+  transform-origin: center bottom;
+}
+
+
+.navbar{
+  position: fixed;
+  height :300px; 
+  padding-top: 200px;
+  top : -200px;
+  width: 100%;
+  background: linear-gradient(45deg, #0078d4 0%, #004578 100%),
+  repeating-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0.05) 10px,
+    transparent 10px,
+    transparent 20px
+  ); 
   border-bottom-left-radius: 45px;
   border-bottom-right-radius: 45px;
 }
 
 .curtainButton {
+  cursor: pointer;
   width: 120px;
   height:40px; 
   text-align: center;
@@ -91,7 +124,6 @@ a:hover {
   font-weight: normal; 
   transition: background-color 0.3s, box-shadow 0.3s, font-weight 0.3s; 
 
-  
 }
 
 .curtainButton:hover {
@@ -101,6 +133,7 @@ a:hover {
 }
 
 .footer {
+  cursor:default;
   background-color: rgb(var(--current-theme-background-start-rgb));
   color: rgb(var(--current-theme-foreground-rgb));
   padding: 20px;
@@ -114,4 +147,33 @@ a:hover {
 .footer p {
   margin: 0;
   font-weight: bold;
+}
+
+.logo {
+  margin-left: 20px;
+  width: 120px;
+  height: 40px;
+  margin-top: 25px;
+
+  display: flex;
+  font-family: 'Arial', sans-serif;
+  align-items: center;
+  font-size: 2rem;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.logo:hover {
+  transform: scale(1.1);
+}
+
+.logo p:first-child {
+  font-weight: bold;
+  margin-right: 4px;
+}
+
+.logo p:last-child {
+  font-weight: bold;
+  color: darkgray
 }

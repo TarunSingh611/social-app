@@ -1,12 +1,13 @@
 
 .slotMachine {
-    width: 80px; /* Adjust the width of the square */
-    height: 80px; /* Adjust the height of the square */
+    width: 80px; 
+    height: 80px;
     overflow: hidden;
+    cursor: default;
     position: relative;
     border : 1px solid whitesmoke;
     filter: brightness(1.2) contrast(0.8) sepia(0.2) saturate(1.4) blur(0.6px) drop-shadow(0 0 5px rgba(71, 154, 168, 0.8));
-  /* Add other properties to create the vignette effect */
+ 
   background: radial-gradient(ellipse at center, rgba(23, 102, 148, 0) 0%, rgba(49, 121, 163, 0.8) 100%);
     margin: 5px;
   }
