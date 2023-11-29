@@ -21,7 +21,7 @@ const NavBar = () => {
 
   const handleMouseMove = (e) => {
     if (isDragging) {
-        if (draggedDistance <65) {
+        if (draggedDistance <15) {
          
         const deltaY = e.clientY - offset.y;
 
@@ -33,7 +33,7 @@ const NavBar = () => {
           x: e.clientX,
           y: e.clientY,
         });
-        if (draggedDistance > 60) {
+        if (draggedDistance > 5) {
             console.log(draggedDistance);
             dispatch(setCurtainRaised(false));
           }
