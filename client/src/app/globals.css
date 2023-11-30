@@ -32,6 +32,7 @@ body {
       rgb(var(--current-theme-background-end-rgb))
     )
     rgb(var(--current-theme-background-start-rgb));
+    overflow: hidden;
 }
 
 /* Additional styling for interactive elements */
@@ -161,7 +162,14 @@ a:hover {
       transparent 10px,
       transparent 20px
     );
+/* 
+backdrop-filter: blur(10px);
+
+border: 1px solid rgba(255, 255, 255, 0.2);
+
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
 }
+
 
 .overlayLogin .formOverlay {
   transform: translateX(-50%);
@@ -348,3 +356,66 @@ a:hover {
   opacity: 0;
   transition: all 0.7s ease-in-out;
 }
+
+.authUser{
+  height:calc(100vh - 165px);
+  width: 100%;
+  margin-top:100px;
+  overflow: hidden;
+}
+
+
+/* Horizontal Nav */
+
+.tabHN{
+  padding: 10px 20px 10px 20px;
+  margin-right: 10px;
+  width: calc(100% - 20px);  
+  box-sizing: border-box;
+  border-radius: 15px;
+
+}
+
+.tabHN:hover{
+  cursor: pointer;
+  background-color: #e4e6e9; 
+}
+
+.liNav{
+  right:0;
+  margin:5px;
+  padding: 2px;
+  margin-left:10px;
+  width:calc(100% - 10px);
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  /* background: linear-gradient(45deg, #0078d4 0%, #004578 100%); */
+  background-image: transparent;
+  /* repeating-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0.05) 10px,
+    transparent 10px,
+    transparent 20px
+  ); */
+  transition: background-position-x 0.7s ease-in-out;
+
+}
+
+.selected {
+  font-weight: bold;
+  color:azure;
+  margin-top:2px;
+  background: linear-gradient(45deg, #0078d4 0%, #004578 100%);
+  background-position-x: 100%;
+  box-sizing: border-box;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+  transition: background-position-x 0.7s ease-in-out;
+ 
+}
+
+.selected .tabHN:hover{
+  background: transparent;
+}
+
+

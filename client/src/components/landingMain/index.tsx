@@ -4,14 +4,7 @@ import RegisterForm from "./SignupFormik.tsx";
 
 const LandingMain = () => {
   const [overlaydefault, setOverlayDefault] = useState(false);
-  const [overlayButtonText, setOverlayButtonText] = useState("Register");
-  useEffect(() => {
-    if (overlaydefault) {
-      setOverlayButtonText("Login");
-    } else {
-      setOverlayButtonText("Register");
-    }
-  }, [overlaydefault]);
+
   return (
     <div className="landingMain">
       <div
@@ -38,9 +31,6 @@ const LandingMain = () => {
         </div>
         </div>
         <div className="formOverlay">
-          {/* <div className="formOverlayButton" onClick={() => setOverlayDefault(!overlaydefault)}>
-            {overlayButtonText}
-           </div> */}
         </div>
 
 
