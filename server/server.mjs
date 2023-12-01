@@ -1,26 +1,29 @@
 // server.js
 import express from 'express';
+import mongoose from 'mongoose';
 import http from 'http';
 import cors from 'cors';
 import { Server as socketIO } from 'socket.io';
-import  initializeSocketIO  from './socket/socket.mjs';
-import  initializeRoutes  from './routes/routes.mjs';
+import  initializeSocketIO  from './sockets/index.mjs';
+import  initializeRoutes  from './routes/index.mjs';
+import databaseConfig from './config/database.mjs';
+import secret from './config/secrets.mjs';
 
-// import db  from './db/dbconnection.mjs';
+
 const app = express();
+// import db  from './db/dbconnection.mjs';
 const server = http.createServer(app);
 const io = new socketIO(server,{
   cors: {
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST"],
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD", "CONNECT", "TRACE"],
     credentials: true
   }
 });
 
 app.use(cors("*"));
 app.use(express.json());
-const port = 5000;
-
+mongoose.connect(databaseConfig.mongoURI);
 initializeSocketIO(io);
 initializeRoutes(app);
 
@@ -33,9 +36,9 @@ app.use((err, req, res, next) => {
 
 
 // Start the server
-const PORT = process.env.PORT || 5000;
+const PORT =secret.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT} click here: http://localhost:${PORT}`);
 });
 
 

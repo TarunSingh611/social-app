@@ -1,18 +1,16 @@
-
-import SlotMachine from '@/components/slotMachine'
-import CurtainButton from '@/components/curtainButton'
-
+"use client";
+import { useEffect, useState } from "react";
+import LandingMain from "@/components/landingMain";
+import UserSpace from "@/components/userSpace";
 
 export default function Home() {
+  const [validUser, setValidUser] = useState(true);
+
   return (
-    <div className="curtain relative">
-      <div className="slotMachine absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-        <SlotMachine />
-        <div className='flex mx-auto mt-16 justify-center'>
-          <CurtainButton key={0} type={0}/>
-          <CurtainButton key={1} type={1}/>
-        </div>
+
+      <div className="relative h-screen w-screen">
+         {validUser? <UserSpace />:<LandingMain/>}
       </div>
-    </div>
-  )
+    )
+  
 }

@@ -7,37 +7,37 @@ const SlotMachine = ({iterate=false,iterateTime=20000}:{iterate?:boolean,iterate
     {
       stopLetter: 'W',
       time: 300,
-      moveDirection: 2,
+      moveDirection: 6,
     },
     {
       stopLetter: 'E',
       time: 300,
-      moveDirection: -1,
+      moveDirection: -2,
     },
     {
       stopLetter: 'L',
       time: 300,
-      moveDirection: 5,
+      moveDirection: 1,
     },
     {
       stopLetter: 'C',
       time: 300,
-      moveDirection: -1,
+      moveDirection: -2,
     },
     {
       stopLetter: 'O',
       time: 300,
-      moveDirection: 2,
+      moveDirection: 1,
     },
     {
       stopLetter: 'M',
       time: 300,
-      moveDirection: -8,
+      moveDirection: -2,
     },
     {
       stopLetter: 'E',
       time: 300,
-      moveDirection: 7,
+      moveDirection: 6,
     }
   ]
  

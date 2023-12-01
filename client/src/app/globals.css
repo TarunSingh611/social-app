@@ -32,6 +32,7 @@ body {
       rgb(var(--current-theme-background-end-rgb))
     )
     rgb(var(--current-theme-background-start-rgb));
+    overflow: hidden;
 }
 
 /* Additional styling for interactive elements */
@@ -64,49 +65,235 @@ a:hover {
       rgba(255, 255, 255, 0.05) 10px,
       transparent 10px,
       transparent 20px
-    ); /* Add cloth-like texture */
+    );
   box-shadow: 10px 20px 20px 11px rgba(0, 0, 0, 0.2);
   border-bottom-left-radius: 45px;
   border-bottom-right-radius: 45px;
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+  z-index: 20;
+  transition: transform 3s ease-out, box-shadow 3s ease-out;
 }
 
-.curtainButton {
+.curtain-raised {
+  transform: translateY(calc(-100% + 100px));
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0.2);
+  opacity: 0.1;
+  z-index: 10;
+  pointer-events: none;
+  transition: transform 3s ease-out, box-shadow 3s ease-out,
+    opacity 1s ease-out 3s;
+  transform-origin: center bottom;
+}
+
+.landingMain {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.formContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.formTitle {
+  font-family: "Roboto", sans-serif;
+  font-size: 28px; 
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #333; 
+  margin-bottom: 20px;
+}
+
+.formTitle p:first-child {
+  font-weight: bold;
+  margin-right: 4px;
+  color: #2c3e50; 
+}
+
+.formTitle p:last-child {
+  font-weight: bold;
+  color: #27ae60;
+}
+
+ .loginForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  height: 60%;
+
+}
+
+.signupForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  overflow-y: auto;
+  height: 60%; 
+}
+
+
+
+.formOverlay {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  height: 60%;
+  transform: translateX(50%);
+  transition: transform 0.7s ease-in-out;
+  background: linear-gradient(45deg, #0078d4 0%, #004578 100%),
+    repeating-linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.05),
+      rgba(255, 255, 255, 0.05) 10px,
+      transparent 10px,
+      transparent 20px
+    );
+/* 
+backdrop-filter: blur(10px);
+
+border: 1px solid rgba(255, 255, 255, 0.2);
+
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+}
+
+
+.overlayLogin .formOverlay {
+  transform: translateX(-50%);
+  transition: transform 0.7s ease-in-out;
+}
+
+.overlaySignup .signupOverlayButton {
+  position: absolute;
+  opacity: 1;
+  z-index: 1;
+  transition: transform 0.7s ease-in-out, opacity 0.7s ease-in-out;
+}
+.overlaySignup .loginOverlayButton {
+  position: absolute;
+  transform: translateX(-50%);
+  opacity: 0;
+  z-index: 1;
+  transition: transform 0.7s ease-in-out, opacity 0.7s ease-in-out;
+  
+}
+
+.overlayLogin .signupOverlayButton {
+  position: absolute;
+  transform: translateX(50%);
+  opacity: 0;
+  z-index: 1;
+  transition: transform 0.7s ease-in-out, opacity 0.7s ease-in-out;
+}
+
+.overlayLogin .loginOverlayButton {
+  position: absolute;
+  transform: translateX(0);
+  opacity: 1;
+  z-index: 1;
+  transition: transform 0.7s ease-in-out, opacity 0.7s ease-in-out;
+}
+
+.formOverlayButton {
+  cursor: pointer;
   width: 120px;
-  height:40px; 
+  height: 40px;
   text-align: center;
   font-size: 1.2em;
   padding: 0.2em;
   border: 1px solid whitesmoke;
-  font : 1.2em;
+  border-radius: 20px;
+  font: 1.2em;
   color: #fff;
   filter: brightness(1.2) contrast(0.8) sepia(0.2) saturate(1.4) blur(0.6px)
     drop-shadow(0 0 5px rgba(71, 154, 168, 0.8));
- 
+
   background: radial-gradient(
     ellipse at center,
     rgba(23, 102, 148, 0) 0%,
     rgba(49, 121, 163, 0.8) 100%
   );
   margin: 20px;
-  font-weight: normal; 
-  transition: background-color 0.3s, box-shadow 0.3s, font-weight 0.3s; 
+  font-weight: normal;
+  transition: background-color 0.3s, box-shadow 0.3s, font-weight 0.3s;
+}
+.formOverlayButton:hover {
+  background-color: rgb(var(--current-theme-foreground-rgb));
+  font-weight: bold;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.8),
+    0 0 20px rgba(255, 255, 255, 0.6), 0 0 30px rgba(255, 255, 255, 0.4);
+}
 
-  
+.navbar {
+  position: fixed;
+  height: 300px;
+  z-index: 10;
+  padding-top: 200px;
+  top: -200px;
+  width: 100%;
+  background: linear-gradient(45deg, #0078d4 0%, #004578 100%),
+    repeating-linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.05),
+      rgba(255, 255, 255, 0.05) 10px,
+      transparent 10px,
+      transparent 20px
+    );
+  border-bottom-left-radius: 45px;
+  border-bottom-right-radius: 45px;
+}
+
+.curtainButton {
+  cursor: pointer;
+  width: 120px;
+  height: 40px;
+  text-align: center;
+  font-size: 1.2em;
+  padding: 0.2em;
+  border: 1px solid whitesmoke;
+  font: 1.2em;
+  color: #fff;
+  filter: brightness(1.2) contrast(0.8) sepia(0.2) saturate(1.4) blur(0.6px)
+    drop-shadow(0 0 5px rgba(71, 154, 168, 0.8));
+
+  background: radial-gradient(
+    ellipse at center,
+    rgba(23, 102, 148, 0) 0%,
+    rgba(49, 121, 163, 0.8) 100%
+  );
+  margin: 20px;
+  font-weight: normal;
+  transition: background-color 0.3s, box-shadow 0.3s, font-weight 0.3s;
 }
 
 .curtainButton:hover {
   background-color: rgb(var(--current-theme-foreground-rgb));
   font-weight: bold;
-  box-shadow: 0 0 5px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6), 0 0 30px rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.8),
+    0 0 20px rgba(255, 255, 255, 0.6), 0 0 30px rgba(255, 255, 255, 0.4);
 }
 
 .footer {
+  cursor: default;
   background-color: rgb(var(--current-theme-background-start-rgb));
   color: rgb(var(--current-theme-foreground-rgb));
   padding: 20px;
   position: fixed;
   bottom: 0;
-  width:100%;
+  width: 100%;
   text-align: center;
   box-shadow: 0px -5px 20px rgba(0, 0, 0, 0.2);
 }
@@ -115,3 +302,120 @@ a:hover {
   margin: 0;
   font-weight: bold;
 }
+
+.logo {
+  margin-left: 20px;
+  width: 120px;
+  height: 40px;
+  margin-top: 25px;
+
+  display: flex;
+  font-family: "Arial", sans-serif;
+  align-items: center;
+  font-size: 2rem;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.logo:hover {
+  transform: scale(1.1);
+}
+
+.logo p:first-child {
+  font-weight: bold;
+  margin-right: 4px;
+}
+
+.logo p:last-child {
+  font-weight: bold;
+  color: darkgray;
+}
+
+
+.overlayLogin .formikSignup{
+  transform: translateX(0);
+  opacity: 1;
+  transition: all 0.7s ease-in-out;
+}
+
+.overlaySignup .formikLogin{
+  transform: translateX(0);
+  opacity: 1;
+  transition: all 0.7s ease-in-out;
+}
+
+.overlaySignup .formikSignup{
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: all 0.7s ease-in-out;
+}
+
+.overlayLogin .formikLogin{
+  transform: translateX(50%);
+  opacity: 0;
+  transition: all 0.7s ease-in-out;
+}
+
+.authUser{
+  height:calc(100vh - 165px);
+  width: 100%;
+  margin-top:100px;
+  overflow: hidden;
+}
+
+
+/* Horizontal Nav */
+
+.tabHN{
+  padding: 10px 20px 10px 20px;
+  margin-right: 10px;
+  width: calc(100% - 20px);  
+  box-sizing: border-box;
+  border-radius: 15px;
+
+}
+
+.tabHN:hover{
+  cursor: pointer;
+  background-color: #e4e6e9; 
+}
+
+.liNav{
+  right:0;
+  margin:5px;
+  padding: 2px;
+  margin-left:10px;
+  width:calc(100% - 10px);
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  /* background: linear-gradient(45deg, #0078d4 0%, #004578 100%); */
+  background-image: transparent;
+  /* repeating-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0.05) 10px,
+    transparent 10px,
+    transparent 20px
+  ); */
+  transition: background-position-x 0.7s ease-in-out;
+
+}
+
+.selected {
+  font-weight: bold;
+  color:azure;
+  margin-top:2px;
+  background: linear-gradient(45deg, #0078d4 0%, #004578 100%);
+  background-position-x: 100%;
+  box-sizing: border-box;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+  transition: background-position-x 0.7s ease-in-out;
+ 
+}
+
+.selected .tabHN:hover{
+  background: transparent;
+}
+
+
