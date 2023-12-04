@@ -8,6 +8,8 @@ import initializeSocketIO from "./sockets/index.mjs";
 import initializeRoutes from "./routes/index.mjs";
 import databaseConfig from "./config/database.mjs";
 import secret from "./config/secrets.mjs";
+// import jwtAuth from './middleware/jwtAuth.mjs';
+// import { generateToken } from './utils/jwtUtils.mjs';
 
 const app = express();
 const server = http.createServer(app);

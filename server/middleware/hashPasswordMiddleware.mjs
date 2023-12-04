@@ -1,5 +1,5 @@
 // hashPasswordMiddleware.mjs
-import { hashPassword } from "../utils/passwordUtils.mjs";
+import  hashPassword  from "../utils/passwordUtils.mjs";
 
 const hashPasswordMiddleware = async function (next) {
 	if (this.isModified("password")) {

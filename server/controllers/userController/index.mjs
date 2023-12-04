@@ -1,11 +1,10 @@
+import { userRegister } from "./userRegister.mjs";
+import { userLogin } from "./userLogin.mjs";
+import {userVerification} from "./userVerification.mjs";
+
 const userSearch = (req, res) => {
   res.send("userSearch");
 }
-
-const userRegister = (req, res) => {
-  res.send("userRegister");
-}
-
 const userProfile = (req, res) => {
   res.send("userProfile");
 }
@@ -28,10 +27,12 @@ const userPasswordChange = (req, res) => {
 
 export {
   userSearch,
+  userLogin,
   userRegister,
   userProfile,
   userFriends,
   userChats,
   userNotifications,
   userPasswordChange,
+  userVerification,
 };

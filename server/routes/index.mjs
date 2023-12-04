@@ -6,8 +6,10 @@ import chatRoutes from "./chatRoute.mjs";
 import friendRoutes from "./friendRoute.mjs";
 import reactionRoutes from "./reactionRoute.mjs";
 import notificationsRoutes from "./notificationsRoute.mjs";
+import BearerAuth from "../middleware/bearerAuth.mjs";
 
 export default function initializeRoutes(app) {
+  app.use(BearerAuth);
   app.use("/user", userRoutes);
   app.use("/post", postRoutes);
   app.use("/hashTag", hashTagRoutes);
