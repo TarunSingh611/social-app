@@ -1,12 +1,19 @@
 import mongoose from "mongoose";
 
+const contentDetailsSchema = new mongoose.Schema({
+	content: { type: String, trim: true },
+});
+
 const notificationSchema = new mongoose.Schema({
-    type: { type: String, trim: true },
-    to: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    content : { type: String, trim: true },
-    read: { type: Boolean, default: false },
-})
+	type: { type: String, trim: true },
+	to: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+	contentDetails: contentDetailsSchema,
+	read: { type: Boolean, default: false },
+});
 
-const notificationModel = mongoose.model("notification", notificationSchema);
+const NotificationModel = mongoose.model(
+	"Notification",
+	notificationSchema
+);
 
-export default notificationModel;
+export default NotificationModel;

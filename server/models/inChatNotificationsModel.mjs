@@ -1,16 +1,26 @@
 import mongoose from "mongoose";
 
+const postDetailsSchema = new mongoose.Schema({
+	post: { type: mongoose.Schema.Types.ObjectId, ref: "Post" },
+});
+
+const chatDetailsSchema = new mongoose.Schema({
+	chat: { type: mongoose.Schema.Types.ObjectId, ref: "Chat" },
+});
+
 const inChatNotificationSchema = new mongoose.Schema({
+	type: { type: String, trim: true },
+	from: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+	to: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+	postDetails: postDetailsSchema,
+	chatDetails: chatDetailsSchema,
+	roomDetails: roomDetailsSchema,
+	read: { type: Boolean, default: false },
+});
 
-    type: { type: String, trim: true },
-    from: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    to: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    post: { type: mongoose.Schema.Types.ObjectId, ref: "Post" },
-    chat: { type: mongoose.Schema.Types.ObjectId, ref: "Chat" },
-    room: { type: mongoose.Schema.Types.ObjectId, ref: "Room" },
-    read: { type: Boolean, default: false },
-})
+const InChatNotificationModel = mongoose.model(
+	"InChatNotification",
+	inChatNotificationSchema
+);
 
-const inChatNotificationModel = mongoose.model("inChatNotification", inChatNotificationSchema);
-
-export default inChatNotificationModel
+export default InChatNotificationModel;
