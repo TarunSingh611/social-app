@@ -1,13 +1,14 @@
 // jwtMiddleware.mjs
-import { verifyToken } from '../utils/jwtUtils.mjs';
+import { verifyToken ,checkTokenBlacklist} from '../utils/jwtUtils.mjs';
 import User from '../models/userModel.mjs';
 
 const jwtMiddleware = async (req, res, next) => {
-  const token = req.header('Authorization');
+  const token = req.header('jwttoken');
 
   if (!token) {
     return res.status(401).json({ message: 'Unauthorized: No token provided' });
   }
+  checkTokenBlacklist(token);
 
   try {
     const decodedToken = verifyToken(token);

@@ -1,6 +1,7 @@
 import { userRegister } from "./userRegister.mjs";
 import { userLogin } from "./userLogin.mjs";
 import {userVerification} from "./userVerification.mjs";
+import { userLogout } from "./userLogout.mjs";
 
 const userSearch = (req, res) => {
   res.send("userSearch");
@@ -29,6 +30,7 @@ export {
   userSearch,
   userLogin,
   userRegister,
+  userLogout,
   userProfile,
   userFriends,
   userChats,

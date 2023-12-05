@@ -6,7 +6,7 @@ import { setCurtainRaised } from "../../redux/ReduxSlicer";
 const curtain = () => {
     
     const dispatch = useDispatch();
-    const curtainRaised = useSelector((state: any) => state.chat.curtainRaised);
+    const curtainRaised = useSelector((state: any) => state.app.curtainRaised);
     const [isClient , setIsClient] = useState(false);
 
     const handleEnter = () => {

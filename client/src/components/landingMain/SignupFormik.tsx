@@ -1,12 +1,11 @@
 'use client';
 import React, { useEffect }  from 'react';
 import { useFormik,FormikErrors } from 'formik';
-// import registerUser from '@/app/api/userData/registration'
-// import {setToken,getToken} from '@/utils/Auth/tokenManagement';
-import {useDispatch} from 'react-redux';
-// import {setUser} from '@/app/redux/ReduxSlicer';
+import registerUser from '@/api/user/apiRegister'
+import {useDispatch, useSelector} from 'react-redux';
 import {useRouter} from 'next/navigation';
 import { toast } from 'react-toastify';
+import { setOverlayDefault } from '@/redux/ReduxSlicer';
 
 interface FormValues {
     firstName: string;
@@ -20,7 +19,7 @@ interface FormValues {
 const SignupFormik =()=>{
 
     const router = useRouter();
- 
+    const overlaydefault = useSelector((state: any) => state.app.overlaydefault);
     const dispatch = useDispatch();
 
     const formik = useFormik<FormValues>({
@@ -68,15 +67,31 @@ const SignupFormik =()=>{
             return errors;
         },
         onSubmit: (values:any) => {
-        //     registerUser({ userData: {firstName:values.firstName,lastName:values.lastName,email:values.email,password:values.password} })
-        //     .then((data)=>{
-          
-        //             toast.success("Registered successfully")
-        //             dispatch(setUser(data))
-        //    })
-        //     .catch((error)=>{
-        //         console.log(error)
-        //     });
+            registerUser(values.firstName,values.lastName,values.email,values.password )
+            .then((data:any)=>{
+                if(data.statusCode===200){
+                    toast.success(data.error);
+                    dispatch(setOverlayDefault(false));
+                    toast.info("Please Verify your email and login to continue");
+                    toast.warning("Verification link sent to your email");
+                    return;
+                }
+                else if(data.statusCode === 400){
+                    toast.error(data.error);
+                    return;
+                }
+                else if(data.statusCode === 500){
+                    toast.error(data.error);
+                    return;
+                }
+                else{
+                    toast.error(data.error);
+                    return;
+                }
+           })
+            .catch((error)=>{
+                console.log(error)
+            });
         },
       });
 
@@ -110,7 +125,7 @@ const SignupFormik =()=>{
           id: 'password',
           name: 'password',
           type: 'password',
-
+          autocomplete:'current-password'
 
         },
         {
@@ -118,17 +133,10 @@ const SignupFormik =()=>{
           id: 'confirmPassword',
           name: 'confirmPassword',
           type: 'password',
-
+          autocomplete:'current-password'
 
         },
       ];
-      useEffect(()=>{
-            console.log(formik.errors)
-            console.log(formik.errors.firstName)
-      },[formik.errors])
-     
-
-    
 
     return (
         <div className='bg-gradient-to-r h-full w-full from-blue-300 dark:from-sky-700 dark:to-teal-500 to-green-300 flex justify-center items-center p-6 shadow-lg'>
@@ -144,6 +152,7 @@ const SignupFormik =()=>{
                         onChange= {formik.handleChange}
                         onBlur={formik.handleBlur}
                         value={formik.values[item?.name]}
+                        autoComplete={ item.autocomplete ||'off'}
                         className='col-span-1 md:col-span-2 p-2 mx-2 mb-2 rounded-md bg-gray-100 dark:text-gray-800'
                     />
                     {formik.touched[item?.name] && formik.errors[item?.name] ? (

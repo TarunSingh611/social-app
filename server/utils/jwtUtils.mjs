@@ -24,3 +24,16 @@ export const verifyToken = (token) => {
     console.log('Invalid token');
   }
 };
+
+export const invalidateToken = (token) => {
+  blacklist.add(token);
+};
+
+export const checkTokenBlacklist = (token) => {
+
+  if (blacklist.has(token)) {
+    return res.status(401).json({ message: "Token is revoked. Please log in again." });
+  }
+
+  next();
+};

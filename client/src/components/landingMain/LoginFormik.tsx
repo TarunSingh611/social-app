@@ -1,12 +1,11 @@
 "use client";
 import React, { useEffect } from "react";
 import { useFormik } from "formik";
-// import { setToken, getToken } from "@/utils/Auth/tokenManagement";
-// import loginUser from "@/app/api/userData/login";
-import { useRouter } from "next/navigation";
+import {setToken} from "@/services/auth";
 import { toast } from "react-toastify";
+import loginUser  from "@/api/user/apiLogin";
 import { useDispatch } from "react-redux";
-// import { setUser } from "@/app/redux/ReduxSlicer";
+import { setValidUser } from "@/redux/slicers/authSlice";
 
 interface FormValues {
   email: string;
@@ -14,10 +13,7 @@ interface FormValues {
 }
 
 const LoginFormik = () => {
-  const router = useRouter();
-
   const dispatch = useDispatch();
-
   const formik = useFormik<FormValues>({
     initialValues: {
       email: "",
@@ -44,15 +40,37 @@ const LoginFormik = () => {
     },
     onSubmit: (values) => {
       if (!formik.errors.email && !formik.errors.password) {
-        // loginUser(values.email, values.password)
-        //   .then((data) => {
-        //     // setToken(data)
-        //     dispatch(setUser(data));
-        //     toast.success("Login successful");
-        //   })
-        //   .catch((error) => {
-        //     console.log(error);
-        //   });
+        loginUser(values.email, values.password)
+          .then((data:any) => {
+            if(data.statusCode===200){
+              toast.success(data.message);
+              setToken(data.token);
+              dispatch(setValidUser(true));
+              return;
+            }
+            else if(data.statusCode === 400){
+              toast.error(data.error);
+              return;
+            }
+            else if (data.statusCode === 403){
+              toast.error(data.error);
+              toast.info("Please Verify your email and login to continue");
+              toast.warning("Verification link sent to your email");
+              return;
+            }
+            else if(data.statusCode === 500){
+              toast.error(data.error);
+              return;
+            }
+            else{
+              toast.error(data.error);
+              return;
+            }
+
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       }
     },
   });
@@ -62,7 +80,7 @@ const LoginFormik = () => {
       htmlFor: "email",
       className: "ml-4 mt-2 col-span-1 dark:text-gray-200",
       textContent: "Email Address",
-      id: "email",
+      id: "emailorUsername",
       name: "email",
       type: "email",
       value: formik.values.email,
@@ -71,10 +89,11 @@ const LoginFormik = () => {
       htmlFor: "password",
       className: "ml-4 mt-8 col-span-1 dark:text-gray-200",
       textContent: "Password",
-      id: "password",
+      id: "passwordLogin",
       name: "password",
       type: "password",
       value: formik.values.password,
+      autoComplete: "current-password",
     },
   ];
 
@@ -103,6 +122,7 @@ const LoginFormik = () => {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={item.value}
+              autoComplete={ item.autoComplete ||'on'}
               className="p-2 mx-2 my-auto md:col-span-2 dark:bg-gray-200 rounded-md "
             />
           </div>
@@ -120,3 +140,4 @@ const LoginFormik = () => {
 };
 
 export default LoginFormik;
+

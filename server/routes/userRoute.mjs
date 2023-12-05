@@ -3,6 +3,7 @@ import {
   userSearch,
   userRegister,
   userLogin,
+  userLogout,
   userProfile,
   userFriends,
   userChats,
@@ -14,6 +15,7 @@ const router = express.Router();
 
 router.get("/search", userSearch);
 router.post("/login", userLogin);
+router.get("/logout", userLogout);
 router.post("/register", userRegister);
 router.get("/profile", userProfile);
 router.get("/friends", userFriends);

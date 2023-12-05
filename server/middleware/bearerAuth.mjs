@@ -5,7 +5,6 @@ const BearerAuth = (req, res, next) => {
   if (EXCLUDED_ROUTES.includes(req.path)) {
     return next();
   }
-
   const authHeader = req.headers["authorization"];
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     return res
