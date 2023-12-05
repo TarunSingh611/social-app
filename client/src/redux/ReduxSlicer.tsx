@@ -1,36 +1,36 @@
-'use client';
-import {saveToLocalStorage,getFromLocalStorage} from "@/utils/LocalStorage";
-import {createSlice} from "@reduxjs/toolkit";
+"use client";
+import { saveToLocalStorage, getFromLocalStorage } from "@/utils/LocalStorage";
+import { createSlice ,createAsyncThunk} from "@reduxjs/toolkit";
+import { getToken } from "@/services/auth";
 
 type State = {
-  curtainRaised: boolean
-
-}
+  curtainRaised: boolean;
+  overlaydefault: boolean;
+ 
+};
 
 const initialState: State = {
   curtainRaised: getFromLocalStorage("curtainRaised") || false,
+  overlaydefault: false,
 
 };
 
-export const chatSlice = createSlice({
-  name: "chat",
+export const appSlice:any= createSlice({
+  name: "app",
   initialState,
   reducers: {
-
-    setCurtainRaised: (state,action) => {
+    setCurtainRaised: (state, action) => {
       state.curtainRaised = action.payload;
       saveToLocalStorage("curtainRaised", state.curtainRaised);
     },
-   
-}
-})
+    setOverlayDefault: (state, action) => {
+      state.overlaydefault = action.payload;
+    },
 
+  },
+});
 
-export const {
-  setCurtainRaised,
+export const { setCurtainRaised, setOverlayDefault } =
+  appSlice.actions;
 
-
-}= chatSlice.actions
-
-
-export default chatSlice.reducer
+export default appSlice.reducer;

@@ -39,7 +39,7 @@ const registerUser = async ({
 
 
 
-    return { message: "User registered successfully." };
+    return { message: "User registered successfully." , statusCode: 200 };
   } catch (error) {
     console.error("Error registering user:", error);
     return { error: "Internal Server Error", statusCode: 500 };

@@ -27,13 +27,14 @@ const loginUser = async (username, email, password) => {
       catch((error) => {
         console.error('Error sending email:', error);
       })
-      return { error: "Email not verified.", statusCode: 400 };
+      return { error: "Email not verified.", statusCode: 403 };
     }
 
     const token = generateToken(user);
 
     return {
       message: "User logged in successfully.",
+      statusCode: 200,
       token,
     };
   } catch (error) {

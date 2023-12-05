@@ -1,25 +1,49 @@
-import mongoose from 'mongoose';
-import  hashPasswordMiddleware  from '../middleware/hashPasswordMiddleware.mjs';
-
+import mongoose from "mongoose";
+import hashPasswordMiddleware from "../middleware/hashPasswordMiddleware.mjs";
 
 const verificationTokenSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   token: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now, expires: 3600 },
 });
-
 
 const userSchema = new mongoose.Schema(
   {
     firstName: { type: String, trim: true, required: true },
     lastName: { type: String, trim: true, required: true },
-    username: { type: String, trim: true, unique: true, required: true, index: true },
-    email: { type: String, trim: true, unique: true, required: true, index: true },
-    phone: { type: String, trim: true ,default: ''},
+    username: {
+      type: String,
+      trim: true,
+      unique: true,
+      required: false,
+      index: true,
+      default: function () {
+        if (typeof this.email === "string") {
+          return (
+            this.email.split("@")[0] +
+            Math.floor(100000 + Math.random() * 900000)
+          );
+        } else {
+          return "defaultUsername";
+        }
+      },
+    },
+    email: {
+      type: String,
+      trim: true,
+      unique: true,
+      required: true,
+      index: true,
+    },
+    phone: { type: String, trim: true, default: "" },
     password: { type: String, trim: true, required: true },
     userVerified: { type: Boolean, default: false },
     online: { type: Boolean, default: false },
-    accountType: { type: String, trim: true, enum: ['user', 'admin', 'moderator'], default: 'user' },
+    accountType: {
+      type: String,
+      trim: true,
+      enum: ["user", "admin", "moderator"],
+      default: "user",
+    },
     emailVerified: { type: Boolean, default: false },
     phoneVerified: { type: Boolean, default: false },
     verificationCode: verificationTokenSchema,
@@ -46,6 +70,6 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-userSchema.pre('save', hashPasswordMiddleware);
+userSchema.pre("save", hashPasswordMiddleware);
 
-export const User = mongoose.model('User', userSchema);
+export const User = mongoose.model("User", userSchema);
