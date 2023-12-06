@@ -1,45 +1,36 @@
+'use client';
 import React, { useEffect, useState } from "react";
+import {useRouter} from 'next/navigation';
 
-const ListNav = () => {
-  const [selectedTab, setSelectedTab] = useState(1);
+const ListNav = ({selected}: {selected: number}) => {
+  const router = useRouter();
+  // const [selectedTab, setSelectedTab] = useState(0);
 
-  const handleTabSelect = (index: number) => {
-    setSelectedTab(index);
-  };
-
-  useEffect(() => {
-    console.log(selectedTab);
-  }, [selectedTab]);
 
   return (
     <ul className="flex flex-col py-4 my-8">
-      <li className={`liNav ${selectedTab === 0 ? "selected" : ""} `}>
-        <div className={`tabHN `} onClick={() => handleTabSelect(0)}>
+      <li className={`liNav ${selected === 0 ? "selected" : ""} `}>
+        <div className={`tabHN `} onClick={() => {router.push("/profile")}}>
           Profile
         </div>
       </li>
-      <li className={`liNav ${selectedTab === 1 ? "selected" : ""}`}>
-        <div className={`tabHN `} onClick={() => handleTabSelect(1)}>
+      <li className={`liNav ${selected === 1 ? "selected" : ""}`}>
+        <div className={`tabHN `} onClick={() =>{router.push("/")}}>
           Feed
         </div>
       </li>
-      <li className={`liNav ${selectedTab === 2 ? "selected" : ""}`}>
-        <div className={`tabHN `} onClick={() => handleTabSelect(2)}>
+      <li className={`liNav ${selected === 2 ? "selected" : ""}`}>
+        <div className={`tabHN `} onClick={() =>{router.push("/chats")}}>
           Chats
         </div>
       </li>
-      <li className={`liNav ${selectedTab === 3 ? "selected" : ""}`}>
-        <div className={`tabHN `} onClick={() => handleTabSelect(3)}>
+      <li className={`liNav ${selected === 3 ? "selected" : ""}`}>
+        <div className={`tabHN `} onClick={() =>{router.push("/explore")}}>
           Explore
         </div>
       </li>
-      <li className={`liNav ${selectedTab === 4 ? "selected" : ""}`}>
-        <div className={`tabHN `} onClick={() => handleTabSelect(4)}>
-          Search
-        </div>
-      </li>
-      <li className={`liNav ${selectedTab === 5 ? "selected" : ""}`}>
-        <div className={`tabHN `} onClick={() => handleTabSelect(5)}>
+      <li className={`liNav ${selected === 4 ? "selected" : ""}`}>
+        <div className={`tabHN `} onClick={() =>{router.push("/setting")}}>
           Setting
         </div>
       </li>

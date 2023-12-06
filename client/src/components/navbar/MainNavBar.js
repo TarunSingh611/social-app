@@ -3,6 +3,7 @@ import React, { useState , useEffect} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setCurtainRaised } from "../../redux/ReduxSlicer";
 import { removeToken } from "@/services/auth";
+import { setValidUser } from "@/redux/slicers/authSlice";
 
 const NavBar = () => {
   const dispatch = useDispatch();
@@ -64,7 +65,7 @@ const NavBar = () => {
 
   const handleLogout = () => {
     localStorage.clear();
-    dispatch(validUser(false));
+    dispatch(setValidUser(false));
     removeToken();
     dispatch(setCurtainRaised(false));
     window.location.reload();
