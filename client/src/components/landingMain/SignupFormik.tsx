@@ -74,6 +74,14 @@ const SignupFormik =()=>{
                     dispatch(setOverlayDefault(false));
                     toast.info("Please Verify your email and login to continue");
                     toast.warning("Verification link sent to your email");
+
+                    values.firstName = '';
+                    values.lastName = '';
+                    values.email = '';
+                    values.password = '';
+                    values.confirmPassword = '';
+                    values.terms = false;
+
                     return;
                 }
                 else if(data.statusCode === 400){

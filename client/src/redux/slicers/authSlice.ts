@@ -1,13 +1,13 @@
 "use client";
 import { createSlice} from "@reduxjs/toolkit";
-import secrets from "@/config/secrets"
-
 type State = {
   validUser: boolean|null;
+  User: any|null;
 };
 
 const initialState: State = {
   validUser: null,
+  User: null
 };
 
 const authSlice = createSlice({
@@ -16,17 +16,15 @@ const authSlice = createSlice({
   reducers: {
     setValidUser: (state, action) => {
       state.validUser = action.payload;
-      console.log("1", state.validUser);
-       if(state.validUser === false){
-        console.log("2",window.location.href, `${secrets.NEXT_PUBLIC_APP_URL}/`);
-        if(window.location.href !== `${secrets.NEXT_PUBLIC_APP_URL}/`){
-          // window.location.href = `${secrets.NEXT_PUBLIC_APP_URL}/`;
-        }
-      }
     },
+
+    setUser: (state, action) => {
+        state.User = action.payload; 
+        console.log(state.User)
+    }
   },
 });
 
-export const { setValidUser } = authSlice.actions;
+export const { setValidUser, setUser } = authSlice.actions;
 
 export default authSlice.reducer;

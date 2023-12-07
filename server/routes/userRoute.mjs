@@ -4,20 +4,21 @@ import {
   userRegister,
   userLogin,
   userLogout,
-  userProfile,
   userFriends,
   userChats,
   userNotifications,
   userPasswordChange,
   userVerification,
+  userGetProfile,
 } from "../controllers/userController/index.mjs";
 const router = express.Router();
 
 router.get("/search", userSearch);
+router.get("/getProfile", userGetProfile);
 router.post("/login", userLogin);
 router.get("/logout", userLogout);
 router.post("/register", userRegister);
-router.get("/profile", userProfile);
+router.get("/getProfile", userGetProfile);
 router.get("/friends", userFriends);
 router.get("/chats", userChats);
 router.get("/notifications", userNotifications);

@@ -4,20 +4,16 @@ import { useSelector, useDispatch } from "react-redux";
 import { setCurtainRaised } from "../../redux/ReduxSlicer";
 import { removeToken } from "@/services/auth";
 import { setValidUser } from "@/redux/slicers/authSlice";
+import { useRouter } from "next/navigation";
 
 const NavBar = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const validUser = useSelector((state) => state.auth.validUser);
   const [isDragging, setIsDragging] = useState(false);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [translateY, setTranslateY] = useState(0);
   const [draggedDistance, setDraggedDistance] = useState(0);
-
-
-  useEffect(() => {
-    console.log("validUser",validUser)
- 
-  }, [validUser])
   
   const handleMouseDown = (e) => {
     console.log("down");
@@ -68,7 +64,7 @@ const NavBar = () => {
     dispatch(setValidUser(false));
     removeToken();
     dispatch(setCurtainRaised(false));
-    window.location.reload();
+    router.push('/');
   };
 
   return (

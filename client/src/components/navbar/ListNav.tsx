@@ -1,39 +1,30 @@
 'use client';
-import React, { useEffect, useState } from "react";
-import {useRouter} from 'next/navigation';
+import React from 'react';
+import Link from 'next/link';
+import { useRouter, usePathname } from 'next/navigation';
 
-const ListNav = ({selected}: {selected: number}) => {
+const navigationItems = [
+  { path: '/userSpace/profile', label: 'Profile' },
+  { path: '/userSpace/feed', label: 'Feed' },
+  { path: '/userSpace/post', label: 'Post' },
+  { path: '/userSpace/chats', label: 'Chats' },
+  { path: '/userSpace/explore', label: 'Explore' },
+  { path: '/userSpace/setting', label: 'Setting' },
+];
+
+const ListNav = () => {
   const router = useRouter();
-  // const [selectedTab, setSelectedTab] = useState(0);
-
+  const  pathname  = usePathname();
 
   return (
     <ul className="flex flex-col py-4 my-8">
-      <li className={`liNav ${selected === 0 ? "selected" : ""} `}>
-        <div className={`tabHN `} onClick={() => {router.push("/profile")}}>
-          Profile
-        </div>
-      </li>
-      <li className={`liNav ${selected === 1 ? "selected" : ""}`}>
-        <div className={`tabHN `} onClick={() =>{router.push("/")}}>
-          Feed
-        </div>
-      </li>
-      <li className={`liNav ${selected === 2 ? "selected" : ""}`}>
-        <div className={`tabHN `} onClick={() =>{router.push("/chats")}}>
-          Chats
-        </div>
-      </li>
-      <li className={`liNav ${selected === 3 ? "selected" : ""}`}>
-        <div className={`tabHN `} onClick={() =>{router.push("/explore")}}>
-          Explore
-        </div>
-      </li>
-      <li className={`liNav ${selected === 4 ? "selected" : ""}`}>
-        <div className={`tabHN `} onClick={() =>{router.push("/setting")}}>
-          Setting
-        </div>
-      </li>
+      {navigationItems.map((item) => (
+        <li key={item.path} className={`liNav ${pathname === item.path ? 'selected' : ''}`}>
+         
+            <div className="tabHN" onClick={() => pathname !== item.path && router.push(item.path)}>{item.label}</div>
+
+        </li>
+      ))}
     </ul>
   );
 };

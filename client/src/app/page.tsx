@@ -1,6 +1,5 @@
 "use client";
 import LandingMain from "@/components/landingMain";
-import UserSpace from "@/components/userSpace";
 import { setValidUser } from "@/redux/slicers/authSlice";
 import { getToken } from "@/services/auth";
 import { useEffect } from "react";
@@ -15,14 +14,21 @@ export default function Home() {
     if(validUser == null){ 
       dispatch(setValidUser(getToken()? true : false));
     }
+    else if(validUser == true){
+      window.location.replace("/userSpace/profile");
+    }
   },[validUser])
 
   return (
 
 <div className="relative h-screen w-screen">
-  {validUser === true ? <UserSpace /> : validUser === false ? <LandingMain /> : <>Loading..</>}
+  { validUser === false ? <LandingMain /> : <>Loading..</>}
 </div>
 
     )
   
 }
+
+
+
+

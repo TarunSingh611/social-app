@@ -1,6 +1,7 @@
 
 import jwt from 'jsonwebtoken';
 import secrets from '../config/secrets.mjs';
+import { User } from '../models/userModel.mjs'; 
 
 const {JWT_SECRET: secretKey} = secrets;
 
@@ -8,6 +9,7 @@ export const generateToken = (user) => {
 
   return jwt.sign(
     {
+      userId: user._id,
       username: user.username,
       email: user.email,
       emailVerified: user.emailVerified,
@@ -37,3 +39,22 @@ export const checkTokenBlacklist = (token) => {
 
   next();
 };
+
+
+
+
+const getUserByToken = async (token) => {
+  try {
+
+    const decoded = jwt.verify(token, secretKey); 
+    const user = await User.findById(decoded.userId);
+    if (!user) {
+      throw new Error('User not found');
+    }
+    return user;
+  } catch (error) {
+    console.log(error)
+  }
+};
+
+export { getUserByToken };

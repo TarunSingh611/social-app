@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { trusted } from "mongoose";
 import hashPasswordMiddleware from "../middleware/hashPasswordMiddleware.mjs";
 
 const verificationTokenSchema = new mongoose.Schema({
@@ -6,66 +6,65 @@ const verificationTokenSchema = new mongoose.Schema({
   token: { type: String, required: true },
 });
 
+
 const userSchema = new mongoose.Schema(
   {
+    // Essential Information
     firstName: { type: String, trim: true, required: true },
     lastName: { type: String, trim: true, required: true },
-    username: {
-      type: String,
-      trim: true,
-      unique: true,
-      required: false,
-      index: true,
-      default: function () {
-        if (typeof this.email === "string") {
-          return (
-            this.email.split("@")[0] +
-            Math.floor(100000 + Math.random() * 900000)
-          );
-        } else {
-          return "defaultUsername";
-        }
-      },
-    },
-    email: {
-      type: String,
-      trim: true,
-      unique: true,
-      required: true,
-      index: true,
-    },
+    username: { type: String, trim: true, unique: true, index: true },
+    email: { type: String, trim: true, unique: true, required: true, index: true },
     phone: { type: String, trim: true, default: "" },
     password: { type: String, trim: true, required: true },
+
+    // Verification
     userVerified: { type: Boolean, default: false },
-    online: { type: Boolean, default: false },
+    emailVerified: { type: Boolean, default: false },
+    phoneVerified: { type: Boolean, default: false },
+    verificationCode: verificationTokenSchema,
+
+    // Privacy Settings
+    hide: { type: Boolean, default: false },
+    hideEmail: { type: Boolean, default: true },
+    hidePhone: { type: Boolean, default: true },
+    hideGender: { type: Boolean, default: false },
+    hideBirthday: { type: Boolean, default: false },
+    hideCountry: { type: Boolean, default: false },
+    hideCity: { type: Boolean, default: false },
+    hideRelationship: { type: Boolean, default: false },
+
+    // Counts
+    followersCount: { type: Number, default: 0 },
+    followingCount: { type: Number, default: 0 },
+    postsCount: { type: Number, default: 0 },
+    friendsCount: { type: Number, default: 0 },
+    likesCount: { type: Number, default: 0 },
+
+    // Additional Information
+    bio: { type: String, trim: true },
+    website: { type: String, trim: true },
+    description: { type: String, trim: true },
+    birthday: { type: Date },
+    gender: { type: String, trim: true },
+    recoveryEmail: { type: String, trim: true },
+
+    // Location
+    location: {
+      country: { type: String, trim: true },
+      city: { type: String, trim: true },
+    },
+
+    // Profile Media
+    profilePicture: { type: String, trim: true },
+    coverPhoto: { type: String, trim: true },
+
+    // Account
     accountType: {
       type: String,
       trim: true,
       enum: ["user", "admin", "moderator"],
       default: "user",
     },
-    emailVerified: { type: Boolean, default: false },
-    phoneVerified: { type: Boolean, default: false },
-    verificationCode: verificationTokenSchema,
-    hide: { type: Boolean, default: false },
-    hideEmail: { type: Boolean, default: false },
-    hidePhone: { type: Boolean, default: false },
-    hideGender: { type: Boolean, default: false },
-    hideBirthday: { type: Boolean, default: false },
-    hideCountry: { type: Boolean, default: false },
-    hideCity: { type: Boolean, default: false },
-    hideRelationship: { type: Boolean, default: false },
-    followersCount: { type: Number, default: 0 },
-    followingCount: { type: Number, default: 0 },
-    postsCount: { type: Number, default: 0 },
-    friendsCount: { type: Number, default: 0 },
-    likesCount: { type: Number, default: 0 },
-    bio: { type: String, trim: true },
-    website: { type: String, trim: true },
-    description: { type: String, trim: true },
-    birthday: { type: Date, trim: true },
-    gender: { type: String, trim: true },
-    recoveryEmail: { type: String, trim: true },
   },
   { timestamps: true }
 );

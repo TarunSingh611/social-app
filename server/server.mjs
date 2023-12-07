@@ -33,7 +33,7 @@ const io = new socketIO(server, {
 
 app.use(cors("*"));
 app.use(express.json());
-console.log(databaseConfig.mongoURI);
+
 mongoose.connect(databaseConfig.mongoURI);
 initializeSocketIO(io);
 initializeRoutes(app);
