@@ -12,8 +12,10 @@ const userSchema = new mongoose.Schema(
     // Essential Information
     firstName: { type: String, trim: true, required: true },
     lastName: { type: String, trim: true, required: true },
-    username: { type: String, trim: true, unique: true, index: true },
     email: { type: String, trim: true, unique: true, required: true, index: true },
+    username: { type: String, trim: true, unique: true, index: true ,default: function(){
+      return this.email
+    }},
     phone: { type: String, trim: true, default: "" },
     password: { type: String, trim: true, required: true },
 
@@ -41,22 +43,22 @@ const userSchema = new mongoose.Schema(
     likesCount: { type: Number, default: 0 },
 
     // Additional Information
-    bio: { type: String, trim: true },
-    website: { type: String, trim: true },
+    bio: { type: String, trim: true, default: "" },
+    website: { type: String, trim: true ,default: ""},
     description: { type: String, trim: true },
-    birthday: { type: Date },
-    gender: { type: String, trim: true },
-    recoveryEmail: { type: String, trim: true },
+    birthday: { type: Date, default: "" },
+    gender: { type: String, trim: true, default: "" },
+    recoveryEmail: { type: String, trim: true ,default: ""},
 
     // Location
     location: {
-      country: { type: String, trim: true },
-      city: { type: String, trim: true },
+      country: { type: String, trim: true, default: "" },
+      city: { type: String, trim: true ,default: "" },
     },
 
     // Profile Media
-    profilePicture: { type: String, trim: true },
-    coverPhoto: { type: String, trim: true },
+    profilePicture: { type: String, trim: true ,default: ""},
+    coverPhoto: { type: String, trim: true, default: "" },
 
     // Account
     accountType: {

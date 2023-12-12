@@ -428,3 +428,17 @@ box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
   color:azure ;
 }
 
+/* ///////////////profile */
+
+.profileInfo {
+  height: calc(100vh - 160px);
+  width: 100%;
+  overflow: scroll;
+  padding: 20px;
+  box-sizing: border-box;
+  scrollbar-width: thin;
+}
+
+.profileInfo::-webkit-scrollbar {
+  display: none;
+}

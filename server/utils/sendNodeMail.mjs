@@ -1,8 +1,9 @@
+import fs from 'fs';
 import nodemailer from 'nodemailer';
 import  secrets  from '../config/secrets.mjs';
 
 const { EMAIL_ADDRESS, EMAIL_PASSWORD, EMAIL_SERVER, EMAIL_NAME, ORIGIN_URL ,EMAIL_PORT} = secrets;
-
+const emailTemplate = fs.readFileSync('./utils/verifyEmailTemplate.html', 'utf-8');
 const sendVerificationEmail = async (email, token) => {
   try {
     const transporter = nodemailer.createTransport({
@@ -15,10 +16,10 @@ const sendVerificationEmail = async (email, token) => {
     });
 
     const mailOptions = {
-      from: EMAIL_NAME,
+      from: `"${EMAIL_NAME}" <noreply@yourdomain.com>`,
       to: email,
       subject: 'Email Verification',
-      text: `Click the following link to verify your email: http://${ORIGIN_URL}/user/verify?t=${token}&f=email`,
+      html: emailTemplate.replace('{{verificationLink}}', `http://${ORIGIN_URL}/user/verify?t=${token}&f=email`),
     };
 
     await transporter.sendMail(mailOptions);

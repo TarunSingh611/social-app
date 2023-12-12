@@ -1,19 +1,16 @@
+// UserProfileCard.tsx
+import React, { useState, useEffect } from "react";
+import ProfileCard from "./ProfileCard";
+import ProfileTabsCard from "./ProfileTabsCard";
 
+const UserProfile = ({ user }: any) => {
 
-const UserProfile = ({ user }: { user: any }) => {
   return (
-    <div>
-      <h1>User Profile</h1>
-      <p>Name: {`${user?.firstName} ${user?.lastName}`}</p>
-      <p>Email: {user?.email}</p>
-      <p>Phone: {user?.phone || 'N/A'}</p>
+    <div className="profileInfo max-w-3xl mx-auto p-6 bg-white shadow-md rounded-md">
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-6"> */}
+       <ProfileCard user={user} />
+       <ProfileTabsCard user={user} />
 
-      {/* Add more profile information as needed */}
-
-      <p>Followers: {user?.followersCount}</p>
-      <p>Following: {user?.followingCount}</p>
-
-      {/* Add more user statistics as needed */}
     </div>
   );
 };
