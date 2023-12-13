@@ -10,6 +10,8 @@ import {
   userPasswordChange,
   userVerification,
   userGetProfile,
+  userUpdate,
+  userUpdateSecurity,
 } from "../controllers/userController/index.mjs";
 const router = express.Router();
 
@@ -24,5 +26,7 @@ router.get("/chats", userChats);
 router.get("/notifications", userNotifications);
 router.put("/password", userPasswordChange);
 router.get("/verify",userVerification);
+router.put("/update", userUpdate);
+router.put("/updateSecurity", userUpdateSecurity);
 
 export default router;

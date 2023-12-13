@@ -11,14 +11,15 @@ const secrets = {
 
 
     ProfilePicture(gender){
+        gender = gender?.toLowerCase();
         if(gender == "male"){
-            return "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+            return `${process.env.NEXT_PUBLIC_API_URL}/public/DP_defaulters/maleDP.webp`;
         }
         else if(gender == "female"){
-            return "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+            return `${process.env.NEXT_PUBLIC_API_URL}/public/DP_defaulters/femaleDP.webp`;
         }
         else{
-            return `${process.env.NEXT_PUBLIC_API_URL}/public/DP_defaulters/DP.webp`;
+            return `https://cdn-icons-png.flaticon.com/512/149/149071.png`;
         }
     },
 };

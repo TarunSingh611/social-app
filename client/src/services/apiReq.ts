@@ -29,6 +29,7 @@ const makeApiRequest = async <T>(
     }
 
     const data: T = await response.json();
+    console.log(data)
     return data;
   } catch (error) {
     console.error("Error making API request:", error);

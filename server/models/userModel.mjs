@@ -3,15 +3,14 @@ import hashPasswordMiddleware from "../middleware/hashPasswordMiddleware.mjs";
 
 const verificationTokenSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-  token: { type: String, required: true },
+  token: { type: String, trim: true },
 });
 
 
 const userSchema = new mongoose.Schema(
   {
     // Essential Information
-    firstName: { type: String, trim: true, required: true },
-    lastName: { type: String, trim: true, required: true },
+    fullName: { type: String, trim: true, required: true },
     email: { type: String, trim: true, unique: true, required: true, index: true },
     username: { type: String, trim: true, unique: true, index: true ,default: function(){
       return this.email
@@ -25,27 +24,16 @@ const userSchema = new mongoose.Schema(
     phoneVerified: { type: Boolean, default: false },
     verificationCode: verificationTokenSchema,
 
-    // Privacy Settings
-    hide: { type: Boolean, default: false },
-    hideEmail: { type: Boolean, default: true },
-    hidePhone: { type: Boolean, default: true },
-    hideGender: { type: Boolean, default: false },
-    hideBirthday: { type: Boolean, default: false },
-    hideCountry: { type: Boolean, default: false },
-    hideCity: { type: Boolean, default: false },
-    hideRelationship: { type: Boolean, default: false },
 
     // Counts
     followersCount: { type: Number, default: 0 },
     followingCount: { type: Number, default: 0 },
-    postsCount: { type: Number, default: 0 },
     friendsCount: { type: Number, default: 0 },
-    likesCount: { type: Number, default: 0 },
+    postsCount: { type: Number, default: 0 },
 
     // Additional Information
     bio: { type: String, trim: true, default: "" },
     website: { type: String, trim: true ,default: ""},
-    description: { type: String, trim: true },
     birthday: { type: Date, default: "" },
     gender: { type: String, trim: true, default: "" },
     recoveryEmail: { type: String, trim: true ,default: ""},
@@ -54,6 +42,12 @@ const userSchema = new mongoose.Schema(
     location: {
       country: { type: String, trim: true, default: "" },
       city: { type: String, trim: true ,default: "" },
+      privacy: {
+        type: String,
+        trim: true,
+        enum: ["public", "private", "followers", "friends"],
+        default: "public",
+      }
     },
 
     // Profile Media
@@ -64,8 +58,8 @@ const userSchema = new mongoose.Schema(
     accountType: {
       type: String,
       trim: true,
-      enum: ["user", "admin", "moderator"],
-      default: "user",
+      enum: ["public", "private", "business" , "admin", "moderator"],
+      default: "public",
     },
   },
   { timestamps: true }

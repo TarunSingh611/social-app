@@ -19,6 +19,9 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
         "custom-gradient": "linear-gradient(45deg, #0078d4 0%, #004578 100%)",
       },
+      spacing: {
+        '40': '10rem',
+      },
       colors: {
         //   primary: "var(--color-primary)",
         //   primaryLight: "var(--color-primary-light)",

@@ -27,7 +27,6 @@ export default function UserSpaceLayout({
         router.push("/");
       }
       else if(validUser === true){
-  
         apiGetProfile()
         .then((res:any)=>{
           if(res.statusCode===200){
@@ -44,6 +43,7 @@ export default function UserSpaceLayout({
        
       }
     },[validUser])
+
 
    return (
         <div className="authUser flex">
