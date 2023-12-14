@@ -19,8 +19,8 @@ const ProfileCard = ({ user }: { user: any }) => {
         <img
           className="w-full h-full object-cover"
           src={
-            user?.coverPicture
-              ? secrets.NEXT_PUBLIC_API_URL + "/" + user?.coverPicture
+            user?.coverPhoto
+              ? secrets.NEXT_PUBLIC_API_URL + "/public/coverPhotos/" + user?.coverPhoto
               : secrets.NEXT_PUBLIC_API_URL + "/public/DP_defaulters/Cover.webp"
           }
           alt="Profile"
@@ -33,7 +33,7 @@ const ProfileCard = ({ user }: { user: any }) => {
             className="sm:w-32 sm:h-32 mx-auto md:w-40 md:h-40 lg:w-48 lg:h-48 p-1 sm:p-2 md:p-3 lg:p-4 rounded-full object-cover"
             src={
               user?.profilePicture
-                ? secrets.NEXT_PUBLIC_API_URL + "/" + user?.profilePicture
+                ? secrets.NEXT_PUBLIC_API_URL + "/public/profilePictures/" + user?.profilePicture
                 : secrets.ProfilePicture(user?.gender)
             }
             alt="Profile"

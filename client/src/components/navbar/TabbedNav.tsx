@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 
-const TabbedNav = ({ tabs }: any) => {
-  const [selectedTab, setSelectedTab] = useState(0);
+const TabbedNav = ({ tabs,defaultTab }: any) => {
+  const [selectedTab, setSelectedTab] = useState(defaultTab || 0); 
   const handleTabSelect = (index: number) => {
     setSelectedTab(index);
   };

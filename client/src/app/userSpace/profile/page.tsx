@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import UserProfile from "@/components/profile";
 const Profile = () => {
-  const user = useSelector((state: any) => state.auth.user);
+  const user:any = useSelector((state: any) => state.auth.user);
   useEffect(() => {
     console.log(user);
   }, [user]);

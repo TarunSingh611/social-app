@@ -7,7 +7,8 @@ const userSetPicture = async (req, res) => {
   if (!tokenData) {
     return res.status(403).json({ message: "Forbidden: Invalid username" });
   }
-  const result = await setPicture(tokenData.userId, req.file, req.type);
+  console.log("req::",req.body.type)
+  const result = await setPicture(tokenData.userId, req.file, req.body.type);
   console.log(result)
   res.json(result);
 };

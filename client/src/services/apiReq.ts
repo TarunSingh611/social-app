@@ -25,8 +25,10 @@ const makeApiRequest = async <T>(
 
 
     if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+      const errorText = await response.text();
+      throw new Error(`HTTP error! Status: ${response.status}, Response: ${errorText}`);
     }
+    
 
     const data: T = await response.json();
     console.log(data)

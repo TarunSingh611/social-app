@@ -497,3 +497,22 @@ box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
 .settingContainer::-webkit-scrollbar {
   display: none;
 }
+
+
+.postContainer{
+  width : 100%;
+  height: 100%;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+}
+
+.postContainer::-webkit-scrollbar {
+  display: none;
+}
+
+.imageInputContainer{
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1;
+  margin: auto;
+}

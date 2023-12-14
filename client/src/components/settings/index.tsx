@@ -3,7 +3,8 @@ import Basic from "./Basic";
 import Privacy from "./Privacy";
 import Security from "./Security";
 import General from "./General";
-import apiUpdateUser  from "@/api/user/apiUpdateUser";
+import UploadButtons from "./UploadButtons";
+import apiUpdateUser from "@/api/user/apiUpdateUser";
 import { toast } from "react-toastify";
 interface Setting {
   key: string;
@@ -12,6 +13,7 @@ interface Setting {
 }
 
 const settingsData: Setting[] = [
+  { key: "basic-info", label: "Basic Info", component: Basic },
   { key: "general-info", label: "General Info", component: General },
   { key: "privacy-info", label: "Privacy Info", component: Privacy },
   { key: "security-info", label: "Security Info", component: Security },
@@ -36,61 +38,52 @@ const Settings: React.FC<{ user: any }> = ({ user }) => {
     }));
   };
 
-  const handleSubmit = (values:any) => {
-
-   apiUpdateUser(values)
-   .then((res:any) => {
-     if(res.statusCode === 200){
-       toast.success(res.message)
-     }
-     else if(res.statusCode === 400){
-       toast.error(res.message)
-       
-     }
-     else if(res.statusCode === 500){
-       toast.error(res.message)
-       
-     }
-     else if (res.statusCode === 404){
-       toast.error(res.message)
-     }
-     else{
-       toast.error("unkopnwn error")
-     }
-   })
-   .catch(() => {
-     toast.error("unkopnwn error")
-   })
-  }
+  const handleSubmit = (values: any) => {
+    apiUpdateUser(values)
+      .then((res: any) => {
+        if (res.statusCode === 200) {
+          toast.success(res.message);
+        } else if (res.statusCode === 400) {
+          toast.error(res.message);
+        } else if (res.statusCode === 500) {
+          toast.error(res.message);
+        } else if (res.statusCode === 404) {
+          toast.error(res.message);
+        } else {
+          toast.error("unkopnwn error");
+        }
+      })
+      .catch(() => {
+        toast.error("unkopnwn error");
+      });
+  };
 
   return (
-    <div>
-      <Basic user={user} onUpdateProfile={handleSubmit}/>
-
-      <div className="my-4">
-        {settingsData.map(({ key, label, component: Component }) => (
-          <div key={key} className="mb-4">
-            <div key={key} className="flex justify-between w-full">
-              <label className="mr-2" htmlFor={key}>
-                {label}:
-              </label>
-              <div
-                className="switch-checkbox"
-                onClick={() => toggleSetting(key)}
-              >
-                <input
-                  id={key}
-                  type="checkbox"
-                  checked={showSettings[key]}
-                  onChange={() => toggleSetting(key)}
-                />
-                <span className="slider"></span>
-              </div>
+    <div className="my-8">
+      <UploadButtons />
+      {settingsData.map(({ key, label, component: Component }) => (
+        <div key={key} className="mb-4">
+          <div key={key} className="flex justify-between w-full">
+            <label className="mr-2" htmlFor={key}>
+              {label}:
+            </label>
+            <div className="switch-checkbox" onClick={() => toggleSetting(key)}>
+              <input
+                id={key}
+                type="checkbox"
+                checked={showSettings[key]}
+                onChange={() => toggleSetting(key)}
+              />
+              <span className="slider"></span>
             </div>
-            {showSettings[key] && <Component user={user} onUpdateProfile={handleSubmit} />}
           </div>
-        ))}
-      </div>
+          {showSettings[key] && (
+            <div className="mb-8">
+              <Component user={user} onUpdateProfile={handleSubmit} />
+            </div>
+          )}
+        </div>
+      ))}
     </div>
   );
 };

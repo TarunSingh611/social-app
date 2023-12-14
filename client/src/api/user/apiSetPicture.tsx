@@ -1,7 +1,7 @@
 import makeApiRequest, { HttpMethod } from '@/services/apiReq';
 
 const apiSetPicture = async (file: File, type: string) => {
-  console.log(file);
+
   const formData = new FormData();
   formData.append('file', file);
   formData.append('type', type);

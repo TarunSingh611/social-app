@@ -1,8 +1,7 @@
 import mongoose from "mongoose";
 
 const postSchema = new mongoose.Schema({
-  content: { type: String, trim: true },
-  image: { type: String, trim: true },
+  image: { type: String, trim: true , default: ""},
   likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },

@@ -10,20 +10,21 @@ const setPicture = async (userId, picture, type) => {
     }
 
     const folder = type === "profilePicture" ? "profilePictures" : (type === "coverPhoto" ? "coverPhotos" : "");
+  
     if (!folder) {
       return { error: "Invalid type", statusCode: 400 };
     }
-
+    const oldimage = user[type];
 
     const uniqueName = `${Date.now()}_${Math.floor(Math.random() * 1000)}${path.extname(picture.originalname)}`;
-    const newPath = `public/uploads/${folder}/${uniqueName}`;
+    const newPath = `public/${folder}/${uniqueName}`;
 
     fs.renameSync(picture.path, newPath);
     user[type] = uniqueName;
     await user.save();
-   
-    if (oldimage) {
-      const oldPath = `public/uploads/${folder}/${oldimage}`;
+
+    if (oldimage){
+      const oldPath = `public/${folder}/${oldimage}`;
       if (fs.existsSync(oldPath)) {
         fs.unlinkSync(oldPath);
       }
@@ -32,7 +33,7 @@ const setPicture = async (userId, picture, type) => {
     return { message: "Image stored and user updated successfully.",picture:uniqueName ,statusCode: 200 };
 
   } catch (error) {
-    console.error(error); // Log the error for debugging
+    console.error(error);
     return { error: "Internal Server Error", statusCode: 500, detail: error.message };
   }
 };
