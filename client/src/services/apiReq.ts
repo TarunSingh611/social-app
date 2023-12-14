@@ -2,14 +2,14 @@
 import secrets from "@/config/secrets";
 import { getToken } from "@/services/auth";
 
-type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
+export type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
 
 const makeApiRequest = async <T>(
   url: string,
   options: {
     method: HttpMethod;
     headers?: { [key: string]: string };
-    body?: string;
+    body?: string | FormData;
   }
 ): Promise<T> => {
   try {

@@ -1,4 +1,5 @@
 import express from "express";
+import multer from "multer";
 import {
   userSearch,
   userRegister,
@@ -12,8 +13,10 @@ import {
   userGetProfile,
   userUpdate,
   userUpdateSecurity,
+  userSetPicture,
 } from "../controllers/userController/index.mjs";
 const router = express.Router();
+const upload = multer({dest:'public/'})
 
 router.get("/search", userSearch);
 router.get("/getProfile", userGetProfile);
@@ -28,5 +31,6 @@ router.put("/password", userPasswordChange);
 router.get("/verify",userVerification);
 router.put("/update", userUpdate);
 router.put("/updateSecurity", userUpdateSecurity);
+router.put("/setPicture", upload.single('file'), userSetPicture);
 
 export default router;

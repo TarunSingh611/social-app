@@ -45,7 +45,7 @@ const validationSchema = Yup.object().shape({
 const General: React.FC<GeneralProps> = ({ user, onUpdateProfile }) => {
   const formik = useFormik({
     initialValues: {
-      gender: user?.gender || '',
+      gender: user?.gender || "Female",
       birthday: user?.birthday ?  formatDate(user?.birthday) : '0000-00-00',
       website: user?.website || '',
       location: {
@@ -152,7 +152,7 @@ const renderEditableDropdown = (label: string, fieldName: string, options: strin
       name={fieldName}
       onChange={formik.handleChange}
       onBlur={formik.handleBlur}
-      value={formik.values[fieldName].privacy}
+      value={formik.values[fieldName]?.privacy||formik.values[fieldName]}
       className="mt-1 p-2 border rounded-md w-full"
     >
       <option value="">Select {label}</option>

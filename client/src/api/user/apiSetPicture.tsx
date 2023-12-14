@@ -1,18 +1,17 @@
-import makeApiRequest from '@/services/apiReq';
+import makeApiRequest, { HttpMethod } from '@/services/apiReq';
 
 const apiSetPicture = async (file: File, type: string) => {
+  console.log(file);
   const formData = new FormData();
   formData.append('file', file);
   formData.append('type', type);
 
   const options = {
-    method: 'POST',
-    body: formData, // FormData will set the appropriate Content-Type header
+    method: 'PUT' as HttpMethod,
+    body: formData,
   };
-
   console.log(options);
-  // Uncomment the line below to make the actual API request
-  // return await makeApiRequest('/user/setPicture', options);
+  return await makeApiRequest('/user/setPicture', options);
 };
 
 export default apiSetPicture;

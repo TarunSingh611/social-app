@@ -31,30 +31,36 @@ const Basic: React.FC<BasicProps> = ({ user, onUpdateProfile }) => {
 
   useEffect(() => {
     const file = profilePicture;
+    console.log(file)
       if (!file) return;
       apiSetPicture(file, "profilePicture").then((res: any) => {
         if (res.statusCode !== 200) {
           toast.error(res.message);
         } else if(res.statusCode === 200) {
           toast.success(res.message);
+          console.log(res)
           res?.picture ? dispatch(setProfilePhoto(res.picture)) : null
         }
       });
+      setProfilePhoto(null)
+
   }, [profilePicture]);
 
   useEffect(() => {
 
       const file = coverPicture;
+      console.log(file)
       if (!file) return;
       apiSetPicture(file, "coverPhoto").then((res: any) => {
-        if (res.statusCode !== 200) {
+        if (res?.statusCode !== 200) {
           toast.error(res.message);
-        } else if(res.statusCode === 200) {
-          toast.success(res.message);
-          dispatch(setCoverPhoto(res.picture));
+        } else if(res?.statusCode === 200) {
+          toast.success(res?.message);
+          console.log(res)
+          dispatch(setCoverPhoto(res?.picture));
         }
       });
-
+      setCoverPhoto(null);
   }, [coverPicture]);
 
   const formik = useFormik({
@@ -76,11 +82,13 @@ const Basic: React.FC<BasicProps> = ({ user, onUpdateProfile }) => {
   ) => {
     const file = e.target.files && e.target.files[0];
     setProfilePicture(file || null);
+    e.target.value = '';
   };
 
   const handleUpdateCoverPicture = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0];
     setCoverPicture(file || null);
+    e.target.value = '';
   };
   return (
     <div className="my-4">

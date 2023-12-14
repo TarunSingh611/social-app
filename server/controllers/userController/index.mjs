@@ -5,6 +5,7 @@ import { userLogout } from "./userLogout.mjs";
 import { userGetProfile } from "./userGetProfile.mjs";
 import {userUpdate} from "./userUpdate.mjs"
 import {userUpdateSecurity} from "./userUpdateSecurity.mjs"
+import {userSetPicture} from "./userSetPicture.mjs"
 
 const userSearch = (req, res) => {
   res.send("userSearch");
@@ -39,4 +40,5 @@ export {
   userVerification,
   userUpdate,
   userUpdateSecurity,
+  userSetPicture,
 };
