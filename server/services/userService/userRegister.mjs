@@ -18,10 +18,9 @@ const registerUser = async ({
     }
 
     const newUser = new User({
-      firstName,
-      lastName,
+      fullName: `${(firstName || '').trim()} ${(lastName || '').trim()}`,
       username,
-      email,
+      email : email.toLowerCase(),
       phone,
       password,
     });
@@ -47,3 +46,5 @@ const registerUser = async ({
 };
 
 export { registerUser };
+
+

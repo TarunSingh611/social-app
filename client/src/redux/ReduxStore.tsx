@@ -1,11 +1,11 @@
 'use client';
 import { combineReducers, configureStore  } from "@reduxjs/toolkit";
 import ReduxSlicer from "./ReduxSlicer";
-import authSlicer from "./slicers/authSlice";
+import AuthSlicer from "./slicers/authSlice";
 
 const rootReducer = combineReducers({
    app: ReduxSlicer,
-   auth:authSlicer,
+   auth: AuthSlicer,
 })
 
 export const store = configureStore({

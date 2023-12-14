@@ -10,6 +10,7 @@ import BearerAuth from "../middleware/bearerAuth.mjs";
 
 export default function initializeRoutes(app) {
   app.use(BearerAuth);
+
   app.use("/user", userRoutes);
   app.use("/post", postRoutes);
   app.use("/hashTag", hashTagRoutes);
