@@ -1,9 +1,9 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import { useFormik } from "formik";
-import {setToken} from "@/services/auth";
+import { setToken } from "@/services/auth";
 import { toast } from "react-toastify";
-import loginUser  from "@/api/user/apiLogin";
+import loginUser from "@/api/user/apiLogin";
 import { useDispatch } from "react-redux";
 import { setValidUser } from "@/redux/slicers/authSlice";
 
@@ -41,28 +41,28 @@ const LoginFormik = () => {
     onSubmit: (values) => {
       if (!formik.errors.email && !formik.errors.password) {
         loginUser(values.email, values.password)
-          .then((data:any) => {
-            if(data.statusCode===200){
+          .then((data: any) => {
+            if (data.statusCode === 200) {
               toast.success(data.message);
               setToken(data.token);
               dispatch(setValidUser(true));
               return;
             }
-            else if(data.statusCode === 400){
+            else if (data.statusCode === 400) {
               toast.error(data.error);
               return;
             }
-            else if (data.statusCode === 403){
+            else if (data.statusCode === 403) {
               toast.error(data.error);
               toast.info("Please Verify your email and login to continue");
               toast.warning("Verification link sent to your email");
               return;
             }
-            else if(data.statusCode === 500){
+            else if (data.statusCode === 500) {
               toast.error(data.error);
               return;
             }
-            else{
+            else {
               toast.error(data.error);
               return;
             }
@@ -122,7 +122,7 @@ const LoginFormik = () => {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={item.value}
-              autoComplete={ item.autoComplete ||'on'}
+              autoComplete={item.autoComplete || 'on'}
               className="p-2 mx-2 my-auto md:col-span-2 dark:bg-gray-200 rounded-md "
             />
           </div>
