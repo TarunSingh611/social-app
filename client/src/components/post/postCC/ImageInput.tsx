@@ -1,20 +1,28 @@
-import React, { ChangeEvent, useState, useRef } from 'react';
-import AvatarEditor from 'react-avatar-editor';
+import React, { ChangeEvent, useState, useRef, useEffect } from "react";
+import AvatarEditor from "react-avatar-editor";
 
 interface ImageInputProps {
   image: File | null;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   editorRef: React.RefObject<AvatarEditor>;
+  onImageSubmit: (editedImage: string) => void;
 }
 
-const ImageInput: React.FC<ImageInputProps> = ({ image, onChange, editorRef }) => {
+const ImageInput: React.FC<ImageInputProps> = ({
+  image,
+  onChange,
+  editorRef,
+  onImageSubmit,
+}) => {
   const [zoom, setZoom] = useState<number>(1.0);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [key, setKey] = useState<number>(0);
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0];
     if (file) {
       onChange(e);
+      setKey((prevKey) => prevKey + 1);
     }
   };
 
@@ -24,13 +32,24 @@ const ImageInput: React.FC<ImageInputProps> = ({ image, onChange, editorRef }) =
 
   const handleButtonClick = () => {
     if (fileInputRef.current) {
+      fileInputRef.current.value = "";
       fileInputRef.current.click();
+    }
+  };
+
+  const handleImageSubmit = () => {
+    if (editorRef.current) {
+      const editedImage = editorRef.current.getImage().toDataURL();
+      onImageSubmit(editedImage);
     }
   };
 
   return (
     <div className="mb-4">
-      <label htmlFor="image" className="block text-sm font-medium text-gray-600">
+      <label
+        htmlFor="image"
+        className="block text-sm font-medium text-gray-600"
+      >
         Image:
       </label>
       <div className="mt-1 imageInputContainer flex flex-col items-center">
@@ -40,7 +59,8 @@ const ImageInput: React.FC<ImageInputProps> = ({ image, onChange, editorRef }) =
         >
           {image ? (
             <AvatarEditor
-              className='!w-full !h-full'
+              key={key}
+              className="!w-full !h-full"
               ref={editorRef}
               image={URL.createObjectURL(image)}
               width={1080}
@@ -48,7 +68,7 @@ const ImageInput: React.FC<ImageInputProps> = ({ image, onChange, editorRef }) =
               border={10}
               scale={zoom}
               crossOrigin="anonymous"
-              color={[255, 255, 255, 0.6]} // RGBA
+              color={[255, 255, 255, 0.6]}
               rotate={0}
             />
           ) : (
@@ -59,7 +79,12 @@ const ImageInput: React.FC<ImageInputProps> = ({ image, onChange, editorRef }) =
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M12 4v16m8-8H4"
+              />
             </svg>
           )}
         </label>
@@ -72,7 +97,10 @@ const ImageInput: React.FC<ImageInputProps> = ({ image, onChange, editorRef }) =
           onChange={handleFileChange}
         />
         <div className="mt-4">
-          <label htmlFor="zoom" className="block text-sm font-medium text-gray-600">
+          <label
+            htmlFor="zoom"
+            className="block text-sm font-medium text-gray-600"
+          >
             Zoom:
           </label>
           <input
@@ -85,13 +113,20 @@ const ImageInput: React.FC<ImageInputProps> = ({ image, onChange, editorRef }) =
             onChange={handleZoomChange}
           />
         </div>
-
+            <div className="flex flex-col md:flex-row">
         <button
-          className="m-4 bg-blue-500 text-white py-1 px-2 rounded-md"
+          className="m-2 bg-blue-500 text-white py-2 px-3 rounded-md"
           onClick={handleButtonClick}
         >
-          Add Image
+        upload
         </button>
+        <button
+          className="m-2 bg-blue-500 text-white py-2 px-3 rounded-md"
+          onClick={handleImageSubmit}
+        >
+          Confirm
+        </button>
+      </div>
       </div>
     </div>
   );

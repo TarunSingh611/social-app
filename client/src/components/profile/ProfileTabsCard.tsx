@@ -1,8 +1,8 @@
 import React from 'react';
 import TabbedNav from '../navbar/TabbedNav';
+import UserPost from "../post/userPost";
 
-
-const ProfileTabsCard = ({ user }: { user:any }) => {
+const ProfileTabsCard = ({ user , Posts}: { user:any, Posts:any }) => {
 
     const tabConfig = [
         {
@@ -11,7 +11,7 @@ const ProfileTabsCard = ({ user }: { user:any }) => {
         },
         {
             name: "Timeline",
-            content: <div>Timeline</div>
+            content: <UserPost user={user} posts={Posts}/>
         }
     ]
     return <div className="w-full">

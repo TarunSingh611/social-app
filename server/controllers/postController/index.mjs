@@ -1,4 +1,5 @@
 export {postImage} from "./postImage.mjs";
+export {userPost as postUserPost} from "./postUserPost.mjs";
 const postCreate = async (req, res) => {
     res.send("postCreate");
   };
