@@ -8,6 +8,7 @@ import {
   postDelete,
   postFeed,
   postReaction,
+  postUserPost,
 } from "../controllers/postController/index.mjs";
 const router = express.Router();
 const upload = multer({dest:'public/'})
@@ -19,5 +20,6 @@ router.get("/get", postGet);
 router.delete("/delete", postDelete);
 router.get("/feed", postFeed);
 router.put("/reaction", postReaction);
+router.get("/userPost", postUserPost);
 
 export default router;

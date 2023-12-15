@@ -5,58 +5,63 @@ import fs from "fs";
 import path from "path";
 
 const setPicture = async (userId, picture, hashTags, caption) => {
-	console.log("set::", userId, picture, caption, hashTags);
+  hashTags = hashTags.split(",");
+  const user = await User.findById(userId);
+  if (!user) {
+    return { error: "User not found", statusCode: 404 };
+  }
 
-	const user = await User.findById(userId);
-	if (!user) {
-		return { error: "User not found", statusCode: 404 };
-	}
+  const folder = "imagePost";
 
-	const folder = "imagePost";
+  if (!folder) {
+    return { error: "Invalid type", statusCode: 400 };
+  }
 
-	if (!folder) {
-		return { error: "Invalid type", statusCode: 400 };
-	}
+  const uniqueName = `${Date.now()}_${Math.floor(
+    Math.random() * 1000
+  )}${path.extname(picture.originalname)}`;
+  const newPath = `public/${folder}/${uniqueName}`;
 
-	const uniqueName = `${Date.now()}_${Math.floor(
-		Math.random() * 1000
-	)}${path.extname(picture.originalname)}`;
-	const newPath = `public/${folder}/${uniqueName}`;
+  fs.renameSync(picture.path, newPath);
 
-	fs.renameSync(picture.path, newPath);
+  user.postsCount++;
+  await user.save();
 
-	user.postsCount++;
-	await user.save();
+  const newPost = new PostModel({
+    image: uniqueName,
+    user: userId,
+    hashTags: [],
+    caption: caption ? caption : "",
+  });
 
-	const newPost = new PostModel({
-		image: uniqueName,
-		user: userId,
-		hashTags: [],
-		caption: caption,
-	});
+  if (hashTags.length > 0) {
+    for (const tagName of hashTags) {
+	  let tagNameSanitized = tagName.trim();
+	  if(!tagNameSanitized){
+		continue;
+	  }
+      let hashtag = await HashTagModel.findOne({ name: tagNameSanitized });
 
-	for (const tagName of hashTags) {
-		let hashtag = await HashTagModel.findOne({ name: tagName });
+      if (!hashtag) {
+        hashtag = new HashTagModel({
+          name: tagNameSanitized,
+          posts: [],
+          users: [],
+        });
+      }
 
-		if (!hashtag) {
-			hashtag = new HashTagModel({
-				name: tagName,
-				posts: [],
-				users: [],
-			});
-		}
+      hashtag.posts.push(newPost._id);
+      hashtag.users.push(userId);
 
-		hashtag.posts.push(newPost._id);
-		hashtag.users.push(userId);
+      await hashtag.save();
 
-		await hashtag.save();
+      newPost.hashTags.push(hashtag._id);
+    }
+  }
 
-		newPost.hashTags.push(hashtag._id);
-	}
+  await newPost.save();
 
-	await newPost.save();
-
-	return { message: "Post created successfully", statusCode: 200 };
+  return { message: "Post created successfully", statusCode: 200 };
 };
 
 export default setPicture;

@@ -48,6 +48,36 @@ export default function ImagePost() {
     resetForm();
   };
 
+  const handleConfirmImage = (editedImage: string) => {
+
+    if (editorRef.current) {
+      editorRef.current.getImage().toBlob((blob: Blob | null) => {
+        if (blob) {
+
+          const binaryData = atob(editedImage.split(',')[1]);
+  
+          const arrayBuffer = new ArrayBuffer(binaryData.length);
+          const uint8Array = new Uint8Array(arrayBuffer);
+          for (let i = 0; i < binaryData.length; i++) {
+            uint8Array[i] = binaryData.charCodeAt(i);
+          }
+  
+          const jpegBlob = new Blob([arrayBuffer], { type: "image/jpeg" });
+
+          const file = new File([jpegBlob], "image.jpg", { type: "image/jpeg" });
+  
+          if (!file ) {
+            toast.warning("Please select an image");
+            setImage(null);
+            return;
+          }
+          setImage(file);
+        }
+      });
+    }
+
+  }
+
   const handleCancel = () => {
     resetForm();
   };
@@ -60,7 +90,7 @@ export default function ImagePost() {
 
   return (
     <div>
-      <ImageInput image={image} onChange={handleImageChange} editorRef={editorRef} />
+      <ImageInput image={image} onChange={handleImageChange} editorRef={editorRef} onImageSubmit={handleConfirmImage} />
       <CaptionInput caption={caption} onChange={handleCaptionChange} />
       <HashtagsInput hashtags={hashtags} onChange={handleHashtagsChange} />
 
@@ -70,7 +100,13 @@ export default function ImagePost() {
           onClick={handleConfirmUpload}
           disabled={!image}
         >
-          Confirm Upload
+          Post
+        </button>
+        <button
+          className="bg-red-500 text-white py-2 px-4 rounded-md"
+          onClick={handleCancel}
+        >
+          Cancel
         </button>
 
       </div>

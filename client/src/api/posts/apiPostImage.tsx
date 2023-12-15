@@ -10,7 +10,7 @@ const apiPostImage = async ({ image, caption, hashtags }: { image: File, caption
     method: 'POST' as const,
     body: formData,
   };
-
+  console.log(options)
   return await makeApiRequest('/post/imagePost', options);
 };
 

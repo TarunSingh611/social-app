@@ -3,7 +3,6 @@ import UserLayout from "@/layouts/UserLayout";
 import SettingComponent from "@/components/settings";
 import{useSelector} from "react-redux";
 import ProfileCard from "@/components/profile/ProfileCard";
-import { useEffect } from "react";
 const Setting = () => {
   const user = useSelector((state: any) => state.auth.user);
 
