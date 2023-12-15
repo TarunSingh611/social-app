@@ -1,6 +1,6 @@
 /* PostCard.module.css */
 .postCard {
-  max-width: 48rem;
+  max-width: 40rem;
   margin: 2rem auto;
   background-color: white;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -19,11 +19,42 @@
  
 }
 
-.cardContent :hover {
-    background-color: #cbd5e0;
-  }
-
-
 .cardContent:hover {
   background-color: #cbd5e0;
+}
+
+.postStats{
+ text-align: center;
+ font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+
+.fullScreenIcon {
+  position: absolute;
+  bottom: 15px;
+  right: 20px;
+  opacity: 0.2;
+  cursor: pointer;
+}
+.fullScreenIcon:hover {
+  opacity: 1;
+  zoom: 1.3;
+  transition: opacity 0.3s ease-in-out zoom 0.3s ease-in-out;
+}
+
+.fullScreenOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 999;
+}
+
+.fullScreenImage {
+  object-fit: contain;
 }
