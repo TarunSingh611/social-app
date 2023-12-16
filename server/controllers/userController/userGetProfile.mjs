@@ -2,7 +2,7 @@ import { getUserByToken } from "../../utils/jwtUtils.mjs";
 import {User} from "../../models/userModel.mjs";
 
 const userGetProfile = async (req, res) => {
-    const token = req.header('jwttoken');
+    const token = req.header("jwttoken");
     const tokenData = await getUserByToken(token)
     if (! tokenData) {
         return res.status(403).json({ message: 'Forbidden: Invalid username' });

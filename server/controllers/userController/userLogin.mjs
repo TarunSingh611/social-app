@@ -2,7 +2,9 @@ import  loginUser from "../../services/userService/userLogin.mjs";
 
 const userLogin = async (req, res) => {
   try {
-    const { username, email, password } = req.body;
+   const username = req.body.username;
+    const email = req.body.email;
+    const password = req.body.password;
 
     const result = await loginUser(username, email, password);
 
