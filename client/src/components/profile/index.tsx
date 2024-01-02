@@ -29,7 +29,7 @@ const UserProfile = ({ user }: any) => {
   },[Posts])
 
   return (
-    <div className="profileInfo bg-white shadow-md rounded-md max-w-xxl  mx-auto p-6">
+    <div className="midInfo">
       {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-6"> */}
        <ProfileCard user={user} />
        <ProfileTabsCard user={user} Posts={Posts} />

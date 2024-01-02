@@ -44,6 +44,10 @@ const ImageInput: React.FC<ImageInputProps> = ({
     }
   };
 
+  useEffect(() => {
+    setZoom(1.0);
+  }, [image]);
+
   return (
     <div className="mb-4">
       <label
@@ -103,6 +107,11 @@ const ImageInput: React.FC<ImageInputProps> = ({
           >
             Zoom:
           </label>
+          <button
+            type="button"
+            className="bg-gray-500 text-white font-bold py-0 px-2 mx-2 rounded-full focus:outline-none focus:shadow-outline"
+            onClick={() => setZoom(zoom - 0.1)}
+          >-</button>
           <input
             type="range"
             id="zoom"
@@ -112,21 +121,28 @@ const ImageInput: React.FC<ImageInputProps> = ({
             value={zoom}
             onChange={handleZoomChange}
           />
+          <button
+            type="button"
+            className="bg-gray-500 text-white font-bold py-0 px-2 mx-2 rounded-full focus:outline-none focus:shadow-outline"
+            onClick={() => setZoom(zoom + 0.1)}
+          >
+            +
+          </button>
         </div>
-            <div className="flex flex-col md:flex-row">
-        <button
-          className="m-2 bg-blue-500 text-white py-2 px-3 rounded-md"
-          onClick={handleButtonClick}
-        >
-        upload
-        </button>
-        <button
-          className="m-2 bg-blue-500 text-white py-2 px-3 rounded-md"
-          onClick={handleImageSubmit}
-        >
-          Confirm
-        </button>
-      </div>
+        <div className="flex flex-col md:flex-row">
+          <button
+            className="m-2 bg-blue-500 text-white py-2 px-3 rounded-md"
+            onClick={handleButtonClick}
+          >
+            upload
+          </button>
+          <button
+            className="m-2 bg-blue-500 text-white py-2 px-3 rounded-md"
+            onClick={handleImageSubmit}
+          >
+            Confirm
+          </button>
+        </div>
       </div>
     </div>
   );

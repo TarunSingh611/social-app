@@ -5,7 +5,7 @@ import {
   userRegister,
   userLogin,
   userLogout,
-
+  userGetUserName,
   userVerification,
   userGetProfile,
   userUpdate,
@@ -20,7 +20,7 @@ router.post("/login", userLogin);
 router.get("/logout", userLogout);
 router.post("/register", userRegister);
 router.get("/getProfile", userGetProfile);
-
+router.get("/getUserName", userGetUserName);
 router.get("/verify",userVerification);
 router.put("/update", userUpdate);
 router.put("/updateSecurity", userUpdateSecurity);
