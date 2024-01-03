@@ -3,6 +3,7 @@ import { User } from "../../models/userModel.mjs";
 import { comparePassword } from "../../utils/passwordUtils.mjs";
 // Function to update user information
 const updateUser = async (userId, updates) => {
+
   try {
     const validUpdates = Object.keys(updates).reduce((acc, key) => {
       if (User.schema.obj[key] !== undefined) {

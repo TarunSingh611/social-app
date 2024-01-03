@@ -8,7 +8,8 @@ async function getFeed(user, page = 1, pageSize = 10) {
     const posts = await PostModel.find({
       $or: [
         { user: user._id },
-        { user: { $in: user.following } }
+        { user: { $in:user.following } },
+        { user: { $in:user.friends } }
       ]
     })
       .sort({ createdDate: -1 })

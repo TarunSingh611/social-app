@@ -1,7 +1,7 @@
 import MiniCard from "@/components/post/miniCard"
 import { useState } from "react"
 import PostCard from "../userPost/PostCard"
-const GridPost = ({ user, posts }: { user: any, posts: any }) => {
+const GridPost = ({ posts }: { posts: any }) => {
 
   const [Card, setCard] = useState(null)
 

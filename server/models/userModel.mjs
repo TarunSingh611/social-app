@@ -54,6 +54,11 @@ const userSchema = new mongoose.Schema(
     profilePicture: { type: String, trim: true ,default: ""},
     coverPhoto: { type: String, trim: true, default: "" },
 
+    //addFollowing and follwer array
+    following: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" ,default:[]}],
+    followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User",default:[]}],
+    friends: [{ type: mongoose.Schema.Types.ObjectId, ref: "User",default:[]}], 
+
     // Account
     accountType: {
       type: String,

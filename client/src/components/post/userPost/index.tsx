@@ -1,6 +1,6 @@
 import React from 'react'
 import PostCard from './PostCard'
-const UserPost = ({ user, posts }: any) => {
+const UserPost = ({ posts }: any) => {
 
 
     return (posts && (

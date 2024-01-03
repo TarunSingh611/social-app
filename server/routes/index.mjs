@@ -8,6 +8,7 @@ import reactionRoutes from "./reactionRoute.mjs";
 import notificationsRoutes from "./notificationsRoute.mjs";
 import BearerAuth from "../middleware/bearerAuth.mjs";
 import feed from "./feed.mjs";
+import explore from "./explore.mjs";
 
 export default function initializeRoutes(app) {
   app.use(BearerAuth);
@@ -21,6 +22,19 @@ export default function initializeRoutes(app) {
   app.use("/reaction", reactionRoutes);
   app.use("/notifications", notificationsRoutes);
   app.use("/feed", feed);
+  app.use("/explore",explore)
+
+  app.get("/mongo", async (req, res) => {
+    try {
+
+      console.log("Successfully updated existing users.");
+      res.send("done");
+    } catch (error) {
+      console.error("Error updating users:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  });
+  
 
   app.use("*", (req, res) => {
     res.status(404).json({

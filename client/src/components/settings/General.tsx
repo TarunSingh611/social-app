@@ -137,7 +137,7 @@ const renderEditableLocationItem = (label: string, fieldName: string, formik: an
       className="mt-1 p-2 border rounded-md w-full"
       placeholder="Country"
     />
-    {renderEditableDropdown('Location Privacy', `${fieldName}`, privacyOptions, formik)}
+    {renderEditableDropdown('Location Privacy', `${fieldName}.privacy`, privacyOptions, formik)}
     {formik.touched[fieldName] && formik.errors[fieldName] && (
       <div className="text-red-600">{formik.errors[fieldName]}</div>
     )}

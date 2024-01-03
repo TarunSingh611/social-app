@@ -10,15 +10,10 @@
 
 }
 
-.thumbnailContainer {
-  position: relative;
-  overflow: hidden;
-}
-
 .thumbnail {
-  object-fit:contain;
+  object-fit:cover;
   width: 100%;
-  height:auto;
+  height:100%;
 }
 
 .overlay {

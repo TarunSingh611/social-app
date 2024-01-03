@@ -32,7 +32,7 @@ const UserProfile = ({ user }: any) => {
     <div className="midInfo">
       {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-6"> */}
        <ProfileCard user={user} />
-       <ProfileTabsCard user={user} Posts={Posts} />
+       <ProfileTabsCard Posts={Posts} />
     </div>
   );
 };
