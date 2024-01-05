@@ -3,18 +3,21 @@ import React, { useState } from "react";
 import secrets from "@/config/secrets";
 import Image from "next/image";
 import UserCard from "@/components/user/UserCard";
+import FollowButton from "@/components/misc/FollowButton";
+import styles from "./PostCard.module.css";
+import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
+
 const likeIconUrl = secrets.NEXT_PUBLIC_ICON_URL + "heart.png";
 const commentIconUrl = secrets.NEXT_PUBLIC_ICON_URL + "comments.png";
 const shareIconUrl = secrets.NEXT_PUBLIC_ICON_URL + "share.png";
 const reportIconUrl = secrets.NEXT_PUBLIC_ICON_URL + "menu.png";
 const fullScreenIconUrl = secrets.NEXT_PUBLIC_ICON_URL + "fullscreen.png";
 
-import styles from "./PostCard.module.css";
-
-import PropTypes from "prop-types";
 
 const PostCard = ({ post }: any) => {
   const [isFullScreen, setIsFullScreen] = useState(false);
+  const self = useSelector((state: any) => state.auth.user);
 
   const handleFullScreenToggle = () => {
     setIsFullScreen(!isFullScreen);
@@ -40,6 +43,11 @@ const PostCard = ({ post }: any) => {
     <div className={styles.postCard}>
       <div className="w-full flex justify-between border-b border-gray-200">
        {post && <UserCard user={post?.userData}/>}
+       <div className="ml-auto mr-2 my-auto">
+        {post?.userData?._id && self._id !== post?.userData?._id && (
+          <FollowButton user={post?.userData} />
+        )}
+      </div>
         <button onClick={handleReport} className={`${styles.iconButton} right-0 ml-auto`}>
           <Image priority src={reportIconUrl} alt="Report" className={`${styles.icon}  hover:bg-slate-50`} width={48} height={48} />
         </button>

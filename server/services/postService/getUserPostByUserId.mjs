@@ -1,19 +1,29 @@
 import PostModel from "../../models/postModel.mjs";
 
-const getUserPostsByUserId = async (userId, pno) => {
+const getUserPostsByUserId = async (userId, pno = 0, pageSize = 9) => {
   try {
-    const postCountPerPage = 3;
-
+  
     const posts = await PostModel.find({ user: userId })
-      .sort({ createdDate: -1 }) 
-      .skip(pno)
-      .limit(pno === 0 ? 9 : postCountPerPage);
+    .sort({ createdDate: -1 })
+    .skip(pno)
+    .limit(pageSize);
 
-    return {statusCode: 200, posts};
-  } catch (error) {
+    // const postsWithUserData = posts.map(post => {
+    //   const userData = {
+    //     id: post.user.id,
+    //     fullName: post.user.fullName,
+    //     username: post.user.username,
+    //     profilePicture: post.user.profilePicture
+    //   };
+
+    // });
+
+    return {statusCode: 200, posts: posts};
+      } catch (error) {
     console.error("Error fetching user posts:", error);
-    throw error;
-  }
-};
+    // throw error;
+      }
+    };
 
-export default getUserPostsByUserId;
+    export default getUserPostsByUserId;
+

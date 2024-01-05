@@ -17,7 +17,7 @@ const UserProfile = ({ user }: any) => {
     .then((res:any)=>{
       if(res.statusCode === 200){
         setPost(res.posts);
-        console.log(res.posts);
+        
       }
       else{
         toast.error(res.message);

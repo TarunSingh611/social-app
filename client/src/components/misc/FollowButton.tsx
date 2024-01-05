@@ -12,7 +12,7 @@ export default function FollowButton({ user }: any) {
     }
 
     return (
-        <div className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg">
+        <div className="bg-blue-500 cursor-pointer hover:bg-blue-600 text-white py-2 px-6 rounded-lg">
            {text}
         </div>
     )

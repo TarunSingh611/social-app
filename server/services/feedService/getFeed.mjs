@@ -1,7 +1,7 @@
 import PostModel from "../../models/postModel.mjs";
 import { User } from "../../models/userModel.mjs";
 
-async function getFeed(user, page = 1, pageSize = 10) {
+async function getFeed(user, page = 1, pageSize = 9) {
   try {
     const skipCount = (page - 1) * pageSize;
 
@@ -25,6 +25,7 @@ async function getFeed(user, page = 1, pageSize = 10) {
     const formattedPosts = posts.map(post => ({
       ...post.toObject(),
       userData: {
+        _id: userMap.get(post.user.toString())._id,
         fullName: userMap.get(post.user.toString()).fullName,
         username: userMap.get(post.user.toString()).username,
         profilePicture: userMap.get(post.user.toString()).profilePicture,
