@@ -5,9 +5,11 @@ import {  useSelector } from "react-redux";
 import UserProfile from "@/components/profile";
 
 const Profile = () => {
+      console.log(":user call:")
   const user:any = useSelector((state: any) => state.auth.user);
+
   return (
-        <UserProfile user={user} />
+      user &&  <UserProfile user={user} />
   )
 };
 Profile.getLayout = function getLayout(page: React.ReactNode) {

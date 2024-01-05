@@ -6,6 +6,8 @@ import { toast } from "react-toastify";
 import  apiGetUserPosts  from "@/api/posts/apiGetUserPost";
 
 const UserProfile = ({ user }: any) => {
+      
+  console.log(":: repeat ::")
   const [Posts,setPost] = useState([]);
 
   useEffect(() => {
@@ -13,20 +15,18 @@ const UserProfile = ({ user }: any) => {
     let pno = Posts? Posts.length : 0;
     apiGetUserPosts(user._id,pno)
     .then((res:any)=>{
-      console.log(res)
       if(res.statusCode === 200){
         setPost(res.posts);
+        console.log(res.posts);
       }
       else{
         toast.error(res.message);
       }
     })
   }
+  console.log(Posts);
   },[user]);
 
-  useEffect(() => {
-    console.log(Posts);
-  },[Posts])
 
   return (
     <div className="midInfo">

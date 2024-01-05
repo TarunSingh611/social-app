@@ -306,7 +306,7 @@ box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
 }
 
 .logo {
-  margin-left: 20px;
+  margin-left: 1.4rem;
   width: 120px;
   height: 40px;
   margin-top: 25px;
@@ -326,12 +326,18 @@ box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
 
 .logo p:first-child {
   font-weight: bold;
-  margin-right: 4px;
+ 
 }
 
 .logo p:last-child {
   font-weight: bold;
   color: darkgray;
+}
+
+.logoImg {
+  width: 4.5rem;
+  height: 4.5rem;
+  opacity: 0.8;
 }
 
 
@@ -418,6 +424,27 @@ box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
   transition: background-position-x 0.7s ease-in-out;
  
+}
+
+
+.liNavLogoutSelected{
+  padding: 2px;
+  margin-left:10px;
+  width:calc(100% - 10px);
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  font-weight: bold;
+  cursor: default;
+  margin-top:2px;
+  background: linear-gradient(45deg, #FF0000 0%, #990000 100%);
+  background-position-x: 100%;
+  box-sizing: border-box;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+  transition: background-position-x 0.7s ease-in-out;
+}
+
+.liNavLogoutSelected .tabHN{
+  color:azure ;
 }
 
 .selected .tabHN:hover{
