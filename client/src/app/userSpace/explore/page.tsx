@@ -35,7 +35,7 @@ const Explore = () => {
     if (user) {
       apiGetExplore().then((res: any) => {
         if (res.statusCode === 200) {
-          setExplore(res.data);
+          setExplore(res?.posts||[]);
         }
       });
     }

@@ -42,10 +42,10 @@ const PostCard = ({ post }: any) => {
   return (<>
     <div className={styles.postCard}>
       <div className="w-full flex justify-between border-b border-gray-200">
-       {post && <UserCard user={post?.userData}/>}
+       {post && <UserCard user={post?.user}/>}
        <div className="ml-auto mr-2 my-auto">
-        {post?.userData?._id && self._id !== post?.userData?._id && (
-          <FollowButton user={post?.userData} />
+        {post?.user?._id && self._id !== post?.user?._id && (
+          <FollowButton user={post?.user} />
         )}
       </div>
         <button onClick={handleReport} className={`${styles.iconButton} right-0 ml-auto`}>

@@ -1,7 +1,7 @@
 import { User } from "../../models/userModel.mjs";
 import HashTag  from "../../models/hashTagModel.mjs";
 async function exploreSearch(data, type) {
-    console.log(data,type);
+   
     if (!data) {
       return { statusCode: 400 };
     }
