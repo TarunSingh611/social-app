@@ -1,7 +1,6 @@
 "use client";
 import UserLayout from "@/layouts/UserLayout";
 import { useEffect, useState } from "react";
-import SearchOverlay from "@/components/search/ExploreOverlay";
 import GridPost from "@/components/post/gridPost";
 import {ProfileSearchCard} from "@/components/profile/ProfileCard";
 import { useSelector } from "react-redux";
@@ -88,7 +87,7 @@ const Explore = () => {
           {searchType === "name" ? (
             <>
               {searchResult.map((result) => (
-                <ProfileSearchCard user={result} />
+                <ProfileSearchCard key={result._id} user={result} />
               ))}
             </>
           ) : searchType === "hashtag" ? (
@@ -96,7 +95,7 @@ const Explore = () => {
           ) : searchType === "username" ? (
             <>
               {searchResult.map((result) => (
-                <ProfileSearchCard user={result} />
+                <ProfileSearchCard key={result._id} user={result} />
               ))}
             </>
           ) : (

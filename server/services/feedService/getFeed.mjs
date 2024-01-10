@@ -1,5 +1,4 @@
 import PostModel from "../../models/postModel.mjs";
-import { User } from "../../models/userModel.mjs";
 
 async function getFeed(user, page = 1, pageSize = 9) {
   try {
@@ -15,7 +14,7 @@ async function getFeed(user, page = 1, pageSize = 9) {
       .sort({ createdDate: -1 })
       .skip(skipCount)
       .limit(pageSize)
-      .populate('user', 'fullName username profilePicture'); 
+      .populate('user', 'fullName username profilePicture accountType following followers friends pendingFollowers');
 
     return { success: true, data: posts, statusCode: 200 };
   } catch (error) {

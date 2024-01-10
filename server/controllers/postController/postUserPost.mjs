@@ -13,21 +13,11 @@ const userPost = async (req, res) => {
   }
 
   if (req.method === "GET") {
-    try {
-      if (userId == tokenData.userId) {
-        const result = await getUserPostsByUserId(userId, pno);
+
+        const result = await getUserPostsByUserId(userId, tokenData.userId, pno);
         return res.json(result);
-      } else {
-        res.json({
-          statusCode: 200,
-          message: "Post fetched successfully",
-          self: false,
-        });
-      }
-    } catch (error) {
-      console.error("Error in postImage controller:", error);
-      res.json({ statusCode: 500, message: "Internal Server Error" });
-    }
+
+
   }
 };
 

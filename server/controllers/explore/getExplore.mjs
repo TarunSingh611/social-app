@@ -1,6 +1,6 @@
 import { getUserByToken } from "../../utils/jwtUtils.mjs";
 import getExploreService from "../../services/exploreService/getExplore.mjs";
-import {User} from "../../models/userModel.mjs";
+import User from "../../models/userModel.mjs";
 
 async function exploreGet(req,res) {
     const token = req.header("jwttoken");

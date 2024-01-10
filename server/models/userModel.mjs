@@ -30,6 +30,7 @@ const userSchema = new mongoose.Schema(
     followingCount: { type: Number, default: 0 },
     friendsCount: { type: Number, default: 0 },
     postsCount: { type: Number, default: 0 },
+    pendingFollowersCount: { type: Number, default: 0 },
 
     // Additional Information
     bio: { type: String, trim: true, default: "" },
@@ -58,6 +59,7 @@ const userSchema = new mongoose.Schema(
     following: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" ,default:[]}],
     followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User",default:[]}],
     friends: [{ type: mongoose.Schema.Types.ObjectId, ref: "User",default:[]}], 
+    pendingFollowers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User",default:[]}],
 
     // Account
     accountType: {
@@ -72,4 +74,5 @@ const userSchema = new mongoose.Schema(
 
 userSchema.pre("save", hashPasswordMiddleware);
 
-export const User = mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema);
+export default User;

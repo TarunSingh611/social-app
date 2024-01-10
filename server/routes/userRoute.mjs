@@ -11,6 +11,7 @@ import {
   userUpdate,
   userUpdateSecurity,
   userSetPicture,
+  userGetProfileById
 } from "../controllers/userController/index.mjs";
 const router = express.Router();
 const upload = multer({dest:'public/'})
@@ -25,5 +26,6 @@ router.get("/verify",userVerification);
 router.put("/update", userUpdate);
 router.put("/updateSecurity", userUpdateSecurity);
 router.put("/setPicture", upload.single('file'), userSetPicture);
+router.get("/getProfile/:userId", userGetProfileById);
 
 export default router;

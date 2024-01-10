@@ -29,13 +29,7 @@
     },
     "strict": false
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    "src/utils/apiReqUtils.jsx"
-  ],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/**/*.ts", "src/**/*.tsx", ".next/types/**/*.ts", ".next/types/app/userSpace/profile/test/page.tsx"],
   "exclude": [
     "node_modules"
   ]

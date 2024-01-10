@@ -6,9 +6,10 @@ import chatRoutes from "./chatRoute.mjs";
 import friendRoutes from "./friendRoute.mjs";
 import reactionRoutes from "./reactionRoute.mjs";
 import notificationsRoutes from "./notificationsRoute.mjs";
+import followRoutes from "./followRoute.mjs";
 import BearerAuth from "../middleware/bearerAuth.mjs";
 import feed from "./feed.mjs";
-import explore from "./explore.mjs";
+import explore from "./explore.mjs"
 
 export default function initializeRoutes(app) {
   app.use(BearerAuth);
@@ -23,12 +24,16 @@ export default function initializeRoutes(app) {
   app.use("/notifications", notificationsRoutes);
   app.use("/feed", feed);
   app.use("/explore",explore)
+  app.use("/follow", followRoutes)
+  app.use("/notifications", notificationsRoutes)
 
   app.get("/mongo", async (req, res) => {
     try {
+      // Fetch all users
 
+  
       console.log("Successfully updated existing users.");
-      res.send("done");
+      res.send("Successfully updated existing users.");
     } catch (error) {
       console.error("Error updating users:", error);
       res.status(500).send("Internal Server Error");

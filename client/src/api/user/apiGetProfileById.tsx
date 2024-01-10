@@ -1,5 +1,5 @@
 import makeApiRequest from '@/services/apiReq';
-const apiGetProfile = async () => {
+const apiGetProfile = async (userId:any) => {
   const options={
     method: 'GET' as const,
     headers: {
@@ -7,7 +7,7 @@ const apiGetProfile = async () => {
     },
   }
  
-  return await makeApiRequest('/user/getProfile/', options);
+  return await makeApiRequest(`/user/getProfile/${userId}`, options);
 };
 
 export default apiGetProfile;

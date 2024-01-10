@@ -1,5 +1,5 @@
 // import necessary modules
-import { User } from "../../models/userModel.mjs";
+import User from "../../models/userModel.mjs";
 import { comparePassword } from "../../utils/passwordUtils.mjs";
 // Function to update user information
 const updateUser = async (userId, updates) => {

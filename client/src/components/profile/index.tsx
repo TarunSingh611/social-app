@@ -1,4 +1,5 @@
 // UserProfileCard.tsx
+'use client';
 import React, { useState, useEffect } from "react";
 import ProfileCard from "./ProfileCard";
 import ProfileTabsCard from "./ProfileTabsCard";
@@ -7,7 +8,6 @@ import  apiGetUserPosts  from "@/api/posts/apiGetUserPost";
 
 const UserProfile = ({ user }: any) => {
       
-  console.log(":: repeat ::")
   const [Posts,setPost] = useState([]);
 
   useEffect(() => {

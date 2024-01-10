@@ -1,12 +1,11 @@
 // pages/PostCard.tsx
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import secrets from "@/config/secrets";
 import Image from "next/image";
 import UserCard from "@/components/user/UserCard";
-import FollowButton from "@/components/misc/FollowButton";
 import styles from "./PostCard.module.css";
 import PropTypes from "prop-types";
-import { useSelector } from "react-redux";
+import apiGetUserName from "@/api/user/apiGetUserName";
 
 const likeIconUrl = secrets.NEXT_PUBLIC_ICON_URL + "heart.png";
 const commentIconUrl = secrets.NEXT_PUBLIC_ICON_URL + "comments.png";
@@ -17,7 +16,8 @@ const fullScreenIconUrl = secrets.NEXT_PUBLIC_ICON_URL + "fullscreen.png";
 
 const PostCard = ({ post }: any) => {
   const [isFullScreen, setIsFullScreen] = useState(false);
-  const self = useSelector((state: any) => state.auth.user);
+
+  const [user,setUser] = useState({} as any)
 
   const handleFullScreenToggle = () => {
     setIsFullScreen(!isFullScreen);
@@ -39,15 +39,19 @@ const PostCard = ({ post }: any) => {
 
   };
 
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res:any = await apiGetUserName(post?.user?._id)
+      setUser(res.user)
+    }
+    fetchUser()
+  },[post?.user?._id])
+
   return (<>
     <div className={styles.postCard}>
       <div className="w-full flex justify-between border-b border-gray-200">
-       {post && <UserCard user={post?.user}/>}
-       <div className="ml-auto mr-2 my-auto">
-        {post?.user?._id && self._id !== post?.user?._id && (
-          <FollowButton user={post?.user} />
-        )}
-      </div>
+       {post && <UserCard user={user} setUser={setUser}/>}
+
         <button onClick={handleReport} className={`${styles.iconButton} right-0 ml-auto`}>
           <Image priority src={reportIconUrl} alt="Report" className={`${styles.icon}  hover:bg-slate-50`} width={48} height={48} />
         </button>

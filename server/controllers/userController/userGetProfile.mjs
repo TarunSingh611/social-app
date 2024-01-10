@@ -1,5 +1,6 @@
 import { getUserByToken } from "../../utils/jwtUtils.mjs";
-import {User} from "../../models/userModel.mjs";
+import User from "../../models/userModel.mjs";
+import { getUserProfile } from "../../services/userService/userGetUsername.mjs";
 
 const userGetProfile = async (req, res) => {
     const token = req.header("jwttoken");
@@ -15,4 +16,19 @@ const userGetProfile = async (req, res) => {
 
 };
 
-export  {userGetProfile}
+
+const userGetProfileById = async (req, res) => {
+
+
+  const userId = req.params.userId
+  if (!userId) {
+      return res.status(403).json({ message: 'Forbidden: Invalid username' });
+  }
+
+  const result = await getUserProfile(userId);
+  res.json(result);
+
+};
+
+
+export  {userGetProfile , userGetProfileById}

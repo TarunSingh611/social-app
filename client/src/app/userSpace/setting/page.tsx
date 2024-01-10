@@ -3,8 +3,10 @@ import UserLayout from "@/layouts/UserLayout";
 import SettingComponent from "@/components/settings";
 import{useSelector} from "react-redux";
 import ProfileCard from "@/components/profile/ProfileCard";
+
 const Setting = () => {
   const user = useSelector((state: any) => state.auth.user);
+  
 
   return (
     <div className="settingContainer bg-white shadow-md rounded-md max-w-xxl mx-auto h-full lg:px-16 lg:py-4 md:px-8 px-4 py-2">

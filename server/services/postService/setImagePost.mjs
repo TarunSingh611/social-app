@@ -1,4 +1,4 @@
-import { User } from "../../models/userModel.mjs";
+import User from "../../models/userModel.mjs";
 import PostModel from "../../models/postModel.mjs";
 import HashTagModel from "../../models/hashTagModel.mjs";
 import fs from "fs";

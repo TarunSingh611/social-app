@@ -8,7 +8,7 @@ interface SearchOverlayProps {
   onClose: () => void;
 }
 
-const ExploreSearchOverlay: React.FC<SearchOverlayProps> = ({onClose}) => {
+const LogoutOverlay: React.FC<SearchOverlayProps> = ({onClose}) => {
     const dispatch = useDispatch();
     const router = useRouter();
 
@@ -44,4 +44,4 @@ const handleConfirmLogout = () => {
       );
 };
 
-export default ExploreSearchOverlay;
+export default LogoutOverlay;

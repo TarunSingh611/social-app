@@ -7,7 +7,7 @@ import {userUpdate} from "./userUpdate.mjs"
 import {userUpdateSecurity} from "./userUpdateSecurity.mjs"
 import {userSetPicture} from "./userSetPicture.mjs"
 import { userGetUserName } from "./userGetUserName.mjs";
-
+import { userGetProfileById } from "./userGetProfile.mjs";
 
 
 export {
@@ -20,4 +20,5 @@ export {
   userUpdate,
   userUpdateSecurity,
   userSetPicture,
+  userGetProfileById
 };

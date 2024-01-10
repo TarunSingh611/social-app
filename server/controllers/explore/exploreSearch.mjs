@@ -1,6 +1,6 @@
 import { getUserByToken } from "../../utils/jwtUtils.mjs";
 import getExploreSearch from "../../services/exploreService/exploreSearch.mjs";
-import {User} from "../../models/userModel.mjs";
+import User from "../../models/userModel.mjs";
 
 async function exploreSearch(req,res) {
 

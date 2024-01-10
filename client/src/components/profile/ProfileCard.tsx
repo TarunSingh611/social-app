@@ -1,11 +1,12 @@
 import secrets from "@/config/secrets";
-import { useRouter, useSearchParams, useSelectedLayoutSegments } from "next/navigation";
-import { useEffect, useRef } from "react";
-import FollowButton from "@/components/misc/FollowButton.tsx";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef ,useState} from "react";
+import FollowButton from "@/components/followButton/FollowButton";
 import { useSelector } from "react-redux";
 
-const ProfileCard = ({ user }: { user: any }) => {
+const ProfileCard = ({ user , setUser = () => {}}:any) => {
   const containerRef = useRef<HTMLParagraphElement>(null);
+
 
   useEffect(() => {
     const containerWidth = containerRef.current!.offsetWidth;
@@ -74,13 +75,19 @@ const ProfileCard = ({ user }: { user: any }) => {
 
 export default ProfileCard;
 
-const ProfileSearchCard = ({ user }: { user: any }) => {
+const ProfileSearchCard = ({ user  }:any) => {
   const router = useRouter();
+  const [userLocal, setUser] = useState({} as any);
   const self = useSelector((state: any) => state.auth.user);
   const handleCardClick = () => {
-    console.log("card clicked");
-    // router.push(`/profile/${user.username}`);
+    router.push(`/userSpace/profile/${user._id}`);
   };
+  useEffect(() => {
+    if (Object.keys(userLocal).length === 0 && Object.keys(user).length) {
+      setUser(user);
+    }
+  },[user])
+
 
   return (
     <div
@@ -91,20 +98,20 @@ const ProfileSearchCard = ({ user }: { user: any }) => {
         <img
           className="w-1/2 h-1/2 object-fit rounded-full"
           src={
-            user?.profilePicture
-              ? secrets.NEXT_PUBLIC_API_URL + "/public/profilePictures/" + user?.profilePicture
-              : secrets.ProfilePicture(user?.gender)
+            userLocal?.profilePicture
+              ? secrets.NEXT_PUBLIC_API_URL + "/public/profilePictures/" + userLocal?.profilePicture
+              : secrets.ProfilePicture(userLocal?.gender)
           }
           alt="Profile"
         />
       </div>
       <div className="flex flex-col">
-        <p className="text-lg font-bold mb-2">{user?.fullName}</p>
-        <p className="text-gray-500 text-left">{user?.username || ""}</p>
+        <p className="text-lg font-bold mb-2">{userLocal?.fullName}</p>
+        <p className="text-gray-500 text-left">{userLocal?.username || ""}</p>
       </div>
       <div className="ml-auto mr-2 my-auto">
-        {self._id !== user._id && (
-          <FollowButton user={user} />
+        {userLocal?._id && self._id !== userLocal._id && (
+          <FollowButton user={userLocal} setUser={setUser}/>
         )}
       </div>
     </div>

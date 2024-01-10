@@ -11,11 +11,9 @@ const Feed = () => {
 
   useEffect(() => {
     if (user) {
-      console.log("feed::", feed.length);
       apiGetFeed()
         .then((res: any) => {
           if (res.statusCode === 200) {
-            console.log(res);
             setFeed(res.data);
           }
         })

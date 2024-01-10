@@ -1,4 +1,4 @@
-import { User } from "../../models/userModel.mjs";
+import User from "../../models/userModel.mjs";
 import { generateVerificationToken } from "../misc/generateVerificationToken.mjs";
 import  sendEmail  from "../../utils/sendNodeMail.mjs";
 const registerUser = async ({

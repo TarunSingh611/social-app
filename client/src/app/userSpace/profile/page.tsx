@@ -5,7 +5,6 @@ import {  useSelector } from "react-redux";
 import UserProfile from "@/components/profile";
 
 const Profile = () => {
-      console.log(":user call:")
   const user:any = useSelector((state: any) => state.auth.user);
 
   return (

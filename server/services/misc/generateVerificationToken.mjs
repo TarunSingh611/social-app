@@ -1,4 +1,4 @@
-import { User } from '../../models/userModel.mjs';
+import User from '../../models/userModel.mjs';
 import generateRandomCode from '../../utils/generateRandomCode.mjs';
 
 const generateVerificationToken = async (userId) => {

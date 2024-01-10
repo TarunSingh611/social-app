@@ -1,4 +1,4 @@
-import { User } from "../../models/userModel.mjs";
+import  User  from "../../models/userModel.mjs";
 import { clearVerificationToken } from "../misc/generateVerificationToken.mjs";
 
 export const userVerification = async (token) => {

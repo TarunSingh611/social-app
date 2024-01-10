@@ -1,4 +1,4 @@
-import { User } from "../../models/userModel.mjs";
+import User from "../../models/userModel.mjs";
 import HashTag  from "../../models/hashTagModel.mjs";
 async function exploreSearch(data, type) {
    

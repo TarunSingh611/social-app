@@ -1,4 +1,4 @@
-import { User } from "../../models/userModel.mjs";
+import  User  from "../../models/userModel.mjs";
 import { generateToken } from "../../utils/jwtUtils.mjs";
 import { comparePassword } from "../../utils/passwordUtils.mjs";
 import sendEmail from "../../utils/sendNodeMail.mjs";

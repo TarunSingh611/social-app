@@ -1,6 +1,6 @@
 import { getUserByToken } from "../../utils/jwtUtils.mjs";
 import getFeedService from "../../services/feedService/getFeed.mjs";
-import {User} from "../../models/userModel.mjs";
+import User from "../../models/userModel.mjs";
 
 async function feedGet(req,res) {
     const token = req.header("jwttoken");

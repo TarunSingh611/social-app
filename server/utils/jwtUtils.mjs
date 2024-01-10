@@ -1,7 +1,6 @@
 
 import jwt from 'jsonwebtoken';
 import secrets from '../config/secrets.mjs';
-import { User } from '../models/userModel.mjs'; 
 
 const {JWT_SECRET: secretKey} = secrets;
 
