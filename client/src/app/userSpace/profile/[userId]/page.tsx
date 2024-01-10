@@ -4,7 +4,11 @@ import UserProfile from "@/components/profile";
 import apiGetUserProfileById from "@/api/user/apiGetProfileById";
 
 const  Profile = async ({ params }: { params: {userId: string } }) => {
-  const user = await apiGetUserProfileById(params.userId);
+  let user :any = null;
+  const result:any = await apiGetUserProfileById(params.userId);
+  if(result && result.statusCode === 200){
+   user = result.user
+  }
   console.log(user)
 return user ? <UserProfile user={user} /> : null;
   

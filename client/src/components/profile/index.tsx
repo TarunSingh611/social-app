@@ -12,8 +12,9 @@ const UserProfile = ({ user }: any) => {
 
   useEffect(() => {
     if(user){
+      console.log(user)
     let pno = Posts? Posts.length : 0;
-    apiGetUserPosts(user._id,pno)
+    apiGetUserPosts(user?._id,pno)
     .then((res:any)=>{
       if(res.statusCode === 200){
         setPost(res.posts);
