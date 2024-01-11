@@ -1,4 +1,5 @@
 import notificationService from "../../services/notificationService/notificationService.mjs";
+import { getUserByToken } from "../../utils/jwtUtils.mjs";
 
 const notificationController = {
   createNotification: async (req, res) => {
@@ -38,7 +39,11 @@ const notificationController = {
   },
 
   getAllNotifications: async (req, res) => {
-    const { userId, pno } = req.params;
+    const token = req.header("jwttoken");
+    const tokenData = await getUserByToken(token);
+    const userId = tokenData.userId;
+    const {pno } = req.params;
+
     const result = await notificationService.getAllNotifications(userId, pno);
     res.status(result.success ? 200 : 500).json(result);
   },

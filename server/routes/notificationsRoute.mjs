@@ -7,7 +7,7 @@ router.post("/delete-notification-by-id/:notificationId", notificationController
 router.post("/delete-all-notifications/:userId", notificationController.deleteAllNotifications);
 router.post("/mark-notification-as-read/:notificationId", notificationController.markNotificationAsRead);
 router.get("/get-unread-notifications/:userId/:pno", notificationController.getUnreadNotifications);
-router.get("/get-all-notifications/:userId/:pno", notificationController.getAllNotifications);
+router.get("/get-all-notifications/:pno", notificationController.getAllNotifications);
 
 
 export default router;

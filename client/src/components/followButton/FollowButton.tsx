@@ -10,18 +10,24 @@ import LoadingDots from "../misc/loadingDots";
 export default function FollowButton({ user ,setUser }: any) {
   const self = useSelector((state: any) => state.auth.user);
 
-  const show = user?._id !== self?._id;
+
   const [text, setText] = useState(
-    user?.followers?.includes(self._id) ? "Following" : user?.pendingFollowers?.includes(self._id) ? "Requested" : "Follow"
+    user?.followers?.includes(self?._id) ? "Following" : user?.pendingFollowers?.includes(self?._id) ? "Requested" : "Follow"
   );
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
 
-  const onClose = () => {
+  const onClose = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.stopPropagation();
     setIsOpen(false);
   };
+
+  const handleOnClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>{
+    e.stopPropagation();
+    setIsOpen(true);
+  }
 
   useEffect(() => {
   if(text==="Following"){
@@ -34,7 +40,8 @@ export default function FollowButton({ user ,setUser }: any) {
     setMessage("Are you sure you want to follow?");
   }
   },[text])
-  const onConfirm = () => {
+  const onConfirm = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.stopPropagation();
     setIsLoading(true);
     setIsOpen(false);
     switch(text)
@@ -89,17 +96,17 @@ export default function FollowButton({ user ,setUser }: any) {
 
 
   return (
-    show &&
+    self && user && self?._id !== user?._id &&
     <>
       <div
         className="bg-blue-500 cursor-pointer hover:bg-blue-600 text-white py-2 px-6 rounded-lg z-50"
-        onClick={() => setIsOpen(true)}
+        onClick={(e:any)=>handleOnClick(e)}
       >{isLoading?<LoadingDots/>:text}
       </div>
       <ConfirmOverlay
         isOpen={isOpen}
-        onClose={onClose}
-        onConfirm={onConfirm}
+        onClose={(e:any)=>onClose(e)}
+        onConfirm={(e:any) => onConfirm(e)}
         text={message}
         title="Confirmation"
         col="red"

@@ -2,8 +2,8 @@ import React from "react";
 
 interface OverlayProps {
   isOpen: boolean;
-  onClose: () => void;
-  onConfirm: () => void;
+  onClose: (e:any) => void;
+  onConfirm: (e:any) => void;
   title?: string;
   text?: string;
   col?: string;
@@ -19,13 +19,13 @@ const ConfirmOverlay: React.FC<OverlayProps> = ({
   col = "green",
   col2 = "slate",
 }) => {
-  const handleCancel = () => {
+  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     console.log("cancel");
-    onClose();
+    onClose(e);
   };
 
-  const handleConfirm = () => {
-    onConfirm();
+  const handleConfirm = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    onConfirm(e);
   };
 
   return (
@@ -37,13 +37,13 @@ const ConfirmOverlay: React.FC<OverlayProps> = ({
             <p className="text-gray-600 mb-8">{text}</p>
             <div className="flex justify-center">
               <button
-                onClick={handleCancel}
+                onClick={(e)=>handleCancel(e)}
                 className={`bg-${col2}-500 font-medium text-white mr-4 px-4 py-2 rounded-md focus:outline-none`}
               >
                 Cancel
               </button>
               <button
-                onClick={handleConfirm}
+                onClick={(e)=>handleConfirm(e)}
                 className={`bg-${col}-500 font-medium text-white px-4 py-2 rounded-md focus:outline-none`}
               >
                 Confirm

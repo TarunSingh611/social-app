@@ -2,11 +2,12 @@ import secrets from "@/config/secrets";
 import FollowButton from "@/components/followButton/FollowButton";
 import { useRouter } from "next/navigation";
 
+
 const UserCard = ({ user ,setUser}: any) => {
 
   const router = useRouter();
   const handleClick = () => {
-    router.push(`/userSpace/profile/${user._id}`);
+    router.push(`/userSpace/profile/${user._id}}`);
   }
 
   return (user &&
