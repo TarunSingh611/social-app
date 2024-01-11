@@ -10,7 +10,7 @@ const ProfileCard = ({ user, setUser = () => {} ,self={}}: any) => {
 
   return (user &&
     <div className="bg-whiterounded-lg relative shadow-md p-6">
-      <div className="absolute bg-gray-200 left-0 top-0  w-full h-40 lg:h-48 !object-cover">
+      <div className="absolute bg-gray-200 left-0 top-0  w-full h-48 sm:h-32 md:h-1/3 lg:h-32 !object-cover">
         <img
           className="w-full h-full object-cover"
           src={
@@ -45,7 +45,8 @@ const ProfileCard = ({ user, setUser = () => {} ,self={}}: any) => {
           {user?.fullName}
         </p>
             </div>
-        <div className="flex w-full flex-col md:w-7/12 sm:flex-row items-end space-x-4" >
+        <div className="flex w-full flex-col md:w-7/12 " >
+          <div className="flex h-full w-full  flex-col sm:flex-row items-end space-x-4">
             <p className="flex w-full md:w-1/3 items-center flex-col">
               <strong>{user?.followersCount}</strong>
               <strong>Followers</strong>
@@ -58,8 +59,10 @@ const ProfileCard = ({ user, setUser = () => {} ,self={}}: any) => {
               <strong>{user?.postsCount}</strong>
               <strong>Posts</strong>
             </p>
-          
-
+          </div>
+          <div className="mx-auto my-2">
+           {user?._id && self && self._id !== user._id && <FollowButton user={user} setUser={setUser} self={self} />}
+          </div>
         </div>
       </div>
       <div className="flex flex-col">

@@ -13,8 +13,12 @@ const UserProfile = ({ user ,self ={} }: any) => {
   const [localUser, setUser] = useState(user);
   const [Loading, setLoadingDots] = useState(true);
 
+  const handleSetUser = (user: any) => {
+    setUser({ ...localUser, ...user });
+  }
+
   useEffect(() => {
-    if (localUser) {
+    if (user) {
       let pno = Posts ? Posts.length : 0;
       setPrivate(false);
       apiGetUserPosts(user?._id, pno)
@@ -30,12 +34,14 @@ const UserProfile = ({ user ,self ={} }: any) => {
         })
         .finally(() => setLoadingDots(false));
     }
-  }, [localUser]);
+  }, [user]);
+
+
 
   return (
     <div className="midInfo">
-      {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-6"> */}
-      <ProfileCard user={localUser} setUser={setUser} />
+  
+      <ProfileCard user={localUser} setUser={handleSetUser} />
       {Loading ? (
         <div className="h-96 flex items-center justify-center">
           <div className="text-center">
