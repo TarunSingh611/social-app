@@ -1,7 +1,7 @@
 import NotificationModel from "../../models/notificationModel.mjs";
 
 const notificationService = {
-  createNotification: async (type,  content ,toUserId,fromUserId=null) => {
+  createNotification: async (type, content ,toUserId,fromUserId=null) => {
     try {
       const notification = new NotificationModel({
         type,
@@ -19,16 +19,27 @@ const notificationService = {
     }
   },
 
-deleteNotification: async (Type,userId,receiverId) => {
-  try {
-    const notifications = await NotificationModel.deleteMany({ Type,userId,receiverId });
-    return { success: true };
-  } catch (error) {
-    console.error("Error deleting notifications:", error);
-    return { success: false, error: "Internal Server Error" };
-  }
-    
-},
+  deleteNotification: async (type, to, from) => {
+    try {
+      console.log("Deleting notifications:", type, to, from);
+  
+      const notifications = await NotificationModel.deleteMany({ type, to, from });
+      
+      console.log("Delete result:", notifications);
+  
+      if (notifications.deletedCount > 0) {
+        console.log("Notifications deleted successfully.");
+        return { success: true };
+      } else {
+        console.log("No matching notifications found for deletion.");
+        return { success: false, error: "No matching notifications found." };
+      }
+    } catch (error) {
+      console.error("Error deleting notifications:", error);
+      return { success: false, error: "Internal Server Error" };
+    }
+  },
+  
   deleteNotificationbyId: async (notificationId) => {
     try {
       const notification = await NotificationModel.findByIdAndDelete(
@@ -48,7 +59,7 @@ deleteNotification: async (Type,userId,receiverId) => {
 
   deleteAllNotifications: async (userId) => {
     try {
-      const notifications = await NotificationModel.deleteMany({ to: userId });
+      const notifications = await NotificationModel.deleteMany({ to: userId, type: { $ne: 'FOLLOW_REQ' } });
       return { success: true };
     } catch (error) {
       console.error("Error deleting notifications:", error);
@@ -56,6 +67,17 @@ deleteNotification: async (Type,userId,receiverId) => {
     }
   },
 
+  deleteAllFollowRequests: async (userId) => {
+    try {
+      const notifications = await NotificationModel.deleteMany({ to: userId, type: 'FOLLOW_REQ' });
+      return { success: true };
+    } catch (error) {
+      console.error("Error deleting notifications:", error);
+      return { success: false, error: "Internal Server Error" };
+    }
+  },
+  
+  
   markNotificationAsRead: async (notificationId) => {
     try {
       const notification = await NotificationModel.findById(notificationId);
@@ -74,33 +96,71 @@ deleteNotification: async (Type,userId,receiverId) => {
     }
   },
 
-  getUnreadNotifications: async (userId,pno) => {
+  getFollowRequests: async (userId, pno) => {
     try {
-      const unreadNotifications = await NotificationModel.find({
+      const followRequests = await NotificationModel.find({
+        to: userId,
+        type: 'FOLLOW_REQ',
+      })
+        .sort({ createdAt: -1 }) 
+        .skip(pno)
+        .limit(10);
+  
+      return { success: true, followRequests };
+    } catch (error) {
+      console.error("Error getting follow requests:", error);
+      return { success: false, error: "Internal Server Error" };
+    }
+  },
+
+  getUnreadNotifications: async (userId, pno) => {
+    try {
+      const Notifications = await NotificationModel.find({
         to: userId,
         read: false,
-      }).sort(-1).skip(pno).limit(10);
+        type: { $ne: 'FOLLOW_REQ' },
+      })
+        .sort({ createdAt: -1 })
+        .skip(pno)
+        .limit(10);
 
-      return { success: true, unreadNotifications };
+        
+        const followReq =await notificationService.getFollowRequests(userId, pno);
+        const data={
+          followReq,
+          Notifications 
+        }
+  
+      return { success: true, data };
     } catch (error) {
       console.error("Error getting unread notifications:", error);
       return { success: false, error: "Internal Server Error" };
     }
   },
-
-  getAllNotifications: async (userId ,pno) => {
+  
+  getAllNotifications: async (userId, pno) => {
     try {
-      const AllNotifications = await NotificationModel.find({
-        to: userId,
-      }).sort(-1).skip(pno).limit(10)
-      ;
 
-      return { success: true, AllNotifications};
+      const Notifications = await NotificationModel.find({
+        to: userId,type: { $ne: 'FOLLOW_REQ' }
+      })
+        .sort({ createdAt: -1 }) 
+        .skip(pno)
+        .limit(10);
+
+        const followReq =await notificationService.getFollowRequests(userId, pno);
+        const data={
+          followRequests : followReq.followRequests,
+          Notifications
+        }
+  
+      return { success: true, data };
     } catch (error) {
-      console.error("Error getting unread notifications:", error);
+      console.error("Error getting all notifications:", error);
       return { success: false, error: "Internal Server Error" };
     }
   },
+  
 };
 
 export default notificationService;

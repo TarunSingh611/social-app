@@ -9,6 +9,7 @@ const navigationItems = [
   { path: "/userSpace/feed", label: "Feed" },
   { path: "/userSpace/post", label: "Post" },
   { path: "/userSpace/chats", label: "Chats" },
+  { path:  "/userSpace/notification",label:"Alerts"},
   { path: "/userSpace/explore", label: "Explore" },
   { path: "/userSpace/setting", label: "Setting" },
 ];

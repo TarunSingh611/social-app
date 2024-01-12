@@ -5,7 +5,7 @@ const apiGetNotifications = async (pno : number) => {
   const options = {
     method: 'GET' as const,
   };
-  return await makeApiRequest(`/notifications/get-all-notifications/pno=${pno}`, options);
+  return await makeApiRequest(`/notifications/get-all-notifications/${pno}`, options);
 };
 
 export default apiGetNotifications;

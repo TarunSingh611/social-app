@@ -8,7 +8,7 @@ const generateTargetUserObject = (user) => {
     fullName,
     userVerified,
     profilePicture,
-  
+
     gender,
     birthday,
     pendingFollowers,
@@ -16,7 +16,6 @@ const generateTargetUserObject = (user) => {
     following,
     accountType,
     friends,
-
   } = user;
 
   return {
@@ -33,10 +32,8 @@ const generateTargetUserObject = (user) => {
     following,
     accountType,
     friends,
-
   };
 };
-
 
 const followService = {
   sendFollowRequest: async (senderId, receiverId) => {
@@ -62,7 +59,7 @@ const followService = {
       ) {
         receiver.pendingFollowers.push(senderId);
         notificationService.createNotification(
-          "FOLLOW_SENT",
+          "FOLLOW_REQ",
           `${sender.username} sent you a follow request.`,
           receiverId,
           senderId
@@ -111,18 +108,19 @@ const followService = {
 
       await Promise.all([user.save(), follower.save()]);
       followService.makeFriends(userId, followerId);
+
       notificationService.createNotification(
-        "FOLLOW_RECEIVED",
-        `${follower.username} is following you.`,
-        userId,
-        followerId
-      );
-      notificationService.createNotification(
-        "FOLLOW_SENT",
+        "FOLLOW_ACCEPT",
         `${user.username} accepted your follow request.`,
         followerId,
         userId
       );
+
+      notificationService.deleteNotification(
+        "FOLLOW_REQ",
+        userId,
+        followerId
+      )
 
       const userFollowData = {
         pendingFollowers: user.pendingFollowers,
@@ -158,6 +156,11 @@ const followService = {
 
       await user.save();
 
+      notificationService.deleteNotification(
+        "FOLLOW_REQ",
+        userId,
+        followerId
+      )
       const userFollowData = {
         pendingFollowers: user.pendingFollowers,
         followers: user.followers,
@@ -193,7 +196,7 @@ const followService = {
 
       await receiver.save();
       notificationService.deleteNotification(
-        "FOLLOW_SENT",
+        "FOLLOW_REQ",
         receiverId,
         senderId
       );
@@ -233,16 +236,17 @@ const followService = {
 
       await Promise.all([user.save(), targetUser.save()]);
 
+
       notificationService.deleteNotification(
         "FOLLOW_SENT",
-        userId,
-        targetUserId
+        targetUserId,
+        userId
       );
 
       notificationService.deleteNotification(
-        "FOLLOW_RECEIVED",
+        "FOLLOW_ACCEPT",
+        userId,
         targetUserId,
-        userId
       );
 
       const tUser = generateTargetUserObject(targetUser);
