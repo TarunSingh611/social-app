@@ -91,18 +91,20 @@ const followService = {
 
   acceptFollowRequest: async (userId, followerId) => {
     try {
-      const [user, follower] = await Promise.all([
-        User.findById(userId),
-        User.findById(followerId),
-      ]);
+      const user = await User.findById(userId);
+      const follower = await User.findById(followerId);
+
+      console.log(followerId)
+      console.log(follower)
 
       if (!user || !follower) {
         throw new Error("User not found");
       }
-
       user.pendingFollowers = user.pendingFollowers.filter(
-        (id) => id !== followerId
+        (id) => id.toString() !== followerId
       );
+
+
       user.followers.push(followerId);
       follower.following.push(userId);
 
@@ -151,7 +153,7 @@ const followService = {
       }
 
       user.pendingFollowers = user.pendingFollowers.filter(
-        (id) => id !== followerId
+        (id) => id.toString() !== followerId
       );
 
       await user.save();

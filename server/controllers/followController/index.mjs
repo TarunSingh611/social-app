@@ -1,4 +1,5 @@
 import followService from "../../services/folowRequests/followRequests.mjs";
+import { getUserByToken } from "../../utils/jwtUtils.mjs";
 
 const followController = {
   sendFollowRequest: async (req, res) => {
@@ -8,14 +9,18 @@ const followController = {
   },
 
   acceptFollowRequest: async (req, res) => {
-    const { userId, followerId } = req.params;
-    const result = await followService.acceptFollowRequest(userId, followerId);
+    const {followerId } = req.params;
+    const token = req.header("jwttoken");
+    const tokenData = await getUserByToken(token)
+    const result = await followService.acceptFollowRequest(tokenData.userId, followerId);
     res.status(result.statusCode).json(result);
   },
 
   rejectFollowRequest: async (req, res) => {
-    const { userId, followerId } = req.params;
-    const result = await followService.rejectFollowRequest(userId, followerId);
+    const {followerId } = req.params;
+    const token = req.header("jwttoken");
+    const tokenData = await getUserByToken(token)
+    const result = await followService.rejectFollowRequest(tokenData.userId, followerId);
     res.status(result.statusCode).json(result);
   },
 

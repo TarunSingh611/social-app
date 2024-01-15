@@ -14,6 +14,7 @@ interface AlertsProps {
 }
 
 const Alerts: React.FC<AlertsProps> = ({ alerts }) => {
+  console.log(alerts);
   return (
     <div>
 

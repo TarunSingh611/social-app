@@ -104,7 +104,8 @@ const notificationService = {
       })
         .sort({ createdAt: -1 }) 
         .skip(pno)
-        .limit(10);
+        .limit(10)
+        .populate('from', 'fullName username profilePicture accountType following followers friends pendingFollowers');
   
       return { success: true, followRequests };
     } catch (error) {
@@ -128,7 +129,7 @@ const notificationService = {
         const followReq =await notificationService.getFollowRequests(userId, pno);
         const data={
           followReq,
-          Notifications 
+          alerts:Notifications 
         }
   
       return { success: true, data };
@@ -151,7 +152,7 @@ const notificationService = {
         const followReq =await notificationService.getFollowRequests(userId, pno);
         const data={
           followRequests : followReq.followRequests,
-          Notifications
+          alerts:Notifications
         }
   
       return { success: true, data };

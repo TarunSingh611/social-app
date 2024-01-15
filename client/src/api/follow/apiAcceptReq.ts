@@ -1,6 +1,6 @@
 import makeApiRequest from '@/services/apiReq';
 
-const apiAcceptReq = async (userId :any ,targetId:any) => {
+const apiAcceptReq = async (targetId:any) => {
   
   const options = {
     method: 'POST' as const,
@@ -8,7 +8,7 @@ const apiAcceptReq = async (userId :any ,targetId:any) => {
       'Content-Type': 'application/json',
     }
   };
-  return await makeApiRequest(`/follow/accept-request/${userId}/${targetId}`, options);
+  return await makeApiRequest(`/follow/accept-request/${targetId}`, options);
 };
 
 export default apiAcceptReq;
