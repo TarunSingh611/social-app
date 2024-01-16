@@ -15,6 +15,7 @@ const postSchema = new mongoose.Schema({
     location: { type: String, trim: true, default: "" },
   },
   isArchived: { type: Boolean, default: false },
+  liked: { type: Boolean, default: false },
 });
 
 const PostModel = mongoose.model("Post", postSchema);

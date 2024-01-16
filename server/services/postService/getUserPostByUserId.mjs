@@ -32,16 +32,15 @@ const getUserPostsByUserId = async (userId, tokenId, pno = 0, pageSize = 9) => {
       .populate('user', 'fullName username profilePicture accountType following followers friends pendingFollowers');
 
 
-      posts.forEach(post => {
-        try{
-        if(like.findOne({ contentId: post._id, userId: tokenId })) {
-          post.liked = true;
+      for (const post of posts) {
+        try {
+          const like = await LikeModel.findOne({ contentId: post._id, userId: tokenId });
+          post.liked = Boolean(like);
+
+        } catch (error) {
+          console.log("Error in like:getFeed", error);
         }
       }
-      catch {
-        console.log("error in like:getUserPostById");
-      }
-      })
       
 
     return { statusCode: 200, posts };

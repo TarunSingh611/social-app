@@ -21,15 +21,15 @@ async function getExplore(user, page = 1, pageSize = 9) {
       return (post.user.accountType === 'public' || post.user.accountType === 'business');
     });
  
-    filteredPosts.forEach(post => {
-      try{
-      if(like.findOne({ contentId: post._id, userId:user._id })) {
-        post.liked = true;
+    for (const post of filteredPosts) {
+      try {
+        const like = await LikeModel.findOne({ contentId: post._id, userId: tokenId });
+        post.liked = Boolean(like);
+
+      } catch (error) {
+        console.log("Error in like:getFeed", error);
       }
-    }catch(error){
-      console.log("error in like:getExplore");
     }
-    })
     return { success: true, posts: filteredPosts , statusCode: 200 };
 
   } catch (error) {

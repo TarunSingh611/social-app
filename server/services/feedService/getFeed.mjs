@@ -1,4 +1,5 @@
 import PostModel from "../../models/postModel.mjs";
+import LikeModel from "../../models/likeModels.mjs";
 
 async function getFeed(user, tokenId, page = 1, pageSize = 9) {
   try {
@@ -17,17 +18,15 @@ async function getFeed(user, tokenId, page = 1, pageSize = 9) {
       .populate('user', 'fullName username profilePicture accountType following followers friends pendingFollowers');
 
       
-      posts.forEach(post => {
-        try{
-        if(like.findOne({ contentId: post._id, userId: tokenId })) {
-          post.liked = true;
+      for (const post of posts) {
+        try {
+          const like = await LikeModel.findOne({ contentId: post._id, userId: tokenId });
+          post.liked = Boolean(like);
+
+        } catch (error) {
+          console.log("Error in like:getFeed", error);
         }
       }
-      catch{
-        console.log("error in like:getFeed");
-      }
-      })
-
     return { success: true, data: posts, statusCode: 200 };
   } catch (error) {
     console.error("Error getting feed:", error);
