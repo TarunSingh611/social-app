@@ -11,7 +11,7 @@ const UserCard = ({ user ,setUser}: any) => {
   }
 
   return (user &&
-    <div className="flex bg-whiterounded-lg shadow-md p-2 w-11/12 hover:bg-slate-100 hover:cursor-pointer" onClick={handleClick}>
+    <div className="flex bg-whiterounded-lg shadow-md p-2 w-11/12 hover:cursor-pointer" onClick={handleClick}>
       <div className="w-1/12 mx-4 my-2 h-auto !object-cover">
         <img
           className="w-full h-full object-cover rounded-full"

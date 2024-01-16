@@ -1,3 +1,6 @@
+import { getUserByToken } from "../../utils/jwtUtils.mjs";
+import likeService from "../../services/reactionService/Like.mjs";
+
 const reactionCreate = async (req, res) => {
   res.send("reactionCreate");
 };  
@@ -18,6 +21,20 @@ const reactionGetAll = async (req, res) => {
   res.send("reactionGetAll");
 }
 
+const like = async (req, res) => {
+  const token = req.header("jwttoken");
+  const tokenData = await getUserByToken(token);
+  const {contentType , contentId} = req.body
+
+  if (!tokenData) {
+    return res.status(403).json({ message: "Forbidden: Invalid username" });
+  }
+
+  const result = await likeService.like(contentType, contentId,tokenData.userId);
+ 
+   res.send(result);
+
+}
 
   export {
     reactionCreate,
@@ -25,4 +42,5 @@ const reactionGetAll = async (req, res) => {
     reactionGet,
     reactionUpdate,
     reactionGetAll,
+    like
   };

@@ -1,6 +1,7 @@
 import { userGetUserName } from "../../controllers/userController/userGetUserName.mjs";
 import PostModel from "../../models/postModel.mjs";
 import User from "../../models/userModel.mjs";
+import like from "../../services/reactionService/Like.mjs";
 
 const getUserPostsByUserId = async (userId, tokenId, pno = 0, pageSize = 9) => {
   try {
@@ -15,7 +16,6 @@ const getUserPostsByUserId = async (userId, tokenId, pno = 0, pageSize = 9) => {
         if (user) {
           if (user.followers.includes(tokenId) || user.accountType === "business" || user.accountType === "public") {
             flag = true;
-            console.log("flag4/5", flag);
           } 
         }
       }
@@ -30,6 +30,19 @@ const getUserPostsByUserId = async (userId, tokenId, pno = 0, pageSize = 9) => {
       .skip(pno)
       .limit(pageSize)
       .populate('user', 'fullName username profilePicture accountType following followers friends pendingFollowers');
+
+
+      posts.forEach(post => {
+        try{
+        if(like.findOne({ contentId: post._id, userId: tokenId })) {
+          post.liked = true;
+        }
+      }
+      catch {
+        console.log("error in like:getUserPostById");
+      }
+      })
+      
 
     return { statusCode: 200, posts };
   } catch (error) {

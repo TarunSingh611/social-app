@@ -1,6 +1,6 @@
 import PostModel from "../../models/postModel.mjs";
 
-async function getFeed(user, page = 1, pageSize = 9) {
+async function getFeed(user, tokenId, page = 1, pageSize = 9) {
   try {
     const skipCount = (page - 1) * pageSize;
 
@@ -15,6 +15,18 @@ async function getFeed(user, page = 1, pageSize = 9) {
       .skip(skipCount)
       .limit(pageSize)
       .populate('user', 'fullName username profilePicture accountType following followers friends pendingFollowers');
+
+      
+      posts.forEach(post => {
+        try{
+        if(like.findOne({ contentId: post._id, userId: tokenId })) {
+          post.liked = true;
+        }
+      }
+      catch{
+        console.log("error in like:getFeed");
+      }
+      })
 
     return { success: true, data: posts, statusCode: 200 };
   } catch (error) {

@@ -15,10 +15,21 @@ async function getExplore(user, page = 1, pageSize = 9) {
     .limit(pageSize)
     .populate('user', 'fullName username profilePicture accountType following followers friends pendingFollowers');
 
+   
+
     const filteredPosts = posts.filter(post => {
       return (post.user.accountType === 'public' || post.user.accountType === 'business');
     });
  
+    filteredPosts.forEach(post => {
+      try{
+      if(like.findOne({ contentId: post._id, userId:user._id })) {
+        post.liked = true;
+      }
+    }catch(error){
+      console.log("error in like:getExplore");
+    }
+    })
     return { success: true, posts: filteredPosts , statusCode: 200 };
 
   } catch (error) {

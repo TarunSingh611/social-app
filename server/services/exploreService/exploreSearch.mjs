@@ -24,7 +24,7 @@ async function exploreSearch(data, type) {
 export default exploreSearch;
 
   /////////////////////////////////////////////////////////////////////////////////////
-async function getUserName(text) {
+async function getUserName(text, tokenId) {
     try {
       const isEmail = text.includes("@");
       const regex = new RegExp(`^${text}$`, "i");
@@ -44,7 +44,7 @@ async function getUserName(text) {
     }
   }
     /////////////////////////////////////////////////////////////////////////////////////
-  async function getFullName(text) {
+  async function getFullName(text, tokenId) {
     try {
       const [firstName, middleName, lastName] = text;
       const filters = [
@@ -65,7 +65,7 @@ async function getUserName(text) {
     }
   }
   /////////////////////////////////////////////////////////////////////////////////////
-  async function getPostsByHashtags(words) {
+  async function getPostsByHashtags(words,tokenId) {
     try {
       if (!words || words.length === 0) {
         throw new Error("No words found in the input text");
@@ -100,6 +100,17 @@ async function getUserName(text) {
         const priorityComparison = b.hashTags.length - a.hashTags.length;
         return priorityComparison !== 0 ? priorityComparison : b.createdDate - a.createdDate;
       });
+
+      filteredPosts.forEach(post => {
+        try{
+        if(like.findOne({ contentId: post._id, userId:tokenId })) {
+          post.liked = true;
+        }
+      }
+      catch{
+        console.log("error in like : ExploreSearch")
+      }
+      })
   
       return filteredPosts || [];
     } catch (error) {

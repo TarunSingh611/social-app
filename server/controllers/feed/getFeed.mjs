@@ -12,7 +12,7 @@ async function feedGet(req,res) {
     if (!user) {
       throw new Error('User not found');
     }
-    const result = await getFeedService(user);
+    const result = await getFeedService(user , tokenData.userId);
     res.json(result);
 }
 export { feedGet}

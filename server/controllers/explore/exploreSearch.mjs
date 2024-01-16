@@ -15,7 +15,7 @@ async function exploreSearch(req,res) {
     }
     const type = req.query.t;
     const data = req.query.q;
-    const result = await getExploreSearch(data,type);
+    const result = await getExploreSearch(data,type,tokenData.userId);
     res.json(result);
 }
 export { exploreSearch}

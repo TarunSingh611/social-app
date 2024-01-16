@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 
 const postSchema = new mongoose.Schema({
   image: { type: String, trim: true , default: ""},
-  likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Like" }],
-  comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
+  likeCount: { type: Number, default: 0 },
+  commentCount: { type: Number, default: 0 },
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   hashTags: [{ type: mongoose.Schema.Types.ObjectId, ref: "HashTag" }],
   createdDate: { type: Date, default: Date.now },
