@@ -1,4 +1,5 @@
 import PostModel from "../../models/postModel.mjs";
+import LikeModel from "../../models/likeModels.mjs";
 
 async function getExplore(user, page = 1, pageSize = 9) {
   try {
@@ -23,11 +24,11 @@ async function getExplore(user, page = 1, pageSize = 9) {
  
     for (const post of filteredPosts) {
       try {
-        const like = await LikeModel.findOne({ contentId: post._id, userId: tokenId });
+        const like = await LikeModel.findOne({ contentId: post._id, userId:user._id });
         post.liked = Boolean(like);
 
       } catch (error) {
-        console.log("Error in like:getFeed", error);
+        console.log("Error in like:getExplpore", error);
       }
     }
     return { success: true, posts: filteredPosts , statusCode: 200 };

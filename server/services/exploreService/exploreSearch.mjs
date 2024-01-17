@@ -1,6 +1,7 @@
 import User from "../../models/userModel.mjs";
 import HashTag  from "../../models/hashTagModel.mjs";
-async function exploreSearch(data, type) {
+import LikeModel from "../../models/likeModels.mjs";
+async function exploreSearch(data, type ,tokenId) {
    
     if (!data) {
       return { statusCode: 400 };
@@ -11,7 +12,7 @@ async function exploreSearch(data, type) {
     const result = await getUserName(dataArray[0]);
     return { type, statusCode: 200, result };
   } else if (type == "hashtag") {
-    const result = await getPostsByHashtags(dataArray, type);
+    const result = await getPostsByHashtags(dataArray,tokenId);
     return { type, statusCode: 200, result };
   } else if (type == "name") {
     const result = await getFullName(dataArray);
@@ -24,7 +25,7 @@ async function exploreSearch(data, type) {
 export default exploreSearch;
 
   /////////////////////////////////////////////////////////////////////////////////////
-async function getUserName(text, tokenId) {
+async function getUserName(text) {
     try {
       const isEmail = text.includes("@");
       const regex = new RegExp(`^${text}$`, "i");
@@ -44,7 +45,7 @@ async function getUserName(text, tokenId) {
     }
   }
     /////////////////////////////////////////////////////////////////////////////////////
-  async function getFullName(text, tokenId) {
+  async function getFullName(text) {
     try {
       const [firstName, middleName, lastName] = text;
       const filters = [

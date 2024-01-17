@@ -15,10 +15,6 @@ const GridPost = ({ posts }: { posts: any }) => {
     setLocalPosts((prevPosts: any) => prevPosts.map((p: any) => { return Card._id === p._id ? {...p, ...post} : p }))
   }
 
-  useEffect(() => {
-    console.log(LocalPosts)
-  },[LocalPosts])
-
 
   return (Card ? (<>
     <PostCard post={Card} setPost={setPost}/>
