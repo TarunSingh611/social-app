@@ -16,7 +16,7 @@ const shareIconUrl = secrets.NEXT_PUBLIC_ICON_URL + "share.png";
 const reportIconUrl = secrets.NEXT_PUBLIC_ICON_URL + "menu.png";
 const fullScreenIconUrl = secrets.NEXT_PUBLIC_ICON_URL + "fullscreen.png";
 
-const PostCard = ({ post }: any) => {
+const PostCard = ({ post ,setPost = ()=> {} }: any) => {
     const [isFullScreen, setIsFullScreen] = useState(false);
     const [user, setUser] = useState({} as any);
     const [LocalPost, setLocalPost] = useState(post);
@@ -28,12 +28,16 @@ const PostCard = ({ post }: any) => {
     const handleLike = () => {
       apiLike("post", LocalPost._id)
         .then((res: any) => {
-          console.log(res.flag);
           if (res.statusCode === 200) {
             setLocalPost((prevPost: any) => ({
               ...prevPost,
-              liked: res.flag ? true : false,
+              liked: res.flag===1 ? true : false,
+              likeCount: res.likeCount,
             }));
+            setPost({
+                liked: res.flag===1 ? true : false,
+                likeCount: res.likeCount})
+
           } else {
             toast.error(res.message);
           }
@@ -48,14 +52,21 @@ const PostCard = ({ post }: any) => {
     const handleReport = () => {};
 
     useEffect(() => {
-        console.log(LocalPost);
-    }, [LocalPost]);
+        const fetchUser = async () => {
+          const res:any = await apiGetUserName(post?.user?._id)
+          setUser(res.user)
+        }
+        fetchUser()
+      },[post?.user?._id])
+
+
+
 
     return (
         <>
             <div className={styles.postCard}>
                 <div className="w-full flex justify-between border-b border-gray-200">
-                    {LocalPost && <UserCard user={user} setUser={setUser} />}
+                { user?._id && <UserCard user={user} setUser={setUser}/>}
 
                     <button
                         onClick={handleReport}
@@ -181,6 +192,7 @@ PostCard.propTypes = {
         image: PropTypes.string.isRequired,
         caption: PropTypes.string.isRequired,
     }).isRequired,
+    setPost : PropTypes.func 
 };
 
 export default PostCard;

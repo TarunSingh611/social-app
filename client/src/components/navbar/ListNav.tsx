@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { useSelector } from "react-redux";  // Import the useSelector hook
+import { useSelector } from "react-redux"; 
 import Logoutconfirm from "@/components/logout/LogoutConfirm";
 
 const navigationItems = [

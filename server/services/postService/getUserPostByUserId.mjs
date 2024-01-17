@@ -1,7 +1,8 @@
 import { userGetUserName } from "../../controllers/userController/userGetUserName.mjs";
 import PostModel from "../../models/postModel.mjs";
 import User from "../../models/userModel.mjs";
-import like from "../../services/reactionService/Like.mjs";
+import LikeModel from "../../models/likeModels.mjs";
+
 
 const getUserPostsByUserId = async (userId, tokenId, pno = 0, pageSize = 9) => {
   try {

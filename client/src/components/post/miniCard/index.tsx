@@ -20,7 +20,7 @@ const MiniCard = ({ post, setFullCard }: { post: any; setFullCard: any }) => {
     setFullCard(post);
   };
 
-  return (
+  return (post &&
     <div
       className={styles.miniCard}
       onMouseEnter={handleMouseEnter}
@@ -36,8 +36,8 @@ const MiniCard = ({ post, setFullCard }: { post: any; setFullCard: any }) => {
       />
       {isHovered && (
         <div className={styles.overlay}>
-          <p>{post.likes.length} Likes</p>
-          <p>{post.comments.length} Comments</p>
+          <p>{post.likeCount || 0} Likes</p>
+          <p>{post.commentCount || 0} Comments</p>
         </div>
       )}
     </div>
@@ -48,8 +48,8 @@ MiniCard.propTypes = {
   post: PropTypes.shape({
     image: PropTypes.string.isRequired,
     caption: PropTypes.string.isRequired,
-    likes: PropTypes.array.isRequired,
-    comments: PropTypes.array.isRequired,
+    likeCount :PropTypes.number.isRequired,
+    commentCount: PropTypes.number.isRequired,
   }).isRequired,
   setFullCard: PropTypes.func.isRequired,
 };
