@@ -1,0 +1,124 @@
+.sidePanel {
+    background-color: #dfdfe1;
+    z-index: 1;
+    height: calc(100%);
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    border-bottom-right-radius: 20px;
+    border-top-right-radius: 20px;
+    transition: all 3s ease-in-out;
+}
+
+.hideSidePanel {
+    transform: translateX(calc(-100% + 25px));
+    transition: all 3s ease-in-out;
+}
+
+.toggle {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    mix-blend-mode: multiply;
+    transform: translateY(-50%);
+    transition: all 3s ease-in-out;
+}
+
+.toggle img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    transition: all 3s ease-in-out;
+}
+
+.hideSidePanel .toggle img {
+    transform: rotate(180deg);
+    transition: all 3s ease-in-out;
+}
+
+.panelContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.head {
+    height: 30px;
+    width: 100%;
+    display: flex;
+    background-color: #4f5b7d;
+    font:  bolder 16px/30px  Arial, sans-serif;
+    text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+    color: #333;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.foot {
+    height: 20px;
+    width: 100%;
+    background-color: #4f5b7d;
+    color: #333;
+    font: bold 12px "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+        sans-serif;
+    text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.head,
+.foot {
+    position: relative;
+    overflow: hidden;
+}
+
+.head,
+.foot {
+    position: relative;
+    overflow: hidden;
+}
+
+.head::after,
+.foot::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+            -45deg,
+            transparent 30%,
+            #dfdfe1 50%,
+            transparent 70%
+        ),
+        linear-gradient(-45deg, transparent 30%, #dfdfe1 50%, transparent 70%),
+        linear-gradient(-45deg, transparent 30%, #dfdfe1 50%, transparent 70%);
+    background-size: 100% 30px;
+    animation: metallicShineAfter 3s infinite linear;
+}
+
+@keyframes metallicShineAfter {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.body {
+    height: calc(100% - 50px);
+    width: 100%;
+}
+
+
+.sidePaneLoading{
+ display :flex;
+ position: absolute;
+ width: 100%;
+ justify-content: center;
+ align-items: center;
+ z-index:-1;
+ height: calc(100% - 54px);
+}

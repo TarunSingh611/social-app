@@ -7,6 +7,8 @@ import styles from "./PostCard.module.css";
 import PropTypes from "prop-types";
 import apiGetUserName from "@/api/user/apiGetUserName";
 import apiLike from "@/api/Reaxtion/Like";
+import { useDispatch } from "react-redux";
+import { setSidePaneOpen , setSidePaneHead , setSidePaneBody , setSidePaneFoot} from "@/redux/slicers/sidePaneSlice";
 import { toast } from "react-toastify";
 
 const likeIconUrl = secrets.NEXT_PUBLIC_ICON_URL + "heart.png";
@@ -17,9 +19,11 @@ const reportIconUrl = secrets.NEXT_PUBLIC_ICON_URL + "menu.png";
 const fullScreenIconUrl = secrets.NEXT_PUBLIC_ICON_URL + "fullscreen.png";
 
 const PostCard = ({ post ,setPost = ()=> {} }: any) => {
+    const dispatch = useDispatch();
     const [isFullScreen, setIsFullScreen] = useState(false);
     const [user, setUser] = useState({} as any);
     const [LocalPost, setLocalPost] = useState(post);
+   
 
     const handleFullScreenToggle = () => {
         setIsFullScreen(!isFullScreen);
@@ -45,7 +49,13 @@ const PostCard = ({ post ,setPost = ()=> {} }: any) => {
     };
     
 
-    const handleComment = () => {};
+    const handleComment = (post:any) => {
+        dispatch(setSidePaneOpen(true));
+        dispatch(setSidePaneHead("Comments"));
+        dispatch(setSidePaneBody({ postId: post._id }));
+        dispatch(setSidePaneFoot({ likeCount: post.likeCount || 0, commentCount: post.commentCount || 0 }));
+
+    };
 
     const handleShare = () => {};
 
@@ -138,7 +148,7 @@ const PostCard = ({ post ,setPost = ()=> {} }: any) => {
                                 </div>
                                 <div className="flex flex-col justify-center">
                                     <button
-                                        onClick={handleComment}
+                                        onClick={()=>handleComment(LocalPost)}
                                         className={styles.iconButton}
                                     >
                                         <Image

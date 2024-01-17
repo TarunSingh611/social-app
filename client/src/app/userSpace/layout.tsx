@@ -8,7 +8,8 @@ import { getToken } from "@/services/auth";
 import { toast } from "react-toastify";
 import apiGetProfile from "@/api/user/apiGetProfile";
 import apiGetNotifications from "@/api/notification/apiGetNotifications";
-import  {setNotifications} from "@/redux/slicers/notificationSlice";
+import { setNotifications } from "@/redux/slicers/notificationSlice";
+import SidePanel from "@/components/sidePanel";
 export default function UserSpaceLayout({
     children,
 }: {
@@ -38,7 +39,7 @@ export default function UserSpaceLayout({
 
             apiGetNotifications(0)
                 .then((res: any) => {
-                  if (res.success) {
+                    if (res.success) {
                         dispatch(setNotifications(res.data));
                     }
                 })
@@ -50,11 +51,18 @@ export default function UserSpaceLayout({
 
     return (
         <div className="authUser flex">
-            <div className="w-3/12">
+            <div className="w-2/12">
                 <ListNav />
             </div>
-            <div className="bg-gray-300 w-9/12">{children}</div>
-
+            <div className="bg-gray-300 w-7/12 z-50">{children}</div>
+            <div className="w-3/12 p-1 pl-0 relative">
+                <div className="absolute flex items-center justify-center h-full w-full">
+                    <p className="text-xl text-gray-300 font-bold border-2 border-dotted border-gray-300 p-2">
+                        Side Panel
+                    </p>
+                </div>
+                <SidePanel/>
+            </div>
         </div>
     );
 }
