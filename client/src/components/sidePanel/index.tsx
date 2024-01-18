@@ -1,5 +1,4 @@
 "use client";
-import { useEffect, useState } from "react";
 import style from "./sidePanel.module.css";
 import secrets from "@/config/secrets";
 import { useDispatch, useSelector } from "react-redux";

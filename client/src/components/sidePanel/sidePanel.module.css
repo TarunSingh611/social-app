@@ -122,3 +122,87 @@
  z-index:-1;
  height: calc(100% - 54px);
 }
+
+
+
+/* ////////////////Comments Pane  */
+
+.commentsPane {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .commentsList {
+    flex: 1;
+    overflow-y: auto; 
+    padding: 16px;
+  }
+  
+
+  .addComment {
+    display: flex;
+    flex-direction: column;
+    margin-top: 16px;
+  }
+  
+  .addComment textarea {
+    padding: 8px;
+    border: 1px solid #ccc;
+    font-size: small;
+    color: #4f5b7d;
+    resize: none; 
+  }
+  
+  .addComment button {
+    background-color: #7085997c;
+    color: white;
+    border: none;
+    padding: 2px 4px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .addComment button:hover {
+    background-color: rgb(27, 127, 209);
+  }
+  
+
+  .commentItem {
+    margin-bottom: 6px;
+    padding: 6px;
+    background-color: #ffffff;
+    border-radius: 4px;
+  }
+  
+  .commentAuthor {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    flex-direction: row;
+  }
+  
+  .commentAuthor img {
+    width: 32px;
+    border-radius: 50%;
+  }
+
+  .commentAuthor p {
+    font-weight: bold;
+    font-size: small;
+    color: #4f5b7d;
+    margin: 4px;
+  }
+
+  .commentBody {
+    margin-left: 16px;
+    padding : 6px;
+  }
+  
+  .commentDate {
+    color: #888;
+    font-size: 8px;
+    margin-left:auto;
+    text-align: right;
+  }
+  

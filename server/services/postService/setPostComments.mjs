@@ -1,10 +1,26 @@
-import Comment from "../../models/commentModel.mjs";
-import Post from "../../models/postModel.mjs";
+import CommentModel from "../../models/commentModel.mjs";
 
-const getPostComments = async (postId) => {
+const getPostComments = async (postId, order, cno) => {
   try {
-    const post = await Post.findById(postId).populate("comments");
-    return { statusCode: 200, comments: post.comments };
+    const populateReplies = async (comment) => {
+      const replies = await CommentModel.find({ parentCommentId: comment._id });
+      comment.replies = await Promise.all(replies.map(populateReplies));
+      return comment;
+    };
+
+    const sortOrder = order === -1 ? 'desc' : 'asc';
+
+    const commentsWithReplies = await CommentModel.find({ post : postId })
+      .sort({ createdDate: sortOrder })
+      .skip(cno)
+      .limit(10)
+      .populate("user", "fullName username profilePicture accountType following followers friends pendingFollowers")
+      .exec();
+
+    const populatedComments = await Promise.all(
+      commentsWithReplies.map(populateReplies)
+    );
+    return { statusCode: 200, comments: populatedComments };
   } catch (error) {
     console.error("Error getting post comments:", error);
     throw error;
@@ -13,26 +29,28 @@ const getPostComments = async (postId) => {
 
 const postPostComments = async (postId, userId, data) => {
   try {
-    const comment = new Comment({ postId, userId, data });
+    const comment = new CommentModel({
+      post: postId,
+      user: userId,
+      body: data,
+    });
 
     await comment.save();
-
-    await Post.findByIdAndUpdate(postId, { $push: { comments: comment._id } });
-
-    return { statusCode: 200 };
+    const populatedComment = await CommentModel.findById(comment._id).populate("user", "fullName username profilePicture accountType following followers friends pendingFollowers");
+    return { statusCode: 200, comment: populatedComment };
   } catch (error) {
     console.error("Error posting comment:", error);
-    throw error;
   }
 };
 
-const putPostComments = async ( userId, commentId) => {
+const putPostComments = async (userId, commentId, body) => {
   try {
-    const comment = await Comment.findById(commentId);
+    const comment = await CommentModel.findById(commentId);
     if (userId !== comment.userId) {
       return { statusCode: 403 };
     }
-    await Comment.findByIdAndUpdate(commentId, { body });
+
+    await CommentModel.findByIdAndUpdate(commentId, { body });
 
     return { statusCode: 200 };
   } catch (error) {
@@ -43,20 +61,33 @@ const putPostComments = async ( userId, commentId) => {
 
 const deletePostComments = async (userId, postId, commentId) => {
   try {
-    const comment = await Comment.findById(commentId);
-    const post = await Post.findById(postId);
-    if (userId === comment.userId || userId === post.user) {
-      await Post.findByIdAndUpdate(postId, { $pull: { comments: commentId } });
-      return { statusCode: 200 };
-    }
-    else{
-      return { statusCode: 403 };
-    }
+    const deleteCommentAndReplies = async (commentId) => {
+      const comment = await CommentModel.findById(commentId);
+      if (!comment) {
+        return; 
+      }
+      if (userId !== comment.userId && userId !== post.userId) {
+        return; 
+      }
+
+      if (comment.postId !== postId) {
+        return; 
+      }
+      await Promise.all(comment.replies.map((replyId) => deleteCommentAndReplies(replyId)));
+
+      await CommentModel.findByIdAndDelete(commentId);
+    };
+
+    await deleteCommentAndReplies(commentId);
+
+    return { statusCode: 200 };
   } catch (error) {
     console.error("Error deleting comment:", error);
     throw error;
   }
 };
+
+
 
 export {
   getPostComments,

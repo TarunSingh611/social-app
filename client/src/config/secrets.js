@@ -10,6 +10,7 @@ const secrets = {
     NEXT_PUBLIC_JWT_KEY: process.env.NEXT_PUBLIC_JWT_KEY,
     NEXT_PUBLIC_IMAGE_URL: process.env.NEXT_PUBLIC_IMAGE_URL,
     NEXT_PUBLIC_ICON_URL: process.env.NEXT_PUBLIC_ICON_URL,
+    NEXT_PUBLIC_PROFILE_IMAGE_URL: process.env.NEXT_PUBLIC_PROFILE_IMAGE_URL,
 
     ProfilePicture(gender){
         gender = gender?.toLowerCase();
