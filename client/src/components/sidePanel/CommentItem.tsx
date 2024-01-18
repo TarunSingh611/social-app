@@ -27,6 +27,9 @@ const CommentItem = ({ comment }) => {
       <div className={style.commentBody}>{body}</div>
       <div className={style.commentDate}>{new Date(createdDate).toLocaleString()}</div>
     </div>
+
+
+
   );
 };
 
