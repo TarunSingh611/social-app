@@ -43,7 +43,6 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 mongoose.connect(process.env.MONGO_URL_FULL);
 initializeSocketIO(io);
 initializeRoutes(app);
-console.log(process.env.MONGO_URL_FULL);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
