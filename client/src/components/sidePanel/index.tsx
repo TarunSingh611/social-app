@@ -4,7 +4,7 @@ import secrets from "@/config/secrets";
 import { useDispatch, useSelector } from "react-redux";
 import { setSidePaneOpen } from "@/redux/slicers/sidePaneSlice";
 import SidePaneBody from "./SidePaneBody.tsx";
-import React from "react";
+import React, { useEffect } from "react";
 
 
 const { NEXT_PUBLIC_ICON_URL } = secrets;
@@ -27,11 +27,8 @@ const SidePanel = () => {
     };
 
     return (
-        <div
-            className={`${style.sidePanel} ${
-                sidePaneOpen ? "" : `${style.hideSidePanel}`
-            }`}
-        >
+        <div className={`${style.sidePanel} ${sidePaneHead && !sidePaneOpen ? style.hideSidePanel : sidePaneHead ? "" : style.emptyPanel}`}>
+
             <div className={style.toggle} onClick={handleToggle}>
                 <img src={iconDoubleLeft} />
             </div>

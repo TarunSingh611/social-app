@@ -14,7 +14,7 @@ const getPostComments = async (postId, order, cno) => {
       .sort({ createdDate: sortOrder })
       .skip(cno)
       .limit(10)
-      .populate("user", "fullName username profilePicture accountType following followers friends pendingFollowers")
+      .populate("user", "fullName username profilePicture accountType following followers gender friends pendingFollowers")
       .exec();
 
     const populatedComments = await Promise.all(
@@ -36,7 +36,7 @@ const postPostComments = async (postId, userId, data) => {
     });
 
     await comment.save();
-    const populatedComment = await CommentModel.findById(comment._id).populate("user", "fullName username profilePicture accountType following followers friends pendingFollowers");
+    const populatedComment = await CommentModel.findById(comment._id).populate("user", "fullName username profilePicture gender accountType following followers friends pendingFollowers");
     return { statusCode: 200, comment: populatedComment };
   } catch (error) {
     console.error("Error posting comment:", error);

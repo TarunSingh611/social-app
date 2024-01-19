@@ -23,7 +23,7 @@ const handleConfirmLogout = () => {
     router.push("/");
 }
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-8 rounded-lg w-5/8 box-content">
             <div className="text-center">
               <h2 className="text-2xl font-bold mb-4">Logout</h2>

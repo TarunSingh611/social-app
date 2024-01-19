@@ -15,6 +15,11 @@
   transition: all 3s ease-in-out;
 }
 
+.emptyPanel {
+  transform: translateX(calc(-100%));
+  transition: all 3s ease-in-out;
+}
+
 .toggle {
   position: absolute;
   right: 0px;
@@ -32,6 +37,11 @@
 }
 
 .hideSidePanel .toggle img {
+  transform: rotate(180deg);
+  transition: all 3s ease-in-out;
+}
+
+.emptyPanel .toggle img {
   transform: rotate(180deg);
   transition: all 3s ease-in-out;
 }
@@ -183,10 +193,21 @@ height: calc(100% - 54px);
 
 /* ////////////////Comment Item */
 .commentItem {
+  position :relative;
   margin-bottom: 6px;
   padding: 6px;
   background-color: #ffffff;
   border-radius: 4px;
+}
+
+.commentItem::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0px;
+  border-width: 0 10px 10px 0;
+  border-style: solid;
+  border-color: #ffffff transparent transparent transparent;
 }
 
 .commentAuthor {
@@ -203,6 +224,9 @@ height: calc(100% - 54px);
 
 .commentAuthor p {
   font-weight: bold;
+  width: inherit;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
   font-size: small;
   color: #4f5b7d;
   margin: 4px;
@@ -211,13 +235,26 @@ height: calc(100% - 54px);
 .commentBody {
   margin-left: 16px;
   word-wrap: break-word;
+  overflow-x: hidden;
+  overflow-wrap: break-word;
   padding : 6px;
+  width :90%;
   font-size: small;
 }
 
+.commentDots{
+  width: fit-content;
+  right: 5px;
+  top:5px;
+  position: absolute;
+
+  cursor: pointer;
+}
 .commentDate {
   color: #888;
   font-size: 8px;
   margin-left:auto;
   text-align: right;
 }
+
+
