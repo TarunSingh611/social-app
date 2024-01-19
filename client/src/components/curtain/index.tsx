@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SlotMachine from "../slotMachine";
 import { setCurtainRaised } from "../../redux/ReduxSlicer";
-const curtain = () => {
+const Curtain = () => {
     
     const dispatch = useDispatch();
     const curtainRaised = useSelector((state: any) => state.app.curtainRaised);
@@ -36,4 +36,4 @@ const curtain = () => {
     );
 }
 
-export default curtain;
+export default Curtain;

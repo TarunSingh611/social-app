@@ -17,6 +17,7 @@ export default function Home() {
     else if(validUser == true){
       window.location.replace("/userSpace/profile");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[validUser])
 
   return (

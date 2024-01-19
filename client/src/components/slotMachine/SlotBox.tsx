@@ -40,6 +40,7 @@ const SlotMachine: React.FC<SlotMachineProps> = ({
 
       return () => clearTimeout(timeoutId);
     }
+         //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [index, stopLetter, moveDirection, time, isClient, letters.length]);
 
   useEffect(() => {

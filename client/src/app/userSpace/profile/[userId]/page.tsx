@@ -21,6 +21,7 @@ const Profile = ({ params }: { params: { userId: string } }) => {
 
   useEffect(() => {
     fetchData();
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.userId]);
 
   return (

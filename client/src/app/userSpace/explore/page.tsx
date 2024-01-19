@@ -38,15 +38,18 @@ const Explore = () => {
         }
       });
     }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
   useEffect(() => {
     if(searchQuery.length==0){
       setIsSearchOverlayVisible(false)
     }
+    
   },[searchQuery])
 
   useEffect(() => {
     handleSearch()
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[searchType])
 
   return (

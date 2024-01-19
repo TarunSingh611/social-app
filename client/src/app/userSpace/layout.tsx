@@ -47,6 +47,7 @@ export default function UserSpaceLayout({
                     toast.error(err.message);
                 });
         }
+         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [validUser]);
 
     return (

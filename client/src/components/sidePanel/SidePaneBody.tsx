@@ -49,6 +49,7 @@ const SidePaneBody = () => {
         if (bodyId) {
             fetchComments();
         }
+             //eslint-disable-next-line react-hooks/exhaustive-deps
     }, [order, bodyId]);
 
     return loading ? (

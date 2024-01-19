@@ -25,6 +25,7 @@ const ListNav = () => {
   useEffect(() => {  
     setNotificationCount(notifications?.alerts?.length||0 + notifications?.followRequests?.length);
      console.log(notificationCount)
+     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [notifications]);
 
   const handleLogout = () => {
