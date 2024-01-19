@@ -27,6 +27,7 @@ const SlotMachine: React.FC<SlotMachineProps> = ({
 
   useEffect(() => {
     setIsClient(true);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -47,6 +48,7 @@ const SlotMachine: React.FC<SlotMachineProps> = ({
         setIndex(0);
       }, iterateTime);
     }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleResetClick = () => {

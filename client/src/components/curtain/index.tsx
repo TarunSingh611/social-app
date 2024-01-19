@@ -14,6 +14,7 @@ const curtain = () => {
       };
     useEffect(() => {
         setIsClient(true);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
     
     return (isClient &&
