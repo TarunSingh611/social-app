@@ -1,4 +1,9 @@
 {
+
+  "name": "SocialSPHERE",
+  "version": "1.0.0",
+  "description": "FIRST DEPLOY",
+  "main": "server.mjs",
   "dependencies": {
 
     "bcrypt": "^5.1.1",
