@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 import ReduxProvider from "@/redux/ReduxProvider";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import GuestLayout from "@/layouts/GuestLayout";
@@ -32,6 +33,7 @@ export default function RootLayout({
           />
         </body>
       </ReduxProvider>
+      <SpeedInsights />
     </html>
   );
 }
