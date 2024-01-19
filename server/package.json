@@ -5,9 +5,7 @@
   "description": "FIRST DEPLOY",
   "main": "server.mjs",
   "dependencies": {
-      "scripts": {
-              "start": "node server.mjs"
-           },
+
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
