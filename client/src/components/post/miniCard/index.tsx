@@ -27,12 +27,10 @@ const MiniCard = ({ post, setFullCard }: { post: any; setFullCard: any }) => {
       onMouseLeave={handleMouseLeave}
       onClick={handleMiniCardClick}
     >
-      <Image
+      <img
         src={`${secrets.NEXT_PUBLIC_IMAGE_URL}${post.image}`}
         alt={`Post: ${post.caption}`}
         className={styles.thumbnail}
-        width={320}
-        height={320}
       />
       {isHovered && (
         <div className={styles.overlay}>
@@ -48,7 +46,7 @@ MiniCard.propTypes = {
   post: PropTypes.shape({
     image: PropTypes.string.isRequired,
     caption: PropTypes.string.isRequired,
-    likeCount :PropTypes.number.isRequired,
+    likeCount: PropTypes.number.isRequired,
     commentCount: PropTypes.number.isRequired,
   }).isRequired,
   setFullCard: PropTypes.func.isRequired,

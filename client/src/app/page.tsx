@@ -1,8 +1,4 @@
 "use client";
-import dotenv from "dotenv";
-dotenv.config();
-import secrets from "@/config/secrets";
-const { NEXT_PUBLIC_API_URL } = secrets;
 import LandingMain from "@/components/landingMain";
 import { setValidUser } from "@/redux/slicers/authSlice";
 import { getToken } from "@/services/auth";
@@ -12,8 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 export default function Home() {
   const dispatch = useDispatch();
   const validUser = useSelector((state: any) => state.auth.validUser);
-
-  console.log(NEXT_PUBLIC_API_URL, process.env.NEXT_PUBLIC_API_URL)
 
   useEffect(() => {
 
