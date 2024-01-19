@@ -1,5 +1,7 @@
 // server.js
 import express from "express";
+import dotenv from "dotenv";
+dotenv.config();
 import mongoose from "mongoose";
 import http from "http";
 import cors from "cors";
@@ -38,9 +40,10 @@ app.use(express.json());
 app.use('/public', express.static('public'));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-mongoose.connect(databaseConfig.mongoURI);
+mongoose.connect(process.env.MONGO_URL_FULL);
 initializeSocketIO(io);
 initializeRoutes(app);
+console.log(process.env.MONGO_URL_FULL);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
