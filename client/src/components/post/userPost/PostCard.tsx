@@ -137,7 +137,6 @@ const PostCard = ({ post, setPost = () => { } }: any) => {
                         src={`${secrets.NEXT_PUBLIC_IMAGE_URL}${LocalPost.image}`}
                         alt={`Post: ${LocalPost.caption}`}
                         className={`${styles.postImage}`}
-
                     />
                     <div
                         className={styles.fullScreenIcon}

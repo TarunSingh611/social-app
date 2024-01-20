@@ -1,11 +1,11 @@
 'use client';
 import secrets from "@/config/secrets";
 import { useRouter } from "next/navigation";
-import { useEffect,  useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import FollowButton from "../followButton/FollowButton";
 
-const ProfileCard = ({ user, setUser = () => {} ,self={}}: any) => {
+const ProfileCard = ({ user, setUser = () => { }, self = {} }: any) => {
 
 
   return (user &&
@@ -16,8 +16,8 @@ const ProfileCard = ({ user, setUser = () => {} ,self={}}: any) => {
           src={
             user?.coverPhoto
               ? secrets.NEXT_PUBLIC_API_URL +
-                "/public/coverPhotos/" +
-                user?.coverPhoto
+              "/public/coverPhotos/" +
+              user?.coverPhoto
               : secrets.NEXT_PUBLIC_API_URL + "/public/DP_defaulters/Cover.webp"
           }
           alt="Profile"
@@ -26,33 +26,33 @@ const ProfileCard = ({ user, setUser = () => {} ,self={}}: any) => {
 
       <div className="flex relative flex-col md:flex-row w-full">
         <div className="w-full md:w-5/12 h-auto">
-        <div className="w-full h-auto !object-contain">
-          <img
-            className="sm:w-32 sm:h-32 p-8 sm:p-0 mx-auto md:w-40 md:h-40 lg:w-48 lg:h-48 rounded-full object-cover"
-            src={
-              user?.profilePicture
-                ? secrets.NEXT_PUBLIC_API_URL +
+          <div className="w-full h-auto !object-contain">
+            <img
+              className="sm:w-32 sm:h-32 p-8 sm:p-0 mx-auto md:w-40 md:h-40 lg:w-48 lg:h-48 rounded-full object-cover"
+              src={
+                user?.profilePicture
+                  ? secrets.NEXT_PUBLIC_API_URL +
                   "/public/profilePictures/" +
                   user?.profilePicture
-                : secrets.ProfilePicture(user?.gender)
-            }
-            alt="Profile"
-          />
+                  : secrets.ProfilePicture(user?.gender)
+              }
+              alt="Profile"
+            />
+          </div>
+          <p
+            className="w-full text-center text-lg font-bold overflow-hidden text-ellipsis"
+          >
+            {user?.fullName}
+          </p>
         </div>
-        <p
-          className="w-full text-center text-lg font-bold overflow-hidden text-ellipsis"
-        >
-          {user?.fullName}
-        </p>
-            </div>
         <div className="flex w-full flex-col md:w-7/12 " >
           <div className="flex h-full w-full  flex-col sm:flex-row items-end space-x-4">
             <p className="flex w-full md:w-1/3 items-center flex-col">
-              <strong>{user?.followersCount}</strong>
+              <strong>{user?.followers?.length}</strong>
               <strong>Followers</strong>
             </p>
             <p className="flex  w-full md:w-1/3 items-center flex-col">
-              <strong>{user?.followingCount}</strong>
+              <strong>{user?.following?.length}</strong>
               <strong>Following</strong>
             </p>
             <p className="flex w-full md:w-1/3 items-center flex-col">
@@ -61,12 +61,12 @@ const ProfileCard = ({ user, setUser = () => {} ,self={}}: any) => {
             </p>
           </div>
           <div className="mx-auto my-2">
-           {user?._id && self && self._id !== user._id && <FollowButton user={user} setUser={setUser} self={self} />}
+            {user?._id && self && self._id !== user._id && <FollowButton user={user} setUser={setUser} self={self} />}
           </div>
         </div>
       </div>
       <div className="flex flex-col">
-  
+
 
         <p className="text-gray-500">{user?.bio || ""}</p>
       </div>
@@ -100,8 +100,8 @@ const ProfileSearchCard = ({ user }: any) => {
           src={
             userLocal?.profilePicture
               ? secrets.NEXT_PUBLIC_API_URL +
-                "/public/profilePictures/" +
-                userLocal?.profilePicture
+              "/public/profilePictures/" +
+              userLocal?.profilePicture
               : secrets.ProfilePicture(userLocal?.gender)
           }
           alt="Profile"
