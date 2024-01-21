@@ -54,15 +54,20 @@
   background: rgba(0, 0, 0, 0.9);
   display: flex;
   justify-content: center;
-  align-items: center;
   cursor: pointer;
-  z-index: 999;
 }
 
 .fullScreenImage {
   object-fit: contain;
 }
 
+.fullScreenImage img {
+  max-width: 100%;
+  max-height: auto;
+  cursor: pointer;
+  cursor: zoom-out;
+
+}
 
 .iconContainer {
   display: flex;

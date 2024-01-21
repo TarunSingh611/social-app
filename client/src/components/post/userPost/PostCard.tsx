@@ -212,13 +212,14 @@ const PostCard = ({ post, setPost = () => { } }: any) => {
             </div>
             {isFullScreen && (
                 <div
-                    className={styles.fullScreenOverlay}
+                    className={`${styles.fullScreenOverlay} z-[100]`}
                     onClick={handleFullScreenToggle}
+
                 >
                     <img
                         src={`${secrets.NEXT_PUBLIC_IMAGE_URL}${LocalPost.image}`}
                         alt={`Post: ${LocalPost.caption}`}
-                        className={styles.fullScreenImage}
+                        className={`${styles.fullScreenImage} z-[100]`}
                     />
                 </div>
             )}

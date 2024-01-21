@@ -3,7 +3,7 @@ import FollowButton from "@/components/followButton/FollowButton";
 import { useRouter } from "next/navigation";
 
 
-const UserCard = ({ user ,setUser}: any) => {
+const UserCard = ({ user, setUser }: any) => {
 
   const router = useRouter();
   const handleClick = () => {
@@ -17,9 +17,8 @@ const UserCard = ({ user ,setUser}: any) => {
           className="w-full h-full object-cover rounded-full"
           src={
             user?.profilePicture
-              ? secrets.NEXT_PUBLIC_API_URL +
-                "/public/profilePictures/" +
-                user?.profilePicture
+              ? secrets.NEXT_PUBLIC_PROFILE_IMAGE_URL +
+              user?.profilePicture
               : secrets.ProfilePicture(user?.gender)
           }
           alt="Profile"
@@ -27,7 +26,7 @@ const UserCard = ({ user ,setUser}: any) => {
       </div>
       <div className="my-auto">{user?.username}</div>
       <div className="ml-auto mr-2 my-auto">
-        {user?._id &&  (
+        {user?._id && (
           <FollowButton user={user} setUser={setUser} />
         )}
       </div>

@@ -242,7 +242,7 @@ box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
 .navbar {
   position: fixed;
   height: 300px;
-  z-index: 98;
+  z-index: 50;
   cursor:pointer;
   padding-top: 200px;
   top: -200px;

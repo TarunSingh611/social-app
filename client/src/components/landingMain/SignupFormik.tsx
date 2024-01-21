@@ -66,6 +66,7 @@ const SignupFormik = () => {
             return errors;
         },
         onSubmit: (values: any) => {
+
             registerUser(values.firstName, values.lastName, values.email, values.password)
                 .then((data: any) => {
                     if (data.statusCode === 200) {

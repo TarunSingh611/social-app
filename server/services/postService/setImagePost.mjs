@@ -3,65 +3,72 @@ import PostModel from "../../models/postModel.mjs";
 import HashTagModel from "../../models/hashTagModel.mjs";
 import fs from "fs";
 import path from "path";
+import imagekit from "../../utils/imageKit.js"; // Make sure to import your ImageKit instance
 
 const setPicture = async (userId, picture, hashTags, caption) => {
-  hashTags = hashTags.split(",");
-  const user = await User.findById(userId);
-  if (!user) {
-    return { error: "User not found", statusCode: 404 };
-  }
+	hashTags = hashTags.split(",");
+	const user = await User.findById(userId);
 
-  const folder = "imagePost";
+	if (!user) {
+		return { error: "User not found", statusCode: 404 };
+	}
 
-  if (!folder) {
-    return { error: "Invalid type", statusCode: 400 };
-  }
+	const folder = "imagePost";
 
-  const uniqueName = `${Date.now()}_${Math.floor(
-    Math.random() * 1000
-  )}${path.extname(picture.originalname)}`;
-  const newPath = `public/${folder}/${uniqueName}`;
+	if (!folder) {
+		return { error: "Invalid type", statusCode: 400 };
+	}
 
-  fs.renameSync(picture.path, newPath);
+	const uniqueName = `${Date.now()}_${Math.floor(
+		Math.random() * 1000
+	)}${path.extname(picture.originalname)}`;
 
-  user.postsCount++;
-  await user.save();
+	// Upload the new image to ImageKit with the unique name
+	const uploadResponse = await imagekit.upload({
+		file: fs.createReadStream(picture.path),
+		fileName: uniqueName,
+		folder: folder,
+	});
 
-  const newPost = new PostModel({
-    image: uniqueName,
-    user: userId,
-    hashTags: [],
-    caption: caption ? caption : "",
-  });
+	const extractedUniqueName = path.basename(uploadResponse.url);
 
-  if (hashTags.length > 0) {
-    for (const tagName of hashTags) {
-	  let tagNameSanitized = tagName.trim();
-	  if(!tagNameSanitized){
-		continue;
-	  }
-      let hashtag = await HashTagModel.findOne({ name: tagNameSanitized });
+	const newPost = new PostModel({
+		image: extractedUniqueName,
+		user: userId,
+		hashTags: [],
+		caption: caption ? caption : "",
+	});
 
-      if (!hashtag) {
-        hashtag = new HashTagModel({
-          name: tagNameSanitized,
-          posts: [],
-          users: [],
-        });
-      }
+	if (hashTags.length > 0) {
+		for (const tagName of hashTags) {
+			let tagNameSanitized = tagName.trim();
+			if (!tagNameSanitized) {
+				continue;
+			}
+			let hashtag = await HashTagModel.findOne({
+				name: tagNameSanitized,
+			});
 
-      hashtag.posts.push(newPost._id);
-      hashtag.users.push(userId);
+			if (!hashtag) {
+				hashtag = new HashTagModel({
+					name: tagNameSanitized,
+					posts: [],
+					users: [],
+				});
+			}
 
-      await hashtag.save();
+			hashtag.posts.push(newPost._id);
+			hashtag.users.push(userId);
 
-      newPost.hashTags.push(hashtag._id);
-    }
-  }
+			await hashtag.save();
 
-  await newPost.save();
+			newPost.hashTags.push(hashtag._id);
+		}
+	}
 
-  return { message: "Post created successfully", statusCode: 200 };
+	await newPost.save();
+
+	return { message: "Post created successfully", statusCode: 200 };
 };
 
 export default setPicture;

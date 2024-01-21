@@ -15,10 +15,9 @@ const ProfileCard = ({ user, setUser = () => { }, self = {} }: any) => {
           className="w-full h-full object-cover"
           src={
             user?.coverPhoto
-              ? secrets.NEXT_PUBLIC_API_URL +
-              "/public/coverPhotos/" +
+              ? secrets.NEXT_PUBLIC_PROFILE_IMAGE_URL +
               user?.coverPhoto
-              : secrets.NEXT_PUBLIC_API_URL + "/public/DP_defaulters/Cover.webp"
+              : secrets.NEXT_PUBLIC_PROFILE_DEFAULTER + "Cover.webp"
           }
           alt="Profile"
         />
@@ -31,8 +30,7 @@ const ProfileCard = ({ user, setUser = () => { }, self = {} }: any) => {
               className="sm:w-32 sm:h-32 p-8 sm:p-0 mx-auto md:w-40 md:h-40 lg:w-48 lg:h-48 rounded-full object-cover"
               src={
                 user?.profilePicture
-                  ? secrets.NEXT_PUBLIC_API_URL +
-                  "/public/profilePictures/" +
+                  ? secrets.NEXT_PUBLIC_PROFILE_IMAGE_URL +
                   user?.profilePicture
                   : secrets.ProfilePicture(user?.gender)
               }
@@ -99,8 +97,7 @@ const ProfileSearchCard = ({ user }: any) => {
           className="w-1/2 h-1/2 object-fit rounded-full"
           src={
             userLocal?.profilePicture
-              ? secrets.NEXT_PUBLIC_API_URL +
-              "/public/profilePictures/" +
+              ? secrets.NEXT_PUBLIC_PROFILE_IMAGE_URL +
               userLocal?.profilePicture
               : secrets.ProfilePicture(userLocal?.gender)
           }
