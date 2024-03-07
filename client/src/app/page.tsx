@@ -1,20 +1,15 @@
 "use client";
 import LandingMain from "@/components/landingMain";
-import { setValidUser } from "@/redux/slicers/authSlice";
-import { getToken } from "@/services/auth";
+import LoadingRing from "@/components/misc/loadingRing";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 export default function Home() {
-  const dispatch = useDispatch();
-  const validUser = useSelector((state: any) => state.auth.validUser);
+  const validUser = useSelector((state: any) => state.auth.user);
 
   useEffect(() => {
 
-    if (validUser == null) {
-      dispatch(setValidUser(getToken() ? true : false));
-    }
-    else if (validUser == true) {
+   if (validUser) {
       window.location.replace("/userSpace/profile");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -22,8 +17,8 @@ export default function Home() {
 
   return (
 
-    <div className="relative h-screen w-screen">
-      {validUser === false ? <LandingMain /> : <>Loading..</>}
+    <div className="main">
+      {validUser ? <LoadingRing/> : <LandingMain />} 
     </div>
 
   )

@@ -19,10 +19,6 @@ export const appSlice:any= createSlice({
   name: "app",
   initialState,
   reducers: {
-    setCurtainRaised: (state, action) => {
-      state.curtainRaised = action.payload;
-      saveToLocalStorage("curtainRaised", state.curtainRaised);
-    },
     setOverlayDefault: (state, action) => {
       state.overlaydefault = action.payload;
     },

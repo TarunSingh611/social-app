@@ -11,7 +11,7 @@ app.prepare().then(() => {
     .createServer((req, res) => {
       handle(req, res);
     })
-    .listen(process.env.NEXT_PUBLIC_PORT || 3000, (err) => {
+    .listen(process.env.NEXT_PUBLIC_PORT || 3005, (err) => {
       if (err) throw err;
       console.log(`> Ready on http://localhost:${process.env.NEXT_PUBLIC_PORT || 3000}`);
     });

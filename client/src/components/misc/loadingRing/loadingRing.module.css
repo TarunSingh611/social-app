@@ -1,0 +1,56 @@
+.svg {
+    filter: drop-shadow(0px 0px 8px rgb(0, 128, 231 / 1));
+}
+
+.container {
+    border-radius: 100%;
+    position: relative;
+    animation: spin 1.4s linear infinite;
+}
+
+.svg defs {
+    position: absolute;
+    width: 0;
+    height: 0;
+}
+
+.svg defs .gradient {
+    position: absolute;
+    width: 0;
+    height: 0;
+}
+
+.ring {
+    border-radius: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    stroke-dasharray: 60 440;
+    stroke-dashoffset: -500;
+    stroke-width: 10px;
+    stroke: url(#gradient);
+    animation: shift 3.2s ease-in-out infinite;
+}
+
+@keyframes shift {
+    0% {
+    }
+    50% {
+        stroke-dasharray: 400 100;
+        stroke-dashoffset: -350;
+    }
+    100% {
+    }
+}
+
+@keyframes shift-test {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
