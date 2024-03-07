@@ -28,7 +28,7 @@ async function getExplore(user, page = 1, pageSize = 9) {
         post.liked = Boolean(like);
 
       } catch (error) {
-        console.log("Error in like:getExplpore", error);
+        console.log("Error in like:getExplore", error);
       }
     }
     return { success: true, posts: filteredPosts , statusCode: 200 };

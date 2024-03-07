@@ -1,12 +1,12 @@
+import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
+dotenv.config();
 const secretKey = process.env.JWT_SECRET;
+const blacklist = new Set();
 export const generateToken = (user) => {
 	return jwt.sign(
 		{
 			userId: user._id,
-			username: user.username,
-			email: user.email,
-			emailVerified: user.emailVerified,
 		},
 		secretKey,
 		{ expiresIn: "24h" }
@@ -27,21 +27,10 @@ export const invalidateToken = (token) => {
 
 export const checkTokenBlacklist = (token) => {
 	if (blacklist.has(token)) {
-		return res.status(401).json({
-			message: "Token is revoked. Please log in again.",
-		});
+		return true;
 	}
-
-	next();
-};
-
-const getUserByToken = async (token) => {
-	try {
-		const decoded = jwt.verify(token, secretKey);
-		return decoded;
-	} catch (error) {
-		console.log(error);
+	else{
+		return false
 	}
 };
 
-export { getUserByToken };

@@ -1,46 +1,43 @@
-import { getUserByToken } from "../../utils/jwtUtils.mjs";
 import likeService from "../../services/reactionService/Like.mjs";
 
 const reactionCreate = async (req, res) => {
-  res.send("reactionCreate");
-};  
+    res.send("reactionCreate");
+};
 
 const reactionDelete = async (req, res) => {
-  res.send("reactionDelete");
+    res.send("reactionDelete");
 };
 
 const reactionGet = async (req, res) => {
-  res.send("reactionGet");
+    res.send("reactionGet");
 };
 
 const reactionUpdate = async (req, res) => {
-  res.send("reactionUpdate");
+    res.send("reactionUpdate");
 };
 
 const reactionGetAll = async (req, res) => {
-  res.send("reactionGetAll");
-}
+    res.send("reactionGetAll");
+};
 
 const like = async (req, res) => {
-  const token = req.header("jwttoken");
-  const tokenData = await getUserByToken(token);
-  const {contentType , contentId} = req.body
+    const self = req.session.user;
+    const { contentType, contentId } = req.param;
 
-  if (!tokenData) {
-    return res.status(403).json({ message: "Forbidden: Invalid username" });
-  }
+    if (!self) {
+        return res.status(403).json({ message: "Forbidden: Invalid username" });
+    }
 
-  const result = await likeService.like(contentType, contentId,tokenData.userId);
- 
-   res.send(result);
+    const result = await likeService.like(contentType, contentId, self.userId);
 
-}
+    res.send(result);
+};
 
-  export {
+export {
     reactionCreate,
     reactionDelete,
     reactionGet,
     reactionUpdate,
     reactionGetAll,
-    like
-  };
+    like,
+};

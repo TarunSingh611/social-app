@@ -2,10 +2,10 @@ import express from "express";
 import followController from "../controllers/followController/index.mjs";
 const router = express.Router();
 
-router.post("/send-request/:senderId/:receiverId", followController.sendFollowRequest);
-router.post("/accept-request/:followerId", followController.acceptFollowRequest);
-router.post("/reject-request/:followerId", followController.rejectFollowRequest);
-router.post("/retract-request/:senderId/:receiverId", followController.retractFollowRequest);
-router.post("/unfollow-request/:userId/:targetUserId", followController.unfollowUser);
+router.get("/send-request/:userId", followController.sendFollowRequest);
+router.get("/accept-request/:userId", followController.acceptFollowRequest);
+router.get("/reject-request/:userId", followController.rejectFollowRequest);
+router.get("/retract-request/:userId", followController.retractFollowRequest);
+router.get("/unfollow-request/:userId", followController.unfollowUser);
 
 export default router;

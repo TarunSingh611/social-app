@@ -16,34 +16,18 @@ const server = http.createServer(app);
 const io = new socketIO(server, {
 	cors: {
 		origin: "*",
-		methods: [
-			"GET",
-			"POST",
-			"PUT",
-			"DELETE",
-			"OPTIONS",
-			"PATCH",
-			"HEAD",
-			"CONNECT",
-			"TRACE",
-		],
+		methods: [ "GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD", "CONNECT", "TRACE", ],
 		credentials: true,
 	},
 });
 
 const { MONGO_URL_FULL } = process.env;
-
 app.use(cors("*"));
 app.use(express.json());
 app.use("/public", express.static("public"));
-app.use(
-	"/api-docs",
-	swaggerUi.serve,
-	swaggerUi.setup(swaggerDocument)
-);
+app.use( "/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument) );
 
 mongoose.connect(MONGO_URL_FULL);
-console.log(MONGO_URL_FULL);
 initializeSocketIO(io);
 initializeRoutes(app);
 

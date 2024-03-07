@@ -1,16 +1,13 @@
-import  findUserNameById from "../../services/userService/userGetUsername.mjs";
-import  getUserByToken  from "../../services/userService/userLogin.mjs";
-
+import findUserNameById from "../../services/userService/userGetUsername.mjs";
 async function userGetUserName(req, res) {
-    const token = req.header("jwttoken");
-    const tokenData = await getUserByToken(token);
-    const userId=req.query.userId
-    if (!tokenData) {
+    const self = req.session.user;
+    const userId = req.query.userId;
+    if (!self) {
         return res.status(403).json({ message: "Forbidden: Invalid username" });
     }
-    
+
     const result = await findUserNameById(userId);
-    res.json(result);
+    res.status(200).json(result);
 }
 
-export { userGetUserName }
+export { userGetUserName };

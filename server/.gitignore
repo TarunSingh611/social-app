@@ -9,6 +9,15 @@ config/config.json
 # Temporary files
 .tmp/
 
+#node modules
+node_modules/
+
+#package lock
+package-lock.json
+
 # Log files
 logs/
 *.log
+
+# env file
+.env

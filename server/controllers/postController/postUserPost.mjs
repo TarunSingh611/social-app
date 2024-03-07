@@ -1,24 +1,20 @@
-import { getUserByToken } from "../../utils/jwtUtils.mjs";
 import getUserPostsByUserId from "../../services/postService/getUserPostByUserId.mjs";
 
 const userPost = async (req, res) => {
-  const userId = req.query.userId;
-  const pno = req.query.pno;
+    const userId = req.query.userId;
+    const pno = req.query.pno;
+    const self = req.session.user;
 
-  const token = req.header("jwttoken");
-  const tokenData = await getUserByToken(token);
+    if (!self) {
+        return res
+            .statusCode(403)
+            .json({ message: "Forbidden: Invalid username" });
+    }
 
-  if (!tokenData) {
-    return res.status(403).json({ message: "Forbidden: Invalid username" });
-  }
-
-  if (req.method === "GET") {
-
-        const result = await getUserPostsByUserId(userId, tokenData.userId, pno);
-        return res.json(result);
-
-
-  }
+    if (req.method === "GET") {
+        const result = await getUserPostsByUserId(userId, self.userId, pno);
+        return res.statusCode(200).json(result);
+    }
 };
 
 export { userPost };

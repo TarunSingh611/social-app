@@ -3,17 +3,19 @@ import { verifyToken ,checkTokenBlacklist} from '../utils/jwtUtils.mjs';
 import User from '../models/userModel.mjs';
 
 const jwtMiddleware = async (req, res, next) => {
-  const token = req.header('jwttoken');
+  const token = req.headers['jwttoken'];
 
   if (!token) {
     return res.status(401).json({ message: 'Unauthorized: No token provided' });
   }
-  checkTokenBlacklist(token);
+  if(checkTokenBlacklist(token)){
+    return res.status(401).json({ message: 'Unauthorized: Invalid token' });
+  }
 
   try {
     const decodedToken = verifyToken(token);
 
-    const user = await User.findOne({ username: decodedToken.username });
+    const user = await User.findOne({ _id: decodedToken.userId });
 
     if (!user) {
       return res.status(403).json({ message: 'Forbidden: Invalid username' });
@@ -23,7 +25,7 @@ const jwtMiddleware = async (req, res, next) => {
       return res.status(403).json({ message: 'Forbidden: Email not verified' });
     }
 
-    req.user = user; 
+    req.session.user = user; 
     next();
   } catch (error) {
     return res.status(403).json({ message: 'Forbidden: Invalid token' });

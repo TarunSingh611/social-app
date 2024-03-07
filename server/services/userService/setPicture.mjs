@@ -3,7 +3,7 @@
 import User from "../../models/userModel.mjs";
 import fs from "fs";
 import path from "path";
-import imagekit from "../../utils/imageKit.js";
+import imagekit from "../../utils/imageKit.mjs";
 
 const setPicture = async (userId, picture, type) => {
 	try {

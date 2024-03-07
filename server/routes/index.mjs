@@ -9,12 +9,14 @@ import notificationsRoutes from "./notificationsRoute.mjs";
 import followRoutes from "./followRoute.mjs";
 import BearerAuth from "../middleware/bearerAuth.mjs";
 import feed from "./feed.mjs";
+import guestRoutes from "./guestRoute.mjs";
 import explore from "./explore.mjs";
-// import notifications from "../models/notificationModel.mjs";
-// import users from "../models/userModel.mjs";
+import mongoQuery from "./mongoQuery.mjs";
+import JWTAuth from "../middleware/jwtAuth.mjs";
 export default function initializeRoutes(app) {
   app.use(BearerAuth);
-
+  app.use("/",guestRoutes);
+  app.use(JWTAuth);
   app.use("/user", userRoutes);
   app.use("/post", postRoutes);
   app.use("/hashTag", hashTagRoutes);
@@ -26,57 +28,7 @@ export default function initializeRoutes(app) {
   app.use("/feed", feed);
   app.use("/explore", explore);
   app.use("/follow", followRoutes);
-  app.use("/notifications", notificationsRoutes);
-
-
-  app.get("/mongo", async (req, res) => {
-    try {
-
-      // const contentDetails = { content: "Sample notification content" };
-
-      // const tarunUser = users.findOne({ username: "tarunsrajput25@gmail.com" });
-      // const abcUser = users.findOne({ username: "abc@gmail.com" });
-      // const xyzUser = users.findOne({ username: "xyz@gmail.com" });
-      
-      // notifications.insertMany([
-      //   {
-      //     type: "SENT_REQ",
-      //     to: abcUser._id,
-      //     from: xyzUser._id,
-      //     contentDetails,
-      //     read: false,
-      //     createdAt: new Date(),
-      //     updatedAt: null,
-      //   },
-      //   {
-      //     type: "Message",
-      //     to: abcUser._id,
-      //     from: xyzUser._id,
-      //     contentDetails,
-      //     read: true,
-      //     createdAt: new Date(),
-      //     updatedAt: null,
-      //   },
-      //   {
-      //     type: "Alert",
-      //     to: abcUser._id,
-      //     from: tarunUser._id,
-      //     contentDetails,
-      //     read: true,
-      //     createdAt: new Date(),
-      //     updatedAt: null,
-      //   },
-      // ]);
-      
-
-      console.log("Successfully updated existing users.");
-      res.send("Successfully updated existing users.");
-    } catch (error) {
-      console.error("Error updating users:", error);
-      res.status(500).send("Internal Server Error");
-    }
-  });
-
+  // app.get("/mongo", mongoQuery); 
   app.use("*", (req, res) => {
     res.status(404).json({
       error: "Not Found",

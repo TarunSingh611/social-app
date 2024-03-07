@@ -3,7 +3,7 @@ import PostModel from "../../models/postModel.mjs";
 import HashTagModel from "../../models/hashTagModel.mjs";
 import fs from "fs";
 import path from "path";
-import imagekit from "../../utils/imageKit.js"; // Make sure to import your ImageKit instance
+import imagekit from "../../utils/imageKit.mjs"; // Make sure to import your ImageKit instance
 
 const setPicture = async (userId, picture, hashTags, caption) => {
 	hashTags = hashTags.split(",");

@@ -1,15 +1,14 @@
-import { getUserByToken } from "../../utils/jwtUtils.mjs";
-import {updateUserSecurity} from "../../services/userService/userUpdate.mjs";
+import { updateUserSecurity } from "../../services/userService/userUpdate.mjs";
 const userUpdateSecurity = async (req, res) => {
-    const token = req.header('jwttoken');
-    const tokenData = await getUserByToken(token)
+    const self = req.session.user;
+    const data = req.body;
 
-    if (! tokenData) {
-        return res.status(403).json({ message: 'Forbidden: Invalid username' });
+    if (!self) {
+        return res.status(403).json({ message: "Forbidden: Invalid username" });
     }
-    const result = await updateUserSecurity(tokenData.userId, req.body);
+    const result = await updateUserSecurity(tokenData.userId, data);
 
-    res.json(result);
+    res.statusCode(200).json(result);
 };
 
-export  {userUpdateSecurity}
+export { userUpdateSecurity };

@@ -3,8 +3,8 @@ import multer from "multer";
 import {
   postImage,
   postUserPost,
-  postLikes,
   postComments,
+  updateUserPostController,
 } from "../controllers/postController/index.mjs";
 const router = express.Router();
 const upload = multer({dest:'public/'})
@@ -12,9 +12,9 @@ const upload = multer({dest:'public/'})
 router.post("/imagePost", upload.single("file"), postImage);
 router.get("/userPost", postUserPost);
 
-router.get("/likes", postLikes);
-router.delete("/likes", postLikes);
-router.put("/likes", postLikes);
+router.get("/updateUserPost", updateUserPostController);
+router.put("/updateUserPost", updateUserPostController);
+router.delete("/updateUserPost", updateUserPostController); 
 
 router.get("/comments", postComments);
 router.post("/comments", postComments);

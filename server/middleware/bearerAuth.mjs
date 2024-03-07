@@ -3,7 +3,6 @@ dotenv.config();
 const { VALID_API_KEYS, EXCLUDED_ROUTES } = process.env;
 
 const BearerAuth = (req, res, next) => {
-	console.log("req::", req.path);
 	if (EXCLUDED_ROUTES.includes(req.path)) {
 		return next();
 	}

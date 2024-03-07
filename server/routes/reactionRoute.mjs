@@ -5,6 +5,6 @@ like
 } from "../controllers/reactionController/index.mjs";
 const router = express.Router();
 
-router.put("/like", like);
+router.put("/like/:contentType/:contentId", like);
 
 export default router;

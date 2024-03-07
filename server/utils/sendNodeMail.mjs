@@ -12,11 +12,25 @@ const {
 	EMAIL_PORT,
 } = process.env;
 
-const emailTemplate = fs.readFileSync(
-	"./utils/verifyEmailTemplate.html",
-	"utf-8"
-);
-const sendVerificationEmail = async (email, token) => {
+let emailTemplate ;
+const sendVerificationEmail = async (email, type, token) => {
+	switch (type) {
+		case "verify":
+			emailTemplate = fs.readFileSync(
+				"./utils/verifyEmailTemplate.html",
+				"utf-8"
+			)
+			.replace(
+				"{{verificationLink}}",
+				`http://${ORIGIN_URL}/user/verify?t=${token}&f=email`
+			);
+			break;
+		default: return {
+			error: "Invalid email type",
+		};
+	}
+
+
 	try {
 		const transporter = nodemailer.createTransport({
 			host: EMAIL_SERVER,
@@ -31,10 +45,7 @@ const sendVerificationEmail = async (email, token) => {
 			from: `"${EMAIL_NAME}" <noreply@yourdomain.com>`,
 			to: email,
 			subject: "Email Verification",
-			html: emailTemplate.replace(
-				"{{verificationLink}}",
-				`http://${ORIGIN_URL}/user/verify?t=${token}&f=email`
-			),
+			html: emailTemplate
 		};
 
 		await transporter.sendMail(mailOptions);
