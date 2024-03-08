@@ -23,17 +23,18 @@ const validationSchema = Yup.object().shape({
     password: Yup.string().required("Password is required"),
 });
 
-const handleSubmit  = async (values: FormValues): Promise<void> => {
-
-     const response = await fetch('/api/user/apiLogin.ts', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(values)
-  });
-
-    console.log(response)
+const handleSubmit = async (values: FormValues): Promise<void> => {
+    const response = await fetch("/api/user/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+    });
+    
+    const responseData = await response.json(); 
+    console.log(responseData);
+    
 
     // fetch('/api/user/apiLogin',{body:{...values}})
     // .then((data: any) => {
@@ -62,8 +63,7 @@ const handleSubmit  = async (values: FormValues): Promise<void> => {
     // .catch((error) => {
     //     console.log(error);
     // });
-}
-
+};
 
 const LoginFormik = () => {
     const formik = useFormik<FormValues>({
@@ -72,8 +72,10 @@ const LoginFormik = () => {
             password: "",
         },
         validationSchema,
-        onSubmit: (values) => { handleSubmit(values); },
-})
+        onSubmit: (values) => {
+            handleSubmit(values);
+        },
+    });
 
     const config = [
         {

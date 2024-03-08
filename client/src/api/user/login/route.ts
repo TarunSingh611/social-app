@@ -1,6 +1,5 @@
 import makeApiRequest from '@/services/apiReq';
 import {NEXT_USER_LOGIN} from "@/contants/api"
-import apiRouteGuard from '../api-route-guard';
 const apiLogin = async (req,res) => {
   debugger
   console.log(req.body)
@@ -17,4 +16,4 @@ const apiLogin = async (req,res) => {
   res.status(result?.statusCode || 200 ).json(result)
 };
 
-export default apiRouteGuard(apiLogin);
+export default apiLogin;
