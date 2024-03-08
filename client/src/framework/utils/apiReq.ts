@@ -1,4 +1,6 @@
 // makeApiRequest.tsx
+import secrets from "@/config/secrets";
+import { getToken } from "@/services/auth";
 
 export type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
 
@@ -11,8 +13,14 @@ const makeApiRequest = async <T>(
   }
 ): Promise<T> => {
   try {
-    const response = await fetch(url, {
-      ...options
+    const response = await fetch(`${secrets.NEXT_PUBLIC_API_URL}${url}`, {
+      ...options,
+      headers: {
+        ...options.headers,
+        Authorization: "Bearer " + secrets.NEXT_PUBLIC_API_KEY,
+        jwtToken: await getToken(),
+
+      },
     });
 
 
